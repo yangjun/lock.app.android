@@ -1,8 +1,11 @@
 package com.wm.lock.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Created by WM on 2015/7/29.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserInfo {
 
     /** 用户id */

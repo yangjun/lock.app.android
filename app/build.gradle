@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 
-//--------------AndroidAnnonation的配置开始---------------------/
+//--------------AndroidAnnonation start---------------------/
 buildscript {
     repositories {
         mavenCentral()
@@ -41,11 +41,11 @@ apt {
         // logFile '/var/log/aa.log'
     }
 }
-//-------------- AndroidAnnonation的配置结束----------------
+//-------------- AndroidAnnonation end----------------
 
 
 
-//-------------- ViewPagerIndicator的配置开始----------------
+//-------------- ViewPagerIndicator start----------------
 buildscript {
     repositories {
         maven { url "http://dl.bintray.com/populov/maven" }
@@ -65,7 +65,21 @@ allprojects {
 dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 }
-//-------------- ViewPagerIndicator的配置结束----------------
+//-------------- ViewPagerIndicator end----------------
+
+
+
+//-------------- spring star----------------
+dependencies {
+    compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
+}
+repositories {
+    maven {
+        url 'http://repo.spring.io/milestone'
+    }
+}
+//-------------- spring end----------------
+
 
 
 

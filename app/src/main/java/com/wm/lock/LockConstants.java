@@ -20,4 +20,6 @@ public final class LockConstants {
     public static final int FLAG_LOGOFF = 1001;
     public static final int FLAG_EXIT = 1002;
 
+    public static final String HTTP_SERVER = "http_server";
+    public static final String CONTENT_TYPE = "Content-Type";
 }

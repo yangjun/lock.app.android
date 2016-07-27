@@ -58,16 +58,17 @@ public abstract class BaseActivity extends AbstractActivity {
         DialogManager.dismissDialog(mDialog);
     }
 
-    public void showWaittingDialog(int messageId) {
-        showWaittingDialog(getString(messageId));
+    public Dialog showWaittingDialog(int messageId) {
+        return showWaittingDialog(getString(messageId));
     }
 
-    public void showWaittingDialog(String message) {
-        showWaittingDialog(R.string.holdon, message);
+    public Dialog showWaittingDialog(String message) {
+        return showWaittingDialog(R.string.holdon, message);
     }
 
-    public void showWaittingDialog(int titleId, String message) {
-        DialogManager.showWaittingDialog(this, titleId, message, false);
+    public Dialog showWaittingDialog(int titleId, String message) {
+        mDialog = DialogManager.showWaittingDialog(this, titleId, message, false);
+        return mDialog;
     }
 
 }
