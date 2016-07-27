@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    style="@style/wrapHeightTheme"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fitsSystemWindows="true">
+
+    <com.wm.lock.core.widget.GuideGroup
+        android:id="@+id/gg"
+        style="@style/matchTheme"/>
+
+</FrameLayout>

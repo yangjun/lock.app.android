@@ -29,7 +29,7 @@ public final class CacheManager {
 		mCtx = ctx;
 	}
 
-	public void destory() {
+	public void destroy() {
 //		mCtx = null;
 		runtimeInstance = null;
 		preferencesInstance = null;
