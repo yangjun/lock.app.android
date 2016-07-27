@@ -1,0 +1,79 @@
+<resources>
+
+    <!-- 标题栏 -->
+    <color name="bg_title">#1ea0ea</color>
+    <color name="bg_title_dark">#401ea0ea</color>
+    <color name="bg_title_light">#801ea0ea</color>
+
+    <color name="bg_menu">#ff3b4b65</color>
+    <!--<color name="bg_menu">#3b4b65</color>-->
+    <color name="bg_menu_accent">#45546d</color>
+    <color name="bg_menu_accent_light">#0084c2</color>
+    <color name="bg_menu_accent_dark">#40383B40</color>
+    <color name="bg_menu_accent_ripple">#3b4b65</color>
+    <color name="bg_menu_divider">#3b4b65</color>
+
+    <!-- 标题栏 -->
+    <color name="txt_title">#FFF</color>
+    <color name="txt_title_dark">#40FFFFFF</color>
+    <color name="txt_title_light">#80FFFFFF</color>
+
+    <!-- 正文 -->
+    <color name="txt_content">#000000</color>
+    <color name="txt_content_dark">#40000000</color>
+    <color name="txt_content_light">#80000000</color>
+
+    <!-- 突出显示 -->
+    <color name="txt_accent">#FF5252</color>
+    <color name="txt_accent_dark">#40FF5252</color>
+    <color name="txt_accent_light">#80FF5252</color>
+
+    <color name="txt_desc">#787878</color>
+    <color name="txt_desc_dark">#40787878</color>
+    <color name="txt_desc_light">#c1c1c1</color>
+
+    <color name="txt_link">#1ea0ea</color>
+    <color name="txt_link_dark">#401ea0ea</color>
+    <color name="txt_link_light">#801ea0ea</color>
+
+    <color name="txt_menu">#cad0d5</color>
+    <color name="txt_menu_dark">#5c6c87</color>
+
+    <!-- 突出层的背景 -->
+    <color name="bg_accent">#009688</color>
+    <color name="bg_accent_dark">#40009688</color>
+    <color name="bg_accent_light">#80009688</color>
+
+    <color name="bg_login_btn">#3dbeff</color>
+    <color name="bg_login_btn_light">#803dbeff</color>
+    <color name="bg_login_btn_dark">#403dbeff</color>
+
+    <!-- 列表项 -->
+    <color name="bg_item">#FFFFFF</color>
+    <color name="bg_item_dark">#40E6E6E6</color>
+    <color name="bg_item_light">#E6E6E6</color>
+
+    <!-- footer -->
+    <color name="bg_footer">#E9E9E9</color>
+    <color name="bg_footer_dark">#333333</color>
+    <color name="bg_footer_light">#EBEBEB</color>
+
+    <color name="bg_window">#F5F5F5</color>
+
+    <color name="txt_login_desc">#81afcd</color>
+    <color name="txt_login_desc_light">#8081afcd</color>
+    <color name="txt_login_desc_dark">#4081afcd</color>
+
+    <color name="divider_login">#428bbe</color>
+
+    <color name="request_item">#20ffffff</color>
+    <color name="request_item_pressed">#000000</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="green">#73aa00</color>
+
+    <color name="light_blue">#90CAF9</color>
+
+    <color name="webview_progress_color">#808080</color>
+
+</resources>

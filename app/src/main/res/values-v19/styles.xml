@@ -1,0 +1,17 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppFullScreenTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+</resources>
