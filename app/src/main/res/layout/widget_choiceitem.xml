@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jingantech.iam.mfa.android.app.core.widget.NoScrollListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nls_item"
+    style="@style/listTheme"
+    android:divider="@drawable/bg_divider_leftmargin"
+    android:dividerHeight="@dimen/height_divider" />

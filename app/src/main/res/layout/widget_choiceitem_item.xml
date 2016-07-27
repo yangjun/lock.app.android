@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wrapHeightTheme">
+
+    <LinearLayout
+        android:id="@+id/ll_reason_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_item"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/height_input"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            style="@style/wrapTheme" />
+
+        <TextView
+            android:id="@+id/tv_title_item"
+            style="@style/contentTheme"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:text="原因1" />
+
+        <ImageView
+            android:id="@+id/iv_indicator_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@mipmap/ic_choice" />
+    </LinearLayout>
+
+</FrameLayout>

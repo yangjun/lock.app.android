@@ -1,8 +1,105 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="Theme.AppCompat">
-    </style>-->
+
+    <!--***************************************************************-->
+    <!--*********************** 系统主题配置 start **********************-->
+    <!--***************************************************************-->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/bg_window</item>
+        <item name="android:windowAnimationStyle">@style/anim_activity</item>
+        <!--<item name="windowActionBar">false</item>-->
+        <item name="colorPrimary">@color/bg_title</item>
+        <item name="colorPrimaryDark">@color/bg_title</item>
+        <item name="colorAccent">@color/bg_accent</item>
+        <!-- 标题文字颜色 -->
+        <item name="android:textColorPrimary">@color/txt_title</item>
+        <!-- 菜单样式 -->
+        <item name="actionMenuTextAppearance">@style/ActionMenuTextStyle</item>
+        <!-- 菜单文字颜色 -->
+        <item name="actionMenuTextColor">@drawable/menu_text_color</item>
+        <!-- 菜单"更多"按钮样式 -->
+        <!-- <item name="actionOverflowButtonStyle">@style/OverflowMenuStyle</item> -->
+        <!-- 菜单下拉框外壳样式 -->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <!-- 菜单下拉框的列表样式 -->
+        <item name="dropDownListViewStyle">@style/PopupMenuListViewStyle</item>
+        <!-- 菜单的点击区域的大小 -->
+        <item name="actionButtonStyle">@style/actionButtonStyle</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
+    <!-- full screen theme. -->
+    <style name="AppFullScreenTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTransparentTheme" parent="AppFullScreenTheme">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
+    <style name="AppSplashTheme" parent="android:Theme">
+        <item name="android:windowBackground">@mipmap/splash</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="anim_activity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+    </style>
+
+    <style name="ActionMenuTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:popupBackground">?attr/colorPrimary</item>
+        <item name="android:dropDownVerticalOffset">5dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:minWidth">50dp</item>
+    </style>
+
+    <style name="OverflowMenuButtonStyle" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
+        <!--<item name="android:src">@drawable/abc_ic_menu_moreoverflow_mtrl_alpha</item>-->
+        <item name="android:background">?attr/actionBarItemBackground</item>
+        <item name="android:contentDescription">@string/abc_action_menu_overflow_description</item>
+        <item name="android:minWidth">@dimen/abc_action_button_min_width_overflow_material</item>
+        <item name="android:minHeight">@dimen/abc_action_button_min_height_material</item>
+    </style>
+
+    <style name="PopupMenuListViewStyle" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:divider">@color/bg_title_light</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:listSelector">@drawable/selector_list_menu</item>
+    </style>
+
+    <style name="actionButtonStyle" parent="@style/Widget.AppCompat.ActionButton">
+        <item name="android:minWidth">?attr/actionBarSize</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+
+    <style name="Transparent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+    <!--***************************************************************-->
+    <!--*********************** 系统主题配置 end ************************-->
+    <!--***************************************************************-->
+
+
+
 
     <style name="matchTheme">
         <item name="android:layout_width">match_parent</item>
@@ -157,123 +254,6 @@
         <item name="android:background">@color/txt_title</item>
     </style>
 
-    <!--<style name="slipButtonTheme">-->
-    <!--<item name="android:layout_width">wrap_content</item>-->
-    <!--<item name="android:layout_height">wrap_content</item>-->
-    <!--<item name="android:layout_alignParentRight">true</item>-->
-    <!--<item name="android:layout_centerVertical">true</item>-->
-    <!--<item name="android:checked">true</item>-->
-    <!--<item name="frameDrawable">@mipmap/switch_frame</item>-->
-    <!--<item name="sliderDrawable">@drawable/selector_switch_slider</item>-->
-    <!--<item name="stateDrawable">@drawable/selector_switch_state</item>-->
-    <!--<item name="stateMaskDrawable">@mipmap/switch_state_mask</item>-->
-    <!--</style>-->
-
-    <!--***************************************************************-->
-    <!--***********************系统主题配置*********************************-->
-    <!--***************************************************************-->
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/bg_window</item>
-        <item name="android:windowAnimationStyle">@style/anim_activity</item>
-        <!--<item name="windowActionBar">false</item>-->
-        <item name="colorPrimary">@color/bg_title</item>
-        <item name="colorPrimaryDark">@color/bg_title</item>
-        <item name="colorAccent">@color/bg_accent</item>
-        <!-- 标题文字颜色 -->
-        <item name="android:textColorPrimary">@color/txt_title</item>
-        <!-- 菜单样式 -->
-        <item name="actionMenuTextAppearance">@style/ActionMenuTextStyle</item>
-        <!-- 菜单文字颜色 -->
-        <item name="actionMenuTextColor">@drawable/menu_text_color</item>
-        <!-- 菜单"更多"按钮样式 -->
-        <!-- <item name="actionOverflowButtonStyle">@style/OverflowMenuStyle</item> -->
-        <!-- 菜单下拉框外壳样式 -->
-        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
-        <!-- 菜单下拉框的列表样式 -->
-        <item name="dropDownListViewStyle">@style/PopupMenuListViewStyle</item>
-        <!-- 菜单的点击区域的大小 -->
-        <item name="actionButtonStyle">@style/actionButtonStyle</item>
-    </style>
-
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme"></style>
-
-    <!-- full screen theme. -->
-    <style name="AppFullScreenTheme" parent="AppTheme">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <style name="AppTransparentTheme" parent="AppFullScreenTheme">
-        <item name="android:windowBackground">@color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
-    </style>
-
-    <style name="AppSplashTheme" parent="android:Theme">
-        <item name="android:windowBackground">@mipmap/splash</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="anim_activity" mce_bogus="1" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
-    </style>
-
-    <style name="ActionMenuTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
-        <item name="overlapAnchor">false</item>
-        <item name="android:dropDownWidth">wrap_content</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:popupBackground">?attr/colorPrimary</item>
-        <item name="android:dropDownVerticalOffset">5dip</item>
-        <item name="android:dropDownHorizontalOffset">0dip</item>
-        <item name="android:minWidth">50dp</item>
-    </style>
-
-    <style name="OverflowMenuButtonStyle" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
-        <!--<item name="android:src">@drawable/abc_ic_menu_moreoverflow_mtrl_alpha</item>-->
-        <item name="android:background">?attr/actionBarItemBackground</item>
-        <item name="android:contentDescription">@string/abc_action_menu_overflow_description</item>
-        <item name="android:minWidth">@dimen/abc_action_button_min_width_overflow_material</item>
-        <item name="android:minHeight">@dimen/abc_action_button_min_height_material</item>
-    </style>
-
-    <style name="PopupMenuListViewStyle" parent="@style/Widget.AppCompat.ListView.DropDown">
-        <item name="android:divider">@color/bg_title_light</item>
-        <item name="android:dividerHeight">1px</item>
-        <item name="android:listSelector">@drawable/selector_list_menu</item>
-    </style>
-
-    <style name="actionButtonStyle" parent="@style/Widget.AppCompat.ActionButton">
-        <item name="android:minWidth">?attr/actionBarSize</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
-    </style>
-
-    <style name="Transparent" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
-    </style>
-
-    <style name="webviewProgressbarTheme" parent="android:Widget.ProgressBar.Horizontal">
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:progressDrawable">@drawable/selector_webview_progressbar</item>
-        <item name="android:minHeight">2.0dp</item>
-        <item name="android:maxHeight">2.0dp</item>
-    </style>
-
     <style name="labelTheme" parent="wrapTheme">
         <item name="android:textColor">@color/txt_desc</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -334,6 +314,29 @@
         <item name="android:padding">@dimen/activity_horizontal_margin</item>
         <item name="android:textColor">@drawable/selector_txt_content</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="roundProgressBarTheme" parent="wrapTheme">
+        <item name="android:indeterminateDrawable">@drawable/load_selector_round_progressbar</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:maxWidth">20dp</item>
+        <item name="android:maxHeight">20dp</item>
+    </style>
+
+    <style name="roundProgressBarLargeTheme" parent="wrapTheme">
+        <item name="android:indeterminateDrawable">@drawable/load_selector_round_progressbar</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:maxWidth">48dp</item>
+        <item name="android:maxHeight">48dp</item>
+    </style>
+
+    <style name="webviewProgressBarTheme" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/selector_webview_progressbar</item>
+        <item name="android:minHeight">2.0dp</item>
+        <item name="android:maxHeight">2.0dp</item>
     </style>
 
 </resources>
