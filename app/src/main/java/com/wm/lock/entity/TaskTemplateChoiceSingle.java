@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class TaskTemplateChoiceSingle extends TaskTemplate {
 
+    /** 选项列表 */
     private List<TaskTemplateChoiceOption> optionList;
 
     public List<TaskTemplateChoiceOption> getOptionList() {
