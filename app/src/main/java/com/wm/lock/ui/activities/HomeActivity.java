@@ -5,12 +5,16 @@ import android.widget.TextView;
 import com.wm.lock.R;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
+import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.helper.ExceptionHandler;
 import com.wm.lock.http.Rest;
 
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import cn.finalteam.demo.ImageDemoActivity;
 
 /**
  * Created by wangmin on 16/7/27.
@@ -33,6 +37,11 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void init() {
         testHttp();
+    }
+
+    @Click(R.id.btn)
+    void onBtnClick() {
+        RedirectUtils.goActivity(this, ImageDemoActivity.class);
     }
 
     private void testHttp() {

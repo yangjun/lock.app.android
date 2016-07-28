@@ -1,0 +1,32 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/guide_imgview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <Button
+        android:id="@+id/guide_start_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:text="开始体验"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="40dp"/>
+
+    <TextView
+        android:id="@+id/v_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="16dp"
+        android:text="跳过>"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"/>
+</RelativeLayout> 

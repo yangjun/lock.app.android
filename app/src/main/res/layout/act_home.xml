@@ -7,10 +7,14 @@
 
     <TextView
         android:id="@+id/tv"
-        style="@style/matchTheme"
+        style="@style/verticalWeightTheme"
         android:gravity="center"
         android:text="@string/app_name"
         android:textColor="@color/txt_content"
         android:textSize="@dimen/text_size_medium" />
 
+    <Button
+        android:id="@+id/btn"
+        style="@style/wrapHeightTheme"
+        android:text="照片处理" />
 </LinearLayout>

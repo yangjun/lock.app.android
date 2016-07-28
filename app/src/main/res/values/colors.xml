@@ -76,4 +76,10 @@
 
     <color name="webview_progress_color">#808080</color>
 
+
+    <!-- lib-image -->
+    <color name="colorPrimary">@color/bg_title</color>
+    <color name="colorPrimaryDark">@color/bg_title</color>
+    <color name="colorAccent">@color/bg_accent</color>
+
 </resources>

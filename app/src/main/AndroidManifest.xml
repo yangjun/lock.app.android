@@ -55,6 +55,11 @@
         <activity
             android:name=".ui.activities.HomeActivity_"
             android:screenOrientation="portrait" />
+
+        <!-- lib-image -->
+        <activity
+            android:name="cn.finalteam.galleryfinal.ImagePreviewActivity"
+            android:theme="@style/AppFullScreenTheme" />
     </application>
 
 </manifest>
