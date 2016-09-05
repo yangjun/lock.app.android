@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/verticalContainerTheme"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/inflate_header" />
+
+    <LinearLayout style="@style/verticalContainerTheme">
+
+        <TextView
+            android:id="@+id/tv_indicator"
+            style="@style/verticalWeightTheme"
+            android:gravity="center"
+            android:textColor="@color/txt_content"
+            android:textSize="@dimen/text_size_medium" />
+
+        <com.wm.lock.core.widget.GesturePrintView
+            android:id="@+id/gpv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            app:lock9_lineColor="#1ea0ea"
+            app:lock9_lineWidth="4dp"
+            app:lock9_nodeOnSrc="@mipmap/lock_9_view_node_highlighted"
+            app:lock9_nodeSrc="@mipmap/lock_9_view_node_normal"
+            app:lock9_spacing="48dp" />
+
+        <View style="@style/verticalWeightTheme" />
+
+        <!--<LinearLayout-->
+            <!--style="@style/verticalWeightTheme"-->
+            <!--android:gravity="center">-->
+
+            <!--<FrameLayout-->
+                <!--android:id="@+id/fl_switch"-->
+                <!--style="@style/matchTheme"-->
+                <!--android:layout_weight="1">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_switch"-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:padding="8dp"-->
+                    <!--android:text="@string/swith_account"-->
+                    <!--android:textColor="@drawable/selector_txt_content"-->
+                    <!--android:textSize="@dimen/text_size_medium" />-->
+            <!--</FrameLayout>-->
+
+            <!--<FrameLayout-->
+                <!--android:id="@+id/tv_verify_fail"-->
+                <!--style="@style/matchTheme"-->
+                <!--android:layout_weight="1">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_forget"-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:padding="8dp"-->
+                    <!--android:text="@string/forget_gesture"-->
+                    <!--android:textColor="@drawable/selector_txt_content"-->
+                    <!--android:textSize="@dimen/text_size_medium" />-->
+            <!--</FrameLayout>-->
+
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+</LinearLayout>

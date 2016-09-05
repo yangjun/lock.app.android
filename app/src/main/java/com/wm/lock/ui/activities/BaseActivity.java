@@ -1,6 +1,8 @@
 package com.wm.lock.ui.activities;
 
 import android.app.Dialog;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wm.lock.R;
@@ -17,6 +19,12 @@ import org.androidannotations.annotations.EActivity;
 public abstract class BaseActivity extends AbstractActivity {
 
     protected Dialog mDialog;
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+        super.setBackBtn(R.mipmap.ic_back);
+    }
 
     @Override
     protected void onResume() {

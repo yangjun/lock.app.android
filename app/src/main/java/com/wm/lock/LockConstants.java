@@ -11,11 +11,15 @@ public final class LockConstants {
     public static final String CLASS = "class";
     public static final String TITLE = "title";
     public static final String BOOLEAN = "boolean";
-
-    public static final String ID = "id";
-    public static final String ACCOUNT = "account";
-    public static final String PASSWORD = "password";
     public static final String VERSION = "version";
+
+    public static final String ENABLE_BACK = "enable_back";
+    public static final String SHOW_BACK_BTN = "show_back_btn";
+
+    public static final String JOB_NUMBER = "job_number";
+    public static final String NAME = "name";
+    public static final String PWD_LOCK = "pwd_lock";
+    public static final String PWD_GESTURE = "pwd_gesture";
 
     public static final int FLAG_LOGOFF = 1001;
     public static final int FLAG_EXIT = 1002;

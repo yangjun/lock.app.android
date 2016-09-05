@@ -54,6 +54,26 @@
             android:theme="@style/AppFullScreenTheme" />
 
         <activity
+            android:name=".ui.activities.LoginActivity_"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activities.RegisterActivity_"
+            android:label="@string/title_register"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <activity
+            android:name=".ui.activities.GesturePrintEnrollActivity_"
+            android:label="@string/title_gesture_print_enroll"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activities.GesturePrintVerifyActivity_"
+            android:label="@string/title_gesture_print_verify"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.activities.HomeActivity_"
             android:screenOrientation="portrait" />
 

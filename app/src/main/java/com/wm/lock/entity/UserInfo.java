@@ -1,51 +1,50 @@
 package com.wm.lock.entity;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import java.io.Serializable;
 
-/**
- * Created by WM on 2015/7/29.
- */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class UserInfo {
+public class UserInfo implements Serializable {
 
-    /** 用户id */
-    private String userApiKey;
+    /** 工号 */
+    private String jobNumber;
 
-    /** 账号 */
-    private String account;
+    /** 姓名 */
+    private String name;
 
-    /** 密码 */
-    private String password;
+    /** 开锁密码 */
+    private String lockPwd;
 
-    public String getUserId() {
-        return userApiKey;
+    /** 手势密码 */
+    private String gesturePwd;
+
+    public String getJobNumber() {
+        return jobNumber;
     }
 
-    public void setUserId(String userId) {
-        this.userApiKey = userId;
+    public void setJobNumber(String jobNumber) {
+        this.jobNumber = jobNumber;
     }
 
-    public String getUserApiKey() {
-        return userApiKey;
+    public String getName() {
+        return name;
     }
 
-    public void setUserApiKey(String userApiKey) {
-        this.userApiKey = userApiKey;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAccount() {
-        return account;
+    public String getLockPwd() {
+        return lockPwd;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setLockPwd(String lockPwd) {
+        this.lockPwd = lockPwd;
     }
 
-    public String getPassword() {
-        return password;
+    public String getGesturePwd() {
+        return gesturePwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setGesturePwd(String gesturePwd) {
+        this.gesturePwd = gesturePwd;
     }
 }

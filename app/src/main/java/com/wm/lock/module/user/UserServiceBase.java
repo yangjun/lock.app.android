@@ -33,42 +33,40 @@ public abstract class UserServiceBase extends BaseModule implements IUserService
 
     @Override
     public void logoff() {
-        mLoginUser.setUserApiKey("");
-        mLoginUser.setPassword("");
+        mLoginUser.setJobNumber(null);
+        mLoginUser.setName(null);
+        mLoginUser.setLockPwd(null);
+        mLoginUser.setGesturePwd(null);
         setCache(mLoginUser);
-    }
-
-    @Override
-    public boolean canAutoLogin() {
-        return !TextUtils.isEmpty(getLoginedInfo().getUserId());
     }
 
     @Override
     public boolean hasLogin() {
-        final String uid = getLoginedInfo().getUserId();
-        return !TextUtils.isEmpty(uid);
+        final String jobNumber = getLoginedInfo().getJobNumber();
+        return !TextUtils.isEmpty(jobNumber);
     }
 
-    protected UserInfo login(String account, String pwd) {
-        mLoginUser.setAccount(account);
-        mLoginUser.setPassword(pwd);
+    @Override
+    public void register(UserInfo user) {
+        mLoginUser = user;
         setCache(mLoginUser);
-        return mLoginUser;
     }
 
     protected final void setCache(UserInfo user) {
         CacheManager cacheManager = CacheManager.getInstance();
-        cacheManager.putString(LockConstants.ID, user.getUserApiKey(), CacheManager.CHANNEL_PREFERENCE);
-        cacheManager.putString(LockConstants.ACCOUNT, SecurityManager.base64Encode(user.getAccount()), CacheManager.CHANNEL_PREFERENCE);
-//        cacheManager.putString(Constants.PASSWORD, SecurityManager.base64Encode(user.getPassword()), CacheManager.CHANNEL_PREFERENCE);
+        cacheManager.putString(LockConstants.JOB_NUMBER, SecurityManager.base64Encode(user.getJobNumber()), CacheManager.CHANNEL_PREFERENCE);
+        cacheManager.putString(LockConstants.NAME, SecurityManager.base64Encode(user.getName()), CacheManager.CHANNEL_PREFERENCE);
+        cacheManager.putString(LockConstants.PWD_LOCK, SecurityManager.base64Encode(user.getLockPwd()), CacheManager.CHANNEL_PREFERENCE);
+        cacheManager.putString(LockConstants.PWD_GESTURE, user.getGesturePwd(), CacheManager.CHANNEL_PREFERENCE);
     }
 
     protected final UserInfo getCache() {
         UserInfo result = new UserInfo();
         CacheManager cacheManager = CacheManager.getInstance();
-        result.setUserApiKey(cacheManager.getString(LockConstants.ID, CacheManager.CHANNEL_PREFERENCE));
-        result.setAccount(SecurityManager.base64Decode(cacheManager.getString(LockConstants.ACCOUNT, CacheManager.CHANNEL_PREFERENCE)));
-//        result.setPassword(SecurityManager.base64Decode(cacheManager.getString(Constants.PASSWORD, CacheManager.CHANNEL_PREFERENCE)));
+        result.setJobNumber(SecurityManager.base64Decode(cacheManager.getString(LockConstants.JOB_NUMBER, CacheManager.CHANNEL_PREFERENCE)));
+        result.setName(SecurityManager.base64Decode(cacheManager.getString(LockConstants.NAME, CacheManager.CHANNEL_PREFERENCE)));
+        result.setLockPwd(SecurityManager.base64Decode(cacheManager.getString(LockConstants.PWD_LOCK, CacheManager.CHANNEL_PREFERENCE)));
+        result.setGesturePwd(cacheManager.getString(LockConstants.PWD_GESTURE, CacheManager.CHANNEL_PREFERENCE));
         return result;
     }
 

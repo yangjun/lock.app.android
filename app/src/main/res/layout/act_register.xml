@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalContainerTheme"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/inflate_header" />
+
+    <ScrollView style="@style/scrollVTheme">
+
+        <LinearLayout
+            style="@style/verticalWrapContainerTheme"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                style="@style/verticalWrapContainerTheme"
+                android:background="@color/bg_item">
+
+                <View style="@style/splitTheme" />
+
+                <com.wm.lock.core.widget.ClearAbleEditText
+                    android:id="@+id/et_job_number"
+                    style="@style/inputRegisterTheme"
+                    android:drawableLeft="@mipmap/ic_job_number"
+                    android:drawablePadding="6dp"
+                    android:hint="@string/hint_job_number"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:paddingLeft="14dp" />
+
+                <View style="@style/splitInnerTheme" />
+
+                <com.wm.lock.core.widget.ClearAbleEditText
+                    android:id="@+id/et_name"
+                    style="@style/inputRegisterTheme"
+                    android:drawableLeft="@mipmap/ic_name"
+                    android:hint="@string/hint_name"
+                    android:maxLength="20" />
+
+                <View style="@style/splitInnerTheme" />
+
+                <com.wm.lock.core.widget.ClearAbleEditText
+                    android:id="@+id/et_lock_pwd"
+                    style="@style/inputRegisterTheme"
+                    android:drawableLeft="@mipmap/ic_lock_pwd"
+                    android:hint="@string/hint_lock_pwd"
+                    android:inputType="numberPassword"
+                    android:maxLength="6" />
+
+                <View style="@style/splitInnerTheme" />
+
+                <com.wm.lock.core.widget.ClearAbleEditText
+                    android:id="@+id/et_lock_pwd_repeat"
+                    style="@style/inputRegisterTheme"
+                    android:drawableLeft="@mipmap/ic_lock_pwd"
+                    android:hint="@string/hint_lock_pwd_repeat"
+                    android:inputType="numberPassword"
+                    android:maxLength="6" />
+
+                <View style="@style/splitTheme" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_next"
+                style="@style/btnBaseTheme"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/selector_btn_title"
+                android:text="@string/label_next" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

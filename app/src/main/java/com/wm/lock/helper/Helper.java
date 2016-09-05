@@ -30,7 +30,7 @@ public final class Helper {
                         .setUserDataProvider(new LoggerOption.DataProvider<String>() {
                             @Override
                             public String getData() {
-                                return ModuleFactory.getInstance().getModuleInstance(IUserService.class).getLoginedInfo().getAccount();
+                                return ModuleFactory.getInstance().getModuleInstance(IUserService.class).getLoginedInfo().getJobNumber();
                             }
                         })
                         .setReportProvider(new LoggerOption.ReportProvider() {

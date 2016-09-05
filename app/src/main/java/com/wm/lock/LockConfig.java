@@ -5,6 +5,8 @@ package com.wm.lock;
  */
 public final class LockConfig {
 
+    public static final int GESTURE_PRINT_MIN_CONNECT = 1;
+
     public static final String MODE_JUNIT = "mode_junit";
     public static final String MODE_DEV = "mode_dev";
     public static final String MODE_RELEASE = "mode_release";

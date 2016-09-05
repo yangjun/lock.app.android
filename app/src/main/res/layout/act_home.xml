@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/verticalContainerTheme"
-    android:fitsSystemWindows="true">
+    style="@style/verticalContainerTheme">
 
-    <include layout="@layout/inflate_header" />
+    <RelativeLayout style="@style/wrapHeightTheme">
+
+        <ImageView
+            android:id="@+id/iv"
+            style="@style/wrapHeightTheme"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_banner" />
+
+        <!--<include-->
+            <!--layout="@layout/inflate_header"/>-->
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv"

@@ -148,6 +148,12 @@ public abstract class AbstractActivity extends ActionBarActivity implements OnMe
         }
     }
 
+    public void setBackBtn(int resId) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(resId);
+        }
+    }
+
     public void showTip(CharSequence message) {
         ToastUtils.showShortToast(getApplicationContext(), message);
     }

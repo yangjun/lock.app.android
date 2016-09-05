@@ -1,5 +1,6 @@
 package com.wm.lock.ui.activities;
 
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.wm.lock.R;
@@ -30,45 +31,43 @@ public class HomeActivity extends BaseActivity {
     TextView mTv;
 
     @Override
+    protected int getStatusBarColor() {
+        return android.R.color.transparent;
+    }
+
+    @Override
     protected int getContentViewId() {
         return R.layout.act_home;
     }
 
     @Override
     protected void init() {
-        testHttp();
+
+    }
+
+    private boolean fullScreen;
+
+    @Click(R.id.iv)
+    void onFullScreenClick() {
+        stateControl(!fullScreen);
+        fullScreen = !fullScreen;
+    }
+
+    private void stateControl(boolean enable) {
+        if (enable) {
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            getWindow().setAttributes(lp);
+        } else {
+            WindowManager.LayoutParams attr = getWindow().getAttributes();
+            attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().setAttributes(attr);
+        }
     }
 
     @Click(R.id.btn)
     void onBtnClick() {
         RedirectUtils.goActivity(this, ImageDemoActivity.class);
-    }
-
-    private void testHttp() {
-        new AsyncExecutor().execute(new AsyncWork<String>() {
-            @Override
-            public void onPreExecute() {
-                showWaittingDialog(R.string.holdon_);
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                mTv.setText(result);
-                dismissDialog();
-            }
-
-            @Override
-            public void onFail(Exception e) {
-                showTip("失败！");
-                ExceptionHandler.log("fail to test http", e);
-                dismissDialog();
-            }
-
-            @Override
-            public String onExecute() throws Exception {
-                return mRest.test();
-            }
-        });
     }
 
 }
