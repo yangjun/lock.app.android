@@ -3,7 +3,6 @@ package com.wm.lock.helper;
 import android.app.Activity;
 import android.content.Context;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConfig;
 import com.wm.lock.core.CrashHandler;
@@ -12,6 +11,7 @@ import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.logger.LoggerOption;
 import com.wm.lock.core.utils.ToastUtils;
 import com.wm.lock.exception.BizException;
+import com.wm.lock.helper.bugly.BuglyManager;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.user.IUserService;
 
@@ -23,8 +23,8 @@ public final class Helper {
     public static void init(Context ctx) throws BizException {
         final boolean isDebugMode = !LockConfig.MODE.equals(LockConfig.MODE_RELEASE);
 
-        //Statistics
-        MobclickAgent.setDebugMode(isDebugMode);
+        BuglyManager.init(ctx);
+
         Logger.init(ctx, new LoggerOption.Builder()
                         .setDebug(isDebugMode)
                         .setUserDataProvider(new LoggerOption.DataProvider<String>() {
@@ -35,13 +35,13 @@ public final class Helper {
                         })
                         .setReportProvider(new LoggerOption.ReportProvider() {
                             @Override
-                            public void report(Context ctx, String message) {
-                                MobclickAgent.reportError(ctx, message);
+                            public void report(String description) {
+                                BuglyManager.reportThrowable(description);
                             }
 
                             @Override
-                            public void report(Context ctx, Throwable t) {
-                                MobclickAgent.reportError(ctx, t);
+                            public void report(String description, Throwable t) {
+                                BuglyManager.reportThrowable(description, t);
                             }
                         })
                         .build()

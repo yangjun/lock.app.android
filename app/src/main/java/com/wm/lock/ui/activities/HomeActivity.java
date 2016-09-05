@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import com.wm.lock.R;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.helper.bugly.BuglyManager;
 import com.wm.lock.http.Rest;
 
 import org.androidannotations.annotations.Bean;
@@ -42,6 +43,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void init() {
         setupActionBar();
+        BuglyManager.checkUpgradeSilent();
     }
 
     @Click(R.id.tv_open_door)

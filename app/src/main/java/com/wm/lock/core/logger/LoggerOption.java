@@ -1,7 +1,5 @@
 package com.wm.lock.core.logger;
 
-import android.content.Context;
-
 /**
  * Created by Administrator on 2016/4/14.
  */
@@ -61,8 +59,8 @@ public final class LoggerOption {
     }
 
     public static interface ReportProvider {
-        public void report(Context ctx, String message);
-        public void report(Context ctx, Throwable t);
+        public void report(String description);
+        public void report(String description, Throwable t);
     }
 
 }

@@ -2,9 +2,7 @@ package com.wm.lock.ui.activities;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wm.lock.R;
 import com.wm.lock.core.AbstractActivity;
 import com.wm.lock.helper.Helper;
@@ -24,18 +22,6 @@ public abstract class BaseActivity extends AbstractActivity {
     public void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         super.setBackBtn(R.mipmap.ic_back);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     @Override

@@ -29,7 +29,7 @@ public final class Logger {
         mOption = option;
     }
 
-    public static void destory() {
+    public static void destroy() {
         mOption = null;
         mCtx = null;
     }
@@ -61,8 +61,8 @@ public final class Logger {
             return;
         }
         if (mCtx != null && !TextUtils.isEmpty(msg)) {
-            msg = getMsg(getUserMsg(msg), getFromStr(), getDeviceStr());
-            mOption.getReportProvider().report(mCtx, msg);
+            msg = getUserMsg(msg);
+            mOption.getReportProvider().report(msg);
         }
     }
 
@@ -77,9 +77,8 @@ public final class Logger {
             return;
         }
         if (mCtx != null && throwable != null) {
-            msg = getMsg(getUserMsg(msg), getDeviceStr());
-            Throwable reportThrowable = new Throwable(msg, throwable);
-            mOption.getReportProvider().report(mCtx, reportThrowable);
+            msg = getUserMsg(msg);
+            mOption.getReportProvider().report(msg, throwable);
         }
     }
 

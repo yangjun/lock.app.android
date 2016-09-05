@@ -5,6 +5,7 @@ import android.widget.TextView;
 import com.wm.lock.R;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.entity.UserInfo;
+import com.wm.lock.helper.bugly.BuglyManager;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.user.IUserService;
 
@@ -40,7 +41,7 @@ public class SettingActivity extends BaseActivity {
 
     @Click(R.id.btn_setting_upgrade)
     void onUpgradeClick() {
-        // TODO
+        BuglyManager.checkUpgradeByBtn();
     }
 
 }
