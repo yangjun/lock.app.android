@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.wm.lock.R;
 
@@ -187,6 +188,10 @@ public final class BuglyManager {
 
     public static void checkUpgradeByBtn() {
         Beta.checkUpgrade(true, false);
+    }
+
+    public static UpgradeInfo getUpgradeInfo() {
+        return Beta.getUpgradeInfo();
     }
 
     public static void reportThrowable(String description) {
