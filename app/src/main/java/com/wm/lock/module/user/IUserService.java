@@ -9,6 +9,8 @@ public interface IUserService {
 
     public void register(UserInfo user);
 
+    public void update(UserInfo user);
+
     public UserInfo getLoginedInfo();
 
     public void logoff();

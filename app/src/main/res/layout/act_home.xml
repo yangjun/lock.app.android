@@ -10,21 +10,25 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_banner" />
 
-        <!--<include-->
-            <!--layout="@layout/inflate_header"/>-->
+        <FrameLayout
+            android:id="@+id/fl_header"
+            style="@style/wrapHeightTheme">
+
+            <include layout="@layout/inflate_header" />
+
+            <TextView
+                android:id="@+id/tv_open_door"
+                style="@style/wrapTheme"
+                android:background="@drawable/selector_btn_title_hollow"
+                android:paddingBottom="1dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="1dp"
+                android:text="@string/title_open_door"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="64dp"/>
+        </FrameLayout>
+
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv"
-        style="@style/verticalWeightTheme"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="@color/txt_content"
-        android:textSize="@dimen/text_size_medium" />
-
-    <Button
-        android:id="@+id/btn"
-        style="@style/wrapHeightTheme"
-        android:text="照片处理" />
 
 </LinearLayout>

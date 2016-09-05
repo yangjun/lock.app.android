@@ -1,21 +1,20 @@
 package com.wm.lock.ui.activities;
 
-import android.view.WindowManager;
-import android.widget.TextView;
+import android.graphics.Color;
+import android.view.Menu;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.wm.lock.R;
-import com.wm.lock.core.async.AsyncExecutor;
-import com.wm.lock.core.async.AsyncWork;
+import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
-import com.wm.lock.helper.ExceptionHandler;
 import com.wm.lock.http.Rest;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
-
-import cn.finalteam.demo.ImageDemoActivity;
 
 /**
  * Created by wangmin on 16/7/27.
@@ -27,8 +26,8 @@ public class HomeActivity extends BaseActivity {
     @Bean
     Rest mRest;
 
-    @ViewById(R.id.tv)
-    TextView mTv;
+    @ViewById(R.id.fl_header)
+    View mContainerHeader;
 
     @Override
     protected int getStatusBarColor() {
@@ -42,32 +41,32 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void init() {
-
+        setupActionBar();
     }
 
-    private boolean fullScreen;
-
-    @Click(R.id.iv)
-    void onFullScreenClick() {
-        stateControl(!fullScreen);
-        fullScreen = !fullScreen;
+    @Click(R.id.tv_open_door)
+    void onOpenDoorClick() {
+        RedirectUtils.goActivity(this, OpenDoorActivity_.class);
     }
 
-    private void stateControl(boolean enable) {
-        if (enable) {
-            WindowManager.LayoutParams lp = getWindow().getAttributes();
-            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-            getWindow().setAttributes(lp);
-        } else {
-            WindowManager.LayoutParams attr = getWindow().getAttributes();
-            attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getWindow().setAttributes(attr);
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_act_home, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    @Click(R.id.btn)
-    void onBtnClick() {
-        RedirectUtils.goActivity(this, ImageDemoActivity.class);
+    @OptionsItem(R.id.menu_setting)
+    void onSettingClick() {
+        RedirectUtils.goActivity(this, SettingActivity_.class);
+    }
+
+    private void setupActionBar() {
+        final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mContainerHeader.getLayoutParams();
+        params.topMargin = HardwareUtils.getStatusBarHeight(getApplicationContext());
+        mContainerHeader.setLayoutParams(params);
+
+        setBackBtnVisible(false);
+        mToolbar.setBackgroundResource(Color.TRANSPARENT);
     }
 
 }

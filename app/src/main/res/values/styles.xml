@@ -196,7 +196,7 @@
         <item name="android:layout_width">@dimen/width_label</item>
         <item name="android:layout_height">@dimen/height_item</item>
         <item name="android:gravity">left|center_vertical</item>
-        <item name="android:textColor">@drawable/selector_txt_desc</item>
+        <item name="android:textColor">@drawable/selector_txt_content</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -217,6 +217,7 @@
 
     <style name="itemGroupTheme" parent="verticalWrapContainerTheme">
         <item name="android:background">@color/bg_item</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="splitTheme">
@@ -304,6 +305,7 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@drawable/selector_txt_content</item>
         <item name="android:drawablePadding">@dimen/padding_item_top</item>
+        <item name="android:background">@drawable/selector_item</item>
     </style>
 
     <style name="itemRightTheme" parent="itemTheme">

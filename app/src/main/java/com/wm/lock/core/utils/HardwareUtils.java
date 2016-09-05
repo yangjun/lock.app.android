@@ -512,4 +512,17 @@ public class HardwareUtils {
 		}
 	}
 
+	public static void switchFullScreen(Activity ctx, boolean fullScreen) {
+        if (fullScreen) {
+            WindowManager.LayoutParams lp = ctx.getWindow().getAttributes();
+            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			ctx.getWindow().setAttributes(lp);
+        }
+		else {
+            WindowManager.LayoutParams attr = ctx.getWindow().getAttributes();
+            attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			ctx.getWindow().setAttributes(attr);
+        }
+	}
+
 }

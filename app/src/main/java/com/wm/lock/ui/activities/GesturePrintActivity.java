@@ -22,8 +22,8 @@ public abstract class GesturePrintActivity extends BaseActivity implements Gestu
     @ViewById(R.id.gpv)
     GesturePrintView mGpv;
 
-    private boolean mEnableBack = true;
-    private boolean mShowBackBtn = true;
+    private boolean mEnableBack;
+    private boolean mShowBackBtn;
 
     @Override
     public void onBackPressed() {
@@ -35,8 +35,8 @@ public abstract class GesturePrintActivity extends BaseActivity implements Gestu
     @Override
     protected void init() {
         if (mSaveBundle != null) {
-            mEnableBack = mSaveBundle.getBoolean(LockConstants.ENABLE_BACK);
-            mShowBackBtn = mSaveBundle.getBoolean(LockConstants.SHOW_BACK_BTN);
+            mEnableBack = mSaveBundle.getBoolean(LockConstants.ENABLE_BACK, true);
+            mShowBackBtn = mSaveBundle.getBoolean(LockConstants.SHOW_BACK_BTN, true);
         }
         setBackBtnVisible(mShowBackBtn);
 

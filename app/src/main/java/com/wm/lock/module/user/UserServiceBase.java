@@ -48,6 +48,11 @@ public abstract class UserServiceBase extends BaseModule implements IUserService
 
     @Override
     public void register(UserInfo user) {
+        update(user);
+    }
+
+    @Override
+    public void update(UserInfo user) {
         mLoginUser = user;
         setCache(mLoginUser);
     }

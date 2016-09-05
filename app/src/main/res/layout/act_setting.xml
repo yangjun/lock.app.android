@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalContainerTheme"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/inflate_header" />
+
+    <ScrollView style="@style/scrollVTheme">
+
+        <LinearLayout
+            style="@style/verticalWrapContainerTheme"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin">
+
+            <LinearLayout style="@style/itemGroupTheme">
+
+                <View style="@style/splitTheme" />
+
+                <LinearLayout
+                    style="@style/wrapTheme"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        style="@style/itemLabelTheme"
+                        android:layout_width="wrap_content"
+                        android:drawableLeft="@mipmap/ic_setting_job_number"
+                        android:drawablePadding="@dimen/padding_item_top"
+                        android:text="@string/label_job_number" />
+
+                    <TextView
+                        android:id="@+id/tv_job_number"
+                        style="@style/itemContentTheme"
+                        android:layout_marginLeft="8dp" />
+
+                </LinearLayout>
+
+                <View style="@style/splitTheme" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/itemGroupTheme"
+                android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+                <View style="@style/splitTheme" />
+
+                <TextView
+                    android:id="@+id/btn_setting_lock_pwd"
+                    style="@style/itemTheme"
+                    android:drawableLeft="@mipmap/ic_setting_lock_pwd"
+                    android:drawableRight="@mipmap/ic_arrow"
+                    android:text="@string/label_setting_lock_pwd" />
+
+                <View style="@style/splitInnerTheme" />
+
+                <TextView
+                    android:id="@+id/btn_setting_upgrade"
+                    style="@style/itemTheme"
+                    android:drawableLeft="@mipmap/ic_setting_upgrade"
+                    android:drawableRight="@mipmap/ic_arrow"
+                    android:text="@string/label_setting_upgrade" />
+
+                <View style="@style/splitTheme" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

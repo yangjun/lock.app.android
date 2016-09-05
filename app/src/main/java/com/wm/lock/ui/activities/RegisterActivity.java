@@ -89,7 +89,7 @@ public class RegisterActivity extends BaseActivity {
             return R.string.empty_lock_pwd_repeat;
         }
         if (!StringUtils.equals(mEtLockPwd, mEtLockPwdRepeat)) {
-            return R.string.not_equal_lock_pwd;
+            return R.string.message_lock_pwd_not_equal;
         }
         return -1;
     }
