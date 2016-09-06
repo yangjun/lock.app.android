@@ -42,7 +42,10 @@
 				cabinet_lock_mac varchar(50),
 				create_date timestamp,
 				last_modify_date timestamp,
-				inspection_id integer
+				inspection_id integer,
+				state integer,
+				result_name text,
+				note text
 			)
 		</content>
 

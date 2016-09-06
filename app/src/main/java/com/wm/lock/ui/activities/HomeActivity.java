@@ -21,6 +21,7 @@ import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.dao.DaoManager;
 import com.wm.lock.dao.DaoManager_;
 import com.wm.lock.entity.Inspection;
+import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.http.Rest;
 
 import org.androidannotations.annotations.Bean;
@@ -72,7 +73,16 @@ public class HomeActivity extends BaseActivity {
         inspection.setPlan_date(new Date());
         inspection.setFinish_date(new Date());
         inspection.setPlan_name("123");
+
         DaoManager_.getInstance_(getApplicationContext()).getInspectionDao().create(inspection);
+
+        InspectionItem inspectionItem = new InspectionItem();
+        inspectionItem.setState(true);
+        inspectionItem.setResult_name("这是结果");
+        inspectionItem.setNote("这是备注");
+        inspectionItem.setInspection(inspection);
+
+        DaoManager_.getInstance_(getApplicationContext()).getInspectionItemDao().create(inspectionItem);
     }
 
     @Override

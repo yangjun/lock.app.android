@@ -1,8 +1,67 @@
 package com.wm.lock.module.biz;
 
-/**
- * Created by WM on 2015/8/6.
- */
+import com.wm.lock.entity.Communication;
+import com.wm.lock.entity.Inspection;
+import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.entity.params.InspectionQueryParam;
+
+import java.util.List;
+
 public interface IBizService {
+
+    /**
+     * 获取巡检计划列表
+     */
+    public List<Inspection> listInspection(InspectionQueryParam param);
+
+    /**
+     * 提交巡检计划
+     */
+    public void submitInspection(long inspectionId);
+
+    /**
+     * 删除巡检计划
+     */
+    public void deleteInspection(long inspectionId);
+
+    /**
+     * 获取巡检计划数量
+     */
+    public int countInspection(InspectionQueryParam param);
+
+    /**
+     * 获取某个巡检计划的分类列表
+     */
+    public List<String> listInspetionCategory(String inspectionId);
+
+    /**
+     * 根据分类获取巡检项列表
+     */
+    public List<InspectionItem> listInspectionItemByCategory(String inspectionId, String categoryId);
+
+    /**
+     * 修改巡检计划内容
+     */
+    public void updateInspectionItem(InspectionItem item);
+
+    /**
+     * 获取附件列表
+     */
+    public List<String> listAttachments(String foreignId);
+
+    /**
+     * 删除某个路径的附件
+     */
+    public void deleteAttachment(String path);
+
+    /**
+     * 获取要保存的附件的路径
+     */
+    public String getAttachmentSavePath(String foreignId);
+
+    /**
+     * 接收到消息
+     */
+    public void onCommunicationReceived(Communication communication);
 
 }

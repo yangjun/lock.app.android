@@ -3,6 +3,8 @@ package com.wm.lock.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import org.w3c.dom.Text;
+
 import java.util.Date;
 
 /**
@@ -50,6 +52,18 @@ public class InspectionItem {
     /** 关联的巡检计划 */
     @DatabaseField(canBeNull = true, foreign = true, columnName = "inspection_id")
     private Inspection inspection;
+
+    /** 是否正常 */
+    @DatabaseField(canBeNull = false, defaultValue = "true")
+    private Boolean state;
+
+    /** 运行情况 */
+    @DatabaseField
+    private String result_name;
+
+    /** 备注 */
+    @DatabaseField
+    private String note;
 
     public long getId_() {
         return id_;
@@ -129,6 +143,30 @@ public class InspectionItem {
 
     public void setInspection(Inspection inspection) {
         this.inspection = inspection;
+    }
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
+    }
+
+    public String getResult_name() {
+        return result_name;
+    }
+
+    public void setResult_name(String result_name) {
+        this.result_name = result_name;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
 }

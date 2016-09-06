@@ -1,5 +1,7 @@
 package com.wm.lock.dao;
 
+import android.text.TextUtils;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.Where;
 import com.wm.lock.entity.Inspection;
@@ -35,6 +37,9 @@ public class InspectionDao extends BaseDao<Inspection, Long> {
         final Where<Inspection, Long> where = where(param.getIndex(), param.getLimit(), "plan_date", true);
         if (param.getState() >= 0) {
             where.and().eq("state", param.getState());
+        }
+        if (!TextUtils.isEmpty(param.getUser_job_number())) {
+            where.and().eq("user_job_number", param.getUser_job_number());
         }
         return where;
     }
