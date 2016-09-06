@@ -11,10 +11,8 @@ import java.util.List;
 public class SqlParser {
 	
 	/** 当前版本号 **/
-	private int curId = -1;
+	private int curVersion = -1;
 
-	private static SqlParser instance;
-	
 	/** 节点 **/
 	private static final String SQL = "sql";
 	private static final String CONTENT = "content";
@@ -30,14 +28,7 @@ public class SqlParser {
 		this.mFileName = fileName;
 	}
 
-	/**
-	 * 获取对应的sql语句列表
-	 * 
-	 * @param id
-	 *            版本标识；
-	 * @return
-	 */
-	public List<String> parse(int id) throws Exception {
+	public List<String> parse(int version) throws Exception {
 		List<String> list = null;
 		XmlPullParser pullParser = Xml.newPullParser();
 		// 为解析器设置要解析的XML数据
@@ -51,9 +42,9 @@ public class SqlParser {
 				break;
 			case XmlPullParser.START_TAG:// 标签开始
 				if (pullParser.getName().equals(SQL) && pullParser.getAttributeCount() > 0) {
-					curId = Integer.valueOf(pullParser.getAttributeValue(0));
+					curVersion = Integer.valueOf(pullParser.getAttributeValue(0));
 				}
-				if (curId == id && pullParser.getName().equals(CONTENT)) {
+				if (curVersion == version && pullParser.getName().equals(CONTENT)) {
 					String content = pullParser.nextText();
 					list.add(content);
 				}

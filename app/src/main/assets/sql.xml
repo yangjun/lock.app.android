@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    
+    <sql version="1">
+        <content>
+            create table tb_communication (
+				id_ integer primary key autoincrement,
+				id varchar(100),
+				content text,
+				type varchar(50),
+				from varchar(50),
+				to varchar(50),
+				create_date varchar(20)
+			)
+        </content>
+
+		<content>
+			create table tb_inspection (
+				id_ integer primary key autoincrement,
+				plan_id varchar(100),
+				plan_name varchar(500),
+				send_man varchar(50),
+				create_date varchar(20),
+				last_modify_date varchar(20),
+				plan_date varchar(20),
+				finish_date varchar(20),
+				room_name varchar(500),
+				lock_mac varchar(50),
+				user_job_number varchar(20)
+			)
+		</content>
+
+		<content>
+			create table tb_inspection_item (
+				id_ integer primary key autoincrement,
+				item_id varchar(100),
+				item_name varchar(500),
+				item_cate_name varchar(500),
+				equipment_name varchar(500),
+				cabinet_name varchar(500),
+				cabinet_lock_mac varchar(50),
+				create_date varchar(20),
+				last_modify_date varchar(20),
+				inspection_id integer
+			)
+		</content>
+
+	</sql>
+
+</sqls>

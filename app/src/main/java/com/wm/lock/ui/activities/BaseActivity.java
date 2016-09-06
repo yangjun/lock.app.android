@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import com.wm.lock.R;
 import com.wm.lock.core.AbstractActivity;
-import com.wm.lock.helper.Helper;
-import com.wm.lock.helper.dialog.DialogManager;
+import com.wm.lock.Helper;
+import com.wm.lock.dialog.DialogManager;
 
 import org.androidannotations.annotations.EActivity;
 

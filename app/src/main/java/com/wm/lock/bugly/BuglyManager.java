@@ -1,13 +1,9 @@
-package com.wm.lock.helper.bugly;
+package com.wm.lock.bugly;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;

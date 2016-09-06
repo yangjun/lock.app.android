@@ -1,4 +1,4 @@
-package com.wm.lock.helper;
+package com.wm.lock;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.logger.LoggerOption;
 import com.wm.lock.core.utils.ToastUtils;
 import com.wm.lock.exception.BizException;
-import com.wm.lock.helper.bugly.BuglyManager;
+import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.user.IUserService;
 

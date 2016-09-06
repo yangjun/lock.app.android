@@ -1,7 +1,6 @@
 package com.wm.lock.ui.activities;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,7 +8,7 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.wm.lock.R;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.entity.UserInfo;
-import com.wm.lock.helper.bugly.BuglyManager;
+import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.user.IUserService;
 

@@ -3,8 +3,6 @@ package com.wm.lock.ui.activities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,11 +14,10 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.TabPageIndicator;
 import com.wm.lock.R;
-import com.wm.lock.core.AbstractActivity;
 import com.wm.lock.core.adapter.PagerTabAdapter;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
-import com.wm.lock.helper.bugly.BuglyManager;
+import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.http.Rest;
 
 import org.androidannotations.annotations.Bean;

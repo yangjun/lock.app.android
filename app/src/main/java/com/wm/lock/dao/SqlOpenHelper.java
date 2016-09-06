@@ -21,11 +21,14 @@ public class SqlOpenHelper extends OrmLiteSqliteOpenHelper {
     private static final String DB_NAME = "db";
 
     private static final int DB_VERSION_INIT = 1;
-    private static final int DB_VERSION_CURR = Sql.VERSION_NEW;
+    private static final int DB_VERSION_CURR = 1;
+
+    private SqlParser mSqlParser;
 
     public SqlOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION_CURR);
         this.mCtx = context;
+        this.mSqlParser = new SqlParser(context, "sql.xml");
     }
     
     public SqlOpenHelper(Context context, String databaseName, CursorFactory factory, int databaseVersion) {
@@ -66,12 +69,11 @@ public class SqlOpenHelper extends OrmLiteSqliteOpenHelper {
                 upgrade(db, i + 1);
             }
         }
-        upgradeSuccess();
     }
 
     private void upgrade(SQLiteDatabase db, int newVersion) throws DbException {
         try {
-            List<String> list = Sql.getMap().get(Integer.valueOf(newVersion));
+            final List<String> list = mSqlParser.parse(newVersion);
             for (String sql : list) {
                 db.execSQL(sql);
             }
@@ -79,10 +81,6 @@ public class SqlOpenHelper extends OrmLiteSqliteOpenHelper {
         catch (Exception e) {
             throw new DbException(e);
         }
-    }
-
-    private void upgradeSuccess() {
-        Sql.destroy();
     }
 
 }

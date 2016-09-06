@@ -1,13 +1,9 @@
 package com.wm.lock.module.sys;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 
-import com.wm.lock.LockConstants;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.utils.HardwareUtils;
-import com.wm.lock.entity.VersionInfo;
 import com.wm.lock.module.BaseModule;
 
 import org.androidannotations.annotations.EBean;

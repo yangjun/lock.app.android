@@ -1,8 +1,8 @@
 package com.wm.lock;
 
 import com.wm.lock.core.AbstractApplication;
-import com.wm.lock.helper.dto.AppDisplayBackgroundDto;
-import com.wm.lock.helper.dto.AppDisplayForegroundDto;
+import com.wm.lock.dto.AppDisplayBackgroundDto;
+import com.wm.lock.dto.AppDisplayForegroundDto;
 
 import de.greenrobot.event.EventBus;
 

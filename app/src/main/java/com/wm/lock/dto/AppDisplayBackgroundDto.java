@@ -1,4 +1,4 @@
-package com.wm.lock.helper.dto;
+package com.wm.lock.dto;
 
 /**
  * Created by wangmin on 16/7/12.

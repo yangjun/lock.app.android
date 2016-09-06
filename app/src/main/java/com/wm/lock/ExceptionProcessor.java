@@ -1,9 +1,7 @@
-package com.wm.lock.helper;
+package com.wm.lock;
 
 import android.app.Dialog;
 
-import com.wm.lock.LockApplication;
-import com.wm.lock.R;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.exception.BizException;
 import com.wm.lock.exception.DbException;
@@ -12,10 +10,10 @@ import com.wm.lock.exception.RemoteException;
 /**
  * Created by wm on 15/9/11.
  */
-public final class ExceptionHandler {
+public final class ExceptionProcessor {
 
     private static Dialog mDialog;
-    private ExceptionHandler() {
+    private ExceptionProcessor() {
     }
 
     public static void show(String operation, Throwable e) {

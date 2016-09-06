@@ -1,4 +1,4 @@
-package com.wm.lock.helper.dialog;
+package com.wm.lock.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
