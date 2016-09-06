@@ -26,11 +26,16 @@ public class SqlOpenHelper extends OrmLiteSqliteOpenHelper {
     private SqlParser mSqlParser;
 
     public SqlOpenHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION_CURR);
+        super(context, getPath(context), null, DB_VERSION_CURR);
         this.mCtx = context;
         this.mSqlParser = new SqlParser(context, "sql.xml");
     }
-    
+
+    private static String getPath(Context ctx) {
+        return ctx.getExternalCacheDir().getAbsolutePath() + File.separator + DB_NAME; // FIXME，正式上线用下面的代码
+//        return DB_NAME;
+    }
+
     public SqlOpenHelper(Context context, String databaseName, CursorFactory factory, int databaseVersion) {
         super(context, databaseName, factory, databaseVersion);
         this.mCtx = context;

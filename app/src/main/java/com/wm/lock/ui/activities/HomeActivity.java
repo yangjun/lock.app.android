@@ -18,6 +18,9 @@ import com.wm.lock.core.adapter.PagerTabAdapter;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.bugly.BuglyManager;
+import com.wm.lock.dao.DaoManager;
+import com.wm.lock.dao.DaoManager_;
+import com.wm.lock.entity.Inspection;
 import com.wm.lock.http.Rest;
 
 import org.androidannotations.annotations.Bean;
@@ -25,6 +28,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by wangmin on 16/7/27.
@@ -57,6 +63,16 @@ public class HomeActivity extends BaseActivity {
         setupActionBar();
         setupTab();
         BuglyManager.checkUpgradeSilent();
+
+        // FIXME TEST
+        Inspection inspection = new Inspection();
+        inspection.setPlan_id(UUID.randomUUID().toString());
+        inspection.setCreate_date(new Date());
+        inspection.setFinish_date(new Date());
+        inspection.setPlan_date(new Date());
+        inspection.setFinish_date(new Date());
+        inspection.setPlan_name("123");
+        DaoManager_.getInstance_(getApplicationContext()).getInspectionDao().create(inspection);
     }
 
     @Override

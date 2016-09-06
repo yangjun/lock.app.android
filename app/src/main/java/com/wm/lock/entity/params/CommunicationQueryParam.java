@@ -6,17 +6,17 @@ import com.wm.lock.entity.CommunicationType;
 public class CommunicationQueryParam extends PageParam {
 
     /** 发起方 */
-    private CommunicationTerminal from;
+    private CommunicationTerminal sender;
 
     /** 类型 */
     private CommunicationType type;
 
-    public CommunicationTerminal getFrom() {
-        return from;
+    public CommunicationTerminal getSender() {
+        return sender;
     }
 
-    public void setFrom(CommunicationTerminal from) {
-        this.from = from;
+    public void setSender(CommunicationTerminal sender) {
+        this.sender = sender;
     }
 
     public CommunicationType getType() {

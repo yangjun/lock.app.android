@@ -1,6 +1,5 @@
 package com.wm.lock.entity;
 
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -13,7 +12,7 @@ import java.util.Date;
 public class Inspection {
 
     /** 唯一id */
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
     private long id_;
 
     /** id */
@@ -37,7 +36,7 @@ public class Inspection {
     private Date last_modify_date;
 
     /** 要求完成时间 */
-    @DatabaseField(dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
+    @DatabaseField
     private Date plan_date;
 
     /** 实际完成时间 */

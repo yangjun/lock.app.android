@@ -8,9 +8,9 @@
 				id varchar(100),
 				content text,
 				type varchar(50),
-				from varchar(50),
-				to varchar(50),
-				create_date varchar(20)
+				sender varchar(50),
+				receiver varchar(50),
+				create_date timestamp
 			)
         </content>
 
@@ -20,10 +20,10 @@
 				plan_id varchar(100),
 				plan_name varchar(500),
 				send_man varchar(50),
-				create_date varchar(20),
-				last_modify_date varchar(20),
-				plan_date varchar(20),
-				finish_date varchar(20),
+				create_date timestamp,
+				last_modify_date timestamp,
+				plan_date timestamp,
+				finish_date timestamp,
 				room_name varchar(500),
 				lock_mac varchar(50),
 				state integer,
@@ -40,8 +40,8 @@
 				equipment_name varchar(500),
 				cabinet_name varchar(500),
 				cabinet_lock_mac varchar(50),
-				create_date varchar(20),
-				last_modify_date varchar(20),
+				create_date timestamp,
+				last_modify_date timestamp,
 				inspection_id integer
 			)
 		</content>

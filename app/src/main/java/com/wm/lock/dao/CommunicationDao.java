@@ -39,8 +39,8 @@ public class CommunicationDao extends BaseDao<Communication, Long> {
         if (param.getType() != null) {
             where.and().eq("type", param.getType());
         }
-        if (param.getFrom() != null) {
-            where.and().eq("from", param.getFrom());
+        if (param.getSender() != null) {
+            where.and().eq("sender", param.getSender());
         }
         return where;
     }

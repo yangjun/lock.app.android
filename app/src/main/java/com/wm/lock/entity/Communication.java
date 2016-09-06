@@ -12,7 +12,7 @@ import java.util.Date;
 public class Communication {
 
     /** 唯一id */
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
     private long id_;
 
     /** 会话id */
@@ -29,11 +29,11 @@ public class Communication {
 
     /** 来自哪端 */
     @DatabaseField
-    private CommunicationTerminal from;
+    private CommunicationTerminal sender;
 
     /** 到哪端 */
     @DatabaseField
-    private CommunicationTerminal to;
+    private CommunicationTerminal receiver;
 
     /** 创建时间 */
     @DatabaseField
@@ -71,20 +71,20 @@ public class Communication {
         this.type = type;
     }
 
-    public CommunicationTerminal getFrom() {
-        return from;
+    public CommunicationTerminal getSender() {
+        return sender;
     }
 
-    public void setFrom(CommunicationTerminal from) {
-        this.from = from;
+    public void setSender(CommunicationTerminal sender) {
+        this.sender = sender;
     }
 
-    public CommunicationTerminal getTo() {
-        return to;
+    public CommunicationTerminal getReceiver() {
+        return receiver;
     }
 
-    public void setTo(CommunicationTerminal to) {
-        this.to = to;
+    public void setReceiver(CommunicationTerminal receiver) {
+        this.receiver = receiver;
     }
 
     public Date getCreate_date() {

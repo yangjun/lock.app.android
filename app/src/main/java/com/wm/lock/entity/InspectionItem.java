@@ -12,7 +12,7 @@ import java.util.Date;
 public class InspectionItem {
 
     /** 唯一id */
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
     private long id_;
 
     /** id */
