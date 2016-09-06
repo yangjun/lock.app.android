@@ -4,11 +4,15 @@ import android.text.TextUtils;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.misc.TransactionManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
+import com.j256.ormlite.support.ConnectionSource;
 import com.wm.lock.entity.Inspection;
+import com.wm.lock.exception.DbException;
 
 import java.sql.SQLException;
+import java.util.concurrent.Callable;
 
 public abstract class BaseDao<T, ID> extends RuntimeExceptionDao<T, ID> {
     
@@ -40,6 +44,16 @@ public abstract class BaseDao<T, ID> extends RuntimeExceptionDao<T, ID> {
             builder.offset(index * limit).limit(limit);
         }
         return builder.where().isNotNull("id_");
+    }
+
+    public <B> B doInTransaction(Callable<B> callable) {
+        ConnectionSource connectionSource = getConnectionSource();
+        TransactionManager transactionManager = new TransactionManager(connectionSource);
+        try {
+            return transactionManager.callInTransaction(callable);
+        } catch (SQLException e) {
+            throw new DbException(e);
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.wm.lock.module.biz;
 
+import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
@@ -15,6 +16,16 @@ public interface IBizService {
     public List<Inspection> listInspection(InspectionQueryParam param);
 
     /**
+     * 接收巡检计划
+     */
+    public void receiveInspection(Inspection inspection);
+
+    /**
+     * 拒绝巡检计划
+     */
+    public void refuseInspection(Inspection inspection, String reason);
+
+    /**
      * 提交巡检计划
      */
     public void submitInspection(long inspectionId);
@@ -27,17 +38,17 @@ public interface IBizService {
     /**
      * 获取巡检计划数量
      */
-    public int countInspection(InspectionQueryParam param);
+    public long countInspection(InspectionQueryParam param);
 
     /**
      * 获取某个巡检计划的分类列表
      */
-    public List<String> listInspetionCategory(String inspectionId);
+    public List<String> listInspectionCategory(long inspectionId);
 
     /**
      * 根据分类获取巡检项列表
      */
-    public List<InspectionItem> listInspectionItemByCategory(String inspectionId, String categoryId);
+    public List<InspectionItem> listInspectionItemByCategory(long inspectionId, String categoryId);
 
     /**
      * 修改巡检计划内容
@@ -47,7 +58,7 @@ public interface IBizService {
     /**
      * 获取附件列表
      */
-    public List<String> listAttachments(String foreignId);
+    public List<String> listAttachments(long foreignId, AttachmentType type);
 
     /**
      * 删除某个路径的附件
@@ -57,7 +68,7 @@ public interface IBizService {
     /**
      * 获取要保存的附件的路径
      */
-    public String getAttachmentSavePath(String foreignId);
+    public String getAttachmentSavePath(long foreignId, AttachmentType type);
 
     /**
      * 接收到消息

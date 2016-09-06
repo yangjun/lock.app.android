@@ -45,4 +45,12 @@ public class InspectionItemDao extends BaseDao<InspectionItem, Long> {
         }
     }
 
+    public List<InspectionItem> list(long inspectionId) {
+        try {
+            return where("id_", true).and().eq("inspection_id", inspectionId).query();
+        } catch (SQLException e) {
+            throw new DbException(e);
+        }
+    }
+
 }
