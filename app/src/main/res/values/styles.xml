@@ -347,4 +347,10 @@
         <item name="android:maxHeight">2.0dp</item>
     </style>
 
+    <style name="newIndicatorTheme">
+        <item name="android:layout_width">@dimen/width_indicator_new</item>
+        <item name="android:layout_height">@dimen/width_indicator_new</item>
+        <item name="android:background">@drawable/bg_indicator_new</item>
+    </style>
+
 </resources>

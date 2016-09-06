@@ -27,7 +27,7 @@
 
 
     <dimen name="width_label">120dp</dimen>
-
+    <dimen name="width_indicator_new">6dp</dimen>
 
     <dimen name="padding_item_left">16dp</dimen>
     <dimen name="padding_item_top">8dp</dimen>

@@ -1,7 +1,5 @@
 package com.wm.lock.module.sys;
 
-import com.wm.lock.entity.VersionInfo;
-
 import org.androidannotations.annotations.EBean;
 
 /**
@@ -10,10 +8,10 @@ import org.androidannotations.annotations.EBean;
 @EBean
 public class SysService extends SysServiceBase {
 
-    @Override
-    public VersionInfo checkVersion() {
-        // TODO
-        return null;
-    }
+//    @Override
+//    public VersionInfo checkVersion() {
+//        // TODO
+//        return null;
+//    }
 
 }

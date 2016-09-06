@@ -42,27 +42,27 @@ public abstract class SysServiceBase extends BaseModule implements ISysService {
         return currVersion > cacheVersion;
     }
 
-    @Override
-    public void ignoreVersion(VersionInfo version) {
-        // TODO
-    }
-
-    @Override
-    public void downloadNewVersion(Context ctx, VersionInfo version) {
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.VIEW");
-        Uri url = Uri.parse(version.getAddress());
-        intent.setData(url);
-        ctx.startActivity(intent);
-    }
-
-    @Override
-    public VersionInfo getNewVersionInCache() {
-        Object obj = CacheManager.getInstance().getObject(LockConstants.VERSION);
-        if (obj == null) {
-            return null;
-        }
-        return (VersionInfo) obj;
-    }
+//    @Override
+//    public void ignoreVersion(VersionInfo version) {
+//        // TODO
+//    }
+//
+//    @Override
+//    public void downloadNewVersion(Context ctx, VersionInfo version) {
+//        Intent intent = new Intent();
+//        intent.setAction("android.intent.action.VIEW");
+//        Uri url = Uri.parse(version.getAddress());
+//        intent.setData(url);
+//        ctx.startActivity(intent);
+//    }
+//
+//    @Override
+//    public VersionInfo getNewVersionInCache() {
+//        Object obj = CacheManager.getInstance().getObject(LockConstants.VERSION);
+//        if (obj == null) {
+//            return null;
+//        }
+//        return (VersionInfo) obj;
+//    }
 
 }

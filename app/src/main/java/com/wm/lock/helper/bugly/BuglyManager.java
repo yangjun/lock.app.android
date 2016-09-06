@@ -1,16 +1,25 @@
 package com.wm.lock.helper.bugly;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.tencent.bugly.beta.ui.UILifecycleListener;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.wm.lock.R;
+import com.wm.lock.core.utils.HardwareUtils;
 
 import java.lang.reflect.Field;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by wangmin on 16/8/2.
@@ -99,16 +108,17 @@ public final class BuglyManager {
 //         */
 //        Beta.tipsDialogLayoutId = R.layout.tips_dialog;
 //
-//        /**
-//         *  如果想监听升级对话框的生命周期事件，可以通过设置OnUILifecycleListener接口
-//         *  回调参数解释：
-//         *  context - 当前弹窗上下文对象
-//         *  view - 升级对话框的根布局视图，可通过这个对象查找指定view控件
-//         *  upgradeInfo - 升级信息
-//         */
-//       Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
-//            @Override
-//            public void onCreate(Context context, View view, UpgradeInfo upgradeInfo) {
+        /**
+         *  如果想监听升级对话框的生命周期事件，可以通过设置OnUILifecycleListener接口
+         *  回调参数解释：
+         *  context - 当前弹窗上下文对象
+         *  view - 升级对话框的根布局视图，可通过这个对象查找指定view控件
+         *  upgradeInfo - 升级信息
+         */
+       Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
+            @Override
+            public void onCreate(Context context, View view, UpgradeInfo upgradeInfo) {
+                EventBus.getDefault().post(upgradeInfo);
 //                Log.d(TAG, "onCreate");
 //                // 注：可通过这个回调方式获取布局的控件，如果设置了id，可通过findViewById方式获取，如果设置了tag，可以通过findViewWithTag，具体参考下面例子:
 //
@@ -129,33 +139,33 @@ public final class BuglyManager {
 //                        startActivity(intent);
 //                    }
 //                });
-//            }
-//
-//            @Override
-//            public void onStart(Context context, View view, UpgradeInfo upgradeInfo) {
+            }
+
+            @Override
+            public void onStart(Context context, View view, UpgradeInfo upgradeInfo) {
 //                Log.d(TAG, "onStart");
-//            }
-//
-//            @Override
-//            public void onResume(Context context, View view, UpgradeInfo upgradeInfo) {
+            }
+
+            @Override
+            public void onResume(Context context, View view, UpgradeInfo upgradeInfo) {
 //                Log.d(TAG, "onResume");
-//            }
-//
-//            @Override
-//            public void onPause(Context context, View view, UpgradeInfo upgradeInfo) {
+            }
+
+            @Override
+            public void onPause(Context context, View view, UpgradeInfo upgradeInfo) {
 //                Log.d(TAG, "onPause");
-//            }
-//
-//            @Override
-//            public void onStop(Context context, View view, UpgradeInfo upgradeInfo) {
+            }
+
+            @Override
+            public void onStop(Context context, View view, UpgradeInfo upgradeInfo) {
 //                Log.d(TAG, "onStop");
-//            }
-//
-//            @Override
-//            public void onDestroy(Context context, View view, UpgradeInfo upgradeInfo) {
+            }
+
+            @Override
+            public void onDestroy(Context context, View view, UpgradeInfo upgradeInfo) {
 //                Log.d(TAG, "onDestory");
-//            }
-//        };
+            }
+        };
 
 
         /**
@@ -190,8 +200,15 @@ public final class BuglyManager {
         Beta.checkUpgrade(true, false);
     }
 
-    public static UpgradeInfo getUpgradeInfo() {
-        return Beta.getUpgradeInfo();
+    public static boolean hasUpgradeInfo(Context ctx) {
+        return hasUpgradeInfo(ctx, Beta.getUpgradeInfo());
+    }
+
+    public static boolean hasUpgradeInfo(Context ctx, UpgradeInfo upgradeInfo) {
+        if (upgradeInfo == null) {
+            return false;
+        }
+        return upgradeInfo.versionCode > HardwareUtils.getVerCode(ctx);
     }
 
     public static void reportThrowable(String description) {

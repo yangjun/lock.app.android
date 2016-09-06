@@ -30,6 +30,9 @@ public class HomeActivity extends BaseActivity {
     @ViewById(R.id.fl_header)
     View mContainerHeader;
 
+    @ViewById(R.id.v_indicator)
+    View mVIndicator;
+
     @Override
     protected int getStatusBarColor() {
         return android.R.color.transparent;
@@ -44,6 +47,12 @@ public class HomeActivity extends BaseActivity {
     protected void init() {
         setupActionBar();
         BuglyManager.checkUpgradeSilent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateIndicator();
     }
 
     @Click(R.id.tv_open_door)
@@ -69,6 +78,11 @@ public class HomeActivity extends BaseActivity {
 
         setBackBtnVisible(false);
         mToolbar.setBackgroundResource(Color.TRANSPARENT);
+    }
+
+    private void updateIndicator() {
+        final boolean hasNew = BuglyManager.hasUpgradeInfo(getApplicationContext());
+        mVIndicator.setVisibility(hasNew ? View.VISIBLE : View.GONE);
     }
 
 }

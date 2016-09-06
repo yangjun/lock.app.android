@@ -54,12 +54,22 @@
 
                 <View style="@style/splitInnerTheme" />
 
-                <TextView
-                    android:id="@+id/btn_setting_upgrade"
-                    style="@style/itemTheme"
-                    android:drawableLeft="@mipmap/ic_setting_upgrade"
-                    android:drawableRight="@mipmap/ic_arrow"
-                    android:text="@string/label_setting_upgrade" />
+                <FrameLayout style="@style/wrapHeightTheme">
+
+                    <TextView
+                        android:id="@+id/btn_setting_upgrade"
+                        style="@style/itemTheme"
+                        android:drawableLeft="@mipmap/ic_setting_upgrade"
+                        android:drawableRight="@mipmap/ic_arrow"
+                        android:text="@string/label_setting_upgrade" />
+
+                    <ImageView
+                        android:id="@+id/iv_upgrade"
+                        style="@style/wrapTheme"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="32dp"
+                        android:src="@mipmap/ic_new" />
+                </FrameLayout>
 
                 <View style="@style/splitTheme" />
 

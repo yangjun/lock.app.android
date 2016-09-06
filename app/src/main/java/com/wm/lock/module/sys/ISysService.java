@@ -1,9 +1,5 @@
 package com.wm.lock.module.sys;
 
-import android.content.Context;
-
-import com.wm.lock.entity.VersionInfo;
-
 /**
  * Created by WM on 2015/8/1.
  */
@@ -24,24 +20,24 @@ public interface ISysService {
      */
     public boolean isNewInstall();
 
-    /**
-     * 获取新版本
-     */
-    public VersionInfo checkVersion();
-
-    /**
-     * 缓存中是否有新版本
-     */
-    public VersionInfo getNewVersionInCache();
-
-    /**
-     * 忽略某个版本
-     */
-    public void ignoreVersion(VersionInfo version);
-
-    /**
-     * 下载新版本
-     */
-    public void downloadNewVersion(Context ctx, VersionInfo version);
+//    /**
+//     * 获取新版本
+//     */
+//    public VersionInfo checkVersion();
+//
+//    /**
+//     * 缓存中是否有新版本
+//     */
+//    public VersionInfo getNewVersionInCache();
+//
+//    /**
+//     * 忽略某个版本
+//     */
+//    public void ignoreVersion(VersionInfo version);
+//
+//    /**
+//     * 下载新版本
+//     */
+//    public void downloadNewVersion(Context ctx, VersionInfo version);
 
 }
