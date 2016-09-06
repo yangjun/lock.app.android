@@ -76,7 +76,8 @@
         <activity
             android:name=".ui.activities.HomeActivity_"
             android:label=""
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/StyledIndicators"/>
 
         <activity
             android:name=".ui.activities.OpenDoorActivity_"

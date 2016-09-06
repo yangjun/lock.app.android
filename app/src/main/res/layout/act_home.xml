@@ -19,24 +19,35 @@
             <TextView
                 android:id="@+id/tv_open_door"
                 style="@style/wrapTheme"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="64dp"
                 android:background="@drawable/selector_btn_title_hollow"
                 android:paddingBottom="1dp"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:paddingTop="1dp"
                 android:text="@string/title_open_door"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="64dp"/>
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@drawable/selector_txt_title"/>
 
             <View
                 android:id="@+id/v_indicator"
                 style="@style/newIndicatorTheme"
                 android:layout_gravity="right"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp" />
 
         </FrameLayout>
 
     </RelativeLayout>
+
+    <com.viewpagerindicator.TabPageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="34dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        style="@style/verticalWeightTheme" />
 
 </LinearLayout>
