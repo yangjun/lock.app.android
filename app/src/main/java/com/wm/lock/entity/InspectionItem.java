@@ -3,6 +3,8 @@ package com.wm.lock.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 /**
  * 巡检项
  */
@@ -19,31 +21,31 @@ public class InspectionItem {
 
     /** 巡检事项 */
     @DatabaseField
-    private long item_name;
+    private String item_name;
 
     /** 类别名称 */
     @DatabaseField
-    private long item_cate_name;
+    private String item_cate_name;
 
     /** 设备名称 */
     @DatabaseField
-    private long equipment_name;
+    private String equipment_name;
 
     /** 机柜名称 */
     @DatabaseField
-    private long cabinet_name;
+    private String cabinet_name;
 
     /** 机柜锁mac地址 */
     @DatabaseField
-    private long cabinet_lock_mac;
+    private String cabinet_lock_mac;
 
     /** 创建时间 */
     @DatabaseField
-    private String create_date;
+    private Date create_date;
 
     /** 最后修改时间 */
     @DatabaseField
-    private String last_modify_date;
+    private Date last_modify_date;
 
     /** 关联的巡检计划 */
     @DatabaseField(canBeNull = true, foreign = true, columnName = "inspection_id")
@@ -65,59 +67,59 @@ public class InspectionItem {
         this.item_id = item_id;
     }
 
-    public long getItem_name() {
+    public String getItem_name() {
         return item_name;
     }
 
-    public void setItem_name(long item_name) {
+    public void setItem_name(String item_name) {
         this.item_name = item_name;
     }
 
-    public long getItem_cate_name() {
+    public String getItem_cate_name() {
         return item_cate_name;
     }
 
-    public void setItem_cate_name(long item_cate_name) {
+    public void setItem_cate_name(String item_cate_name) {
         this.item_cate_name = item_cate_name;
     }
 
-    public long getEquipment_name() {
+    public String getEquipment_name() {
         return equipment_name;
     }
 
-    public void setEquipment_name(long equipment_name) {
+    public void setEquipment_name(String equipment_name) {
         this.equipment_name = equipment_name;
     }
 
-    public long getCabinet_name() {
+    public String getCabinet_name() {
         return cabinet_name;
     }
 
-    public void setCabinet_name(long cabinet_name) {
+    public void setCabinet_name(String cabinet_name) {
         this.cabinet_name = cabinet_name;
     }
 
-    public long getCabinet_lock_mac() {
+    public String getCabinet_lock_mac() {
         return cabinet_lock_mac;
     }
 
-    public void setCabinet_lock_mac(long cabinet_lock_mac) {
+    public void setCabinet_lock_mac(String cabinet_lock_mac) {
         this.cabinet_lock_mac = cabinet_lock_mac;
     }
 
-    public String getCreate_date() {
+    public Date getCreate_date() {
         return create_date;
     }
 
-    public void setCreate_date(String create_date) {
+    public void setCreate_date(Date create_date) {
         this.create_date = create_date;
     }
 
-    public String getLast_modify_date() {
+    public Date getLast_modify_date() {
         return last_modify_date;
     }
 
-    public void setLast_modify_date(String last_modify_date) {
+    public void setLast_modify_date(Date last_modify_date) {
         this.last_modify_date = last_modify_date;
     }
 

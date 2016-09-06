@@ -3,10 +3,18 @@ package com.wm.lock.dao;
 import android.content.Context;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.wm.lock.core.logger.Logger;
+import com.wm.lock.entity.Communication;
+import com.wm.lock.entity.Inspection;
+import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.exception.DbException;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+
+import java.sql.SQLException;
 
 @EBean(scope = EBean.Scope.Singleton)
 public class DaoManager {
@@ -15,46 +23,46 @@ public class DaoManager {
     Context mCtx;
 
     private SqlOpenHelper helper;
-//    private PushMessageDao mPushMessageDao;
+
+    private InspectionDao inspectionDao;
+    private InspectionItemDao inspectionItemDao;
+    private CommunicationDao communicationDao;
 
     @AfterInject
     void init() {
         helper = OpenHelperManager.getHelper(mCtx, SqlOpenHelper.class);
-//        try {
-//            mPushMessageDao = new PushMessageDao((Dao<PushMessage, String>) helper.getDao(PushMessage.class));
-//        } catch (SQLException e) {
-//            Logger.p("fail to instance dao", e);
-//            throw new DbException(e);
-//        }
+        try {
+            inspectionDao = new InspectionDao((Dao<Inspection, Long>) helper.getDao(Inspection.class));
+            inspectionItemDao = new InspectionItemDao((Dao<InspectionItem, Long>) helper.getDao(InspectionItem.class));
+            communicationDao = new CommunicationDao((Dao<Communication, Long>) helper.getDao(Communication.class));
+        } catch (SQLException e) {
+            Logger.p("fail to instance dao", e);
+            throw new DbException(e);
+        }
     }
 
-    private static class BizDaoManagerHolder {
+    private static class DaoManagerHolder {
         static final DaoManager instance = new DaoManager();
     }
 
     public static final DaoManager getInstance() {
-        return BizDaoManagerHolder.instance;
+        return DaoManagerHolder.instance;
     }
 
-//    public PushMessageDao getPushMessageDao() {
-//        return mPushMessageDao;
-//    }
+    public InspectionDao getInspectionDao() {
+        return inspectionDao;
+    }
+
+    public InspectionItemDao getInspectionItemDao() {
+        return inspectionItemDao;
+    }
+
+    public CommunicationDao getCommunicationDao() {
+        return communicationDao;
+    }
 
     public SqlOpenHelper getHelper() {
         return helper;
     }
-
-//    public void resetAllTable() {
-//    }
-//
-//    public <T> void resetTable(Class<T> clazz) {
-//        try {
-//            TableUtils.dropTable(helper.getConnectionSource(), clazz, false);
-//            TableUtils.createTable(helper.getConnectionSource(), clazz);
-//        }
-//        catch (SQLException e) {
-//            throw new DbException(e);
-//        }
-//    }
 
 }

@@ -3,6 +3,8 @@ package com.wm.lock.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 /**
  * 通信数据
  */
@@ -35,7 +37,7 @@ public class Communication {
 
     /** 创建时间 */
     @DatabaseField
-    private String create_date;
+    private Date create_date;
 
     public long getId_() {
         return id_;
@@ -85,11 +87,11 @@ public class Communication {
         this.to = to;
     }
 
-    public String getCreate_date() {
+    public Date getCreate_date() {
         return create_date;
     }
 
-    public void setCreate_date(String create_date) {
+    public void setCreate_date(Date create_date) {
         this.create_date = create_date;
     }
 

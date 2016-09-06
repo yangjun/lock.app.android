@@ -1,7 +1,10 @@
 package com.wm.lock.entity;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.Date;
 
 /**
  * 巡检计划
@@ -27,19 +30,19 @@ public class Inspection {
 
     /** 创建时间 */
     @DatabaseField
-    private String create_date;
+    private Date create_date;
 
     /** 最后修改时间 */
     @DatabaseField
-    private String last_modify_date;
+    private Date last_modify_date;
 
     /** 要求完成时间 */
-    @DatabaseField
-    private String plan_date;
+    @DatabaseField(dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
+    private Date plan_date;
 
     /** 实际完成时间 */
     @DatabaseField
-    private String finish_date;
+    private Date finish_date;
 
     /** 所属机房 */
     @DatabaseField
@@ -52,6 +55,9 @@ public class Inspection {
     /** 执行人员的工号 */
     @DatabaseField
     private String user_job_number;
+
+    /** 状态 */
+    private int state;
 
     public long getId_() {
         return id_;
@@ -85,35 +91,35 @@ public class Inspection {
         this.send_man = send_man;
     }
 
-    public String getCreate_date() {
+    public Date getCreate_date() {
         return create_date;
     }
 
-    public void setCreate_date(String create_date) {
+    public void setCreate_date(Date create_date) {
         this.create_date = create_date;
     }
 
-    public String getLast_modify_date() {
+    public Date getLast_modify_date() {
         return last_modify_date;
     }
 
-    public void setLast_modify_date(String last_modify_date) {
+    public void setLast_modify_date(Date last_modify_date) {
         this.last_modify_date = last_modify_date;
     }
 
-    public String getPlan_date() {
+    public Date getPlan_date() {
         return plan_date;
     }
 
-    public void setPlan_date(String plan_date) {
+    public void setPlan_date(Date plan_date) {
         this.plan_date = plan_date;
     }
 
-    public String getFinish_date() {
+    public Date getFinish_date() {
         return finish_date;
     }
 
-    public void setFinish_date(String finish_date) {
+    public void setFinish_date(Date finish_date) {
         this.finish_date = finish_date;
     }
 
@@ -139,6 +145,14 @@ public class Inspection {
 
     public void setUser_job_number(String user_job_number) {
         this.user_job_number = user_job_number;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
 }

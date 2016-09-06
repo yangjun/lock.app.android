@@ -26,6 +26,7 @@
 				finish_date varchar(20),
 				room_name varchar(500),
 				lock_mac varchar(50),
+				state integer,
 				user_job_number varchar(20)
 			)
 		</content>
