@@ -19,7 +19,7 @@ public class InspectionItem {
 
     /** id */
     @DatabaseField
-    private long item_id;
+    private String item_id;
 
     /** 巡检事项 */
     @DatabaseField
@@ -73,11 +73,11 @@ public class InspectionItem {
         this.id_ = id_;
     }
 
-    public long getItem_id() {
+    public String getItem_id() {
         return item_id;
     }
 
-    public void setItem_id(long item_id) {
+    public void setItem_id(String item_id) {
         this.item_id = item_id;
     }
 

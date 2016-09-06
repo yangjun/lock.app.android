@@ -17,4 +17,7 @@ public class InspectionState {
     /** 拒绝 */
     public static final int REFUSE = 4;
 
+    /** 提交失败 */
+    public static final int SUBMIT_FAIL = 5;
+
 }

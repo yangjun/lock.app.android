@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 巡检计划
@@ -56,7 +57,11 @@ public class Inspection {
     private String user_job_number;
 
     /** 状态 */
+    @DatabaseField
     private int state;
+
+    /** 巡检项列表 */
+    private List<InspectionItem> inspection_item_list;
 
     public long getId_() {
         return id_;
@@ -152,6 +157,14 @@ public class Inspection {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public List<InspectionItem> getInspection_item_list() {
+        return inspection_item_list;
+    }
+
+    public void setInspection_item_list(List<InspectionItem> inspection_item_list) {
+        this.inspection_item_list = inspection_item_list;
     }
 
 }
