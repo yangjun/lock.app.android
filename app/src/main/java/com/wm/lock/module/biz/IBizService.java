@@ -31,9 +31,24 @@ public interface IBizService {
     public void submitInspection(long inspectionId);
 
     /**
+     * 新增巡检计划
+     */
+    public long addInspection(Inspection inspection);
+
+    /**
+     * 查询巡检计划
+     */
+    public Inspection findInspection(long inspectionId);
+
+    /**
      * 删除巡检计划
      */
     public void deleteInspection(long inspectionId);
+
+    /**
+     * 删除巡检计划
+     */
+    public void deleteInspection(String userJobNumber, String planId);
 
     /**
      * 获取巡检计划数量
@@ -49,6 +64,11 @@ public interface IBizService {
      * 根据分类获取巡检项列表
      */
     public List<InspectionItem> listInspectionItemByCategory(long inspectionId, String categoryId);
+
+    /**
+     * 根据巡检计划id获取巡检项列表
+     */
+    public List<InspectionItem> listInspectionItem(long inspectionId);
 
     /**
      * 修改巡检计划内容
@@ -71,8 +91,28 @@ public interface IBizService {
     public String getAttachmentSavePath(long foreignId, AttachmentType type);
 
     /**
-     * 接收到消息
+     * 查找下一个写入的通信记录
      */
-    public void onCommunicationReceived(Communication communication);
+    public Communication findNextWriteCommunication(String userJobNumber, long currCommunicationId);
+
+    /**
+     * 新增通信记录
+     */
+    public void addCommunication(Communication communication);
+
+    /**
+     * 删除通信记录
+     */
+    public void deleteCommunication(long communicationId);
+
+    /**
+     * 删除通信记录
+     */
+    public void deleteCommunication(String userJobNumber, String communicationBizId);
+
+    /**
+     * 获取通信记录
+     */
+    public Communication findCommunication(String userJobNumber, String communicationBizId);
 
 }

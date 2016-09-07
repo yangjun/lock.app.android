@@ -6,7 +6,7 @@ public class PageParam {
     private int index;
 
     /** 每页显示的数量 */
-    private int limit;
+    private int limit = Integer.MAX_VALUE;
 
     public int getIndex() {
         return index;

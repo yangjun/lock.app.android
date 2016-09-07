@@ -9,6 +9,7 @@ import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.BaseModule;
 
@@ -41,17 +42,49 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
 
     @Override
     public void receiveInspection(Inspection inspection) {
-        // TODO 接收任务，并添加消息到发送队列
+        inspection.setState(InspectionState.IN_PROCESS);
+        inspection.setLast_modify_date(new Date());
+        mDaoManager.getInspectionDao().update(inspection);
     }
 
     @Override
     public void refuseInspection(Inspection inspection, String reason) {
-        // TODO 拒绝任务，并添加消息到发送队列
+        inspection.setState(InspectionState.REFUSE);
+        inspection.setLast_modify_date(new Date());
+        mDaoManager.getInspectionDao().update(inspection);
     }
 
     @Override
     public void submitInspection(long inspectionId) {
-        // TODO 提交任务，添加到发送队列，如果已经有任务已经在排队咋办（这个时候不能及时收到回复）
+        final Inspection inspection = mDaoManager.getInspectionDao().queryForId(inspectionId);
+        inspection.setState(InspectionState.SUBMIT_FAIL);
+        inspection.setLast_modify_date(new Date());
+    }
+
+    @Override
+    public long addInspection(final Inspection inspection) {
+        inspection.setState(InspectionState.PENDING);
+        inspection.setCreate_date(new Date());
+        inspection.setLast_modify_date(new Date());
+        final int count = mDaoManager.getInspectionDao().add(inspection);
+        if (count <= 0) {
+            return 0;
+        }
+
+        mDaoManager.getInspectionItemDao().doInTransaction(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                final List<InspectionItem> inspectionItemList = inspection.getInspection_item_list();
+                for (InspectionItem item : inspectionItemList) {
+                    item.setCreate_date(new Date());
+                    item.setLast_modify_date(new Date());
+                    item.setInspection(inspection);
+                    mDaoManager.getInspectionItemDao().create(item);
+                }
+                return null;
+            }
+        });
+        return 1;
     }
 
     @Override
@@ -73,8 +106,18 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
+    public void deleteInspection(String userJobNumber, String planId) {
+        mDaoManager.getInspectionDao().delete(userJobNumber, planId);
+    }
+
+    @Override
     public long countInspection(InspectionQueryParam param) {
         return mDaoManager.getInspectionDao().count(param);
+    }
+
+    @Override
+    public Inspection findInspection(long inspectionId) {
+        return mDaoManager.getInspectionDao().queryForId(inspectionId);
     }
 
     @Override
@@ -85,6 +128,11 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     @Override
     public List<InspectionItem> listInspectionItemByCategory(long inspectionId, String categoryId) {
         return mDaoManager.getInspectionItemDao().listByCategory(inspectionId, categoryId);
+    }
+
+    @Override
+    public List<InspectionItem> listInspectionItem(long inspectionId) {
+        return mDaoManager.getInspectionItemDao().list(inspectionId);
     }
 
     @Override
@@ -124,8 +172,29 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public void onCommunicationReceived(Communication communication) {
-        // TODO 先添加到数据库，然后添加到发送队列
+    public Communication findNextWriteCommunication(String userJobNumber, long currCommunicationId) {
+        return mDaoManager.getCommunicationDao().findNextWrite(userJobNumber, currCommunicationId);
+    }
+
+    @Override
+    public void addCommunication(Communication communication) {
+        communication.setCreate_date(new Date());
+        mDaoManager.getCommunicationDao().add(communication);
+    }
+
+    @Override
+    public void deleteCommunication(long communicationId) {
+        mDaoManager.getCommunicationDao().deleteById(communicationId);
+    }
+
+    @Override
+    public void deleteCommunication(String userJobNumber, String communicationBizId) {
+        mDaoManager.getCommunicationDao().delete(userJobNumber, communicationBizId);
+    }
+
+    @Override
+    public Communication findCommunication(String userJobNumber, String communicationBizId) {
+        return mDaoManager.getCommunicationDao().find(userJobNumber, communicationBizId);
     }
 
     protected File getAttachmentFolder(long foreignId) {

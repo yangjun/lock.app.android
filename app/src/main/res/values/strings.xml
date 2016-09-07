@@ -37,6 +37,8 @@
     <string name="message_lock_pwd_not_equal">两次开锁密码输入不一致</string>
     <string name="message_setting_lock_pwd_not_same">旧开锁密码错误</string>
     <string name="message_setting_lock_pwd_success">修改开锁密码成功</string>
+    <string name="message_new_inspection">收到%1$d条新的巡检计划</string>
+
 
     <string name="hint_job_number">请输入工号...</string>
     <string name="hint_name">请输入姓名...</string>

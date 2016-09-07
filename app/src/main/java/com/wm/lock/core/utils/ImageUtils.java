@@ -9,6 +9,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import org.apache.commons.codec.binary.Base64;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,6 +25,12 @@ import java.io.InputStream;
  */
 public class ImageUtils {
 
+	public static void recycle(Bitmap bitmap) {
+		if (bitmap != null && !bitmap.isRecycled()) {
+			bitmap.recycle();
+		}
+	}
+
 	public static void recycle(ImageView iv) {
 		if (iv == null) {
 			return;
@@ -30,10 +39,8 @@ public class ImageUtils {
 		if (drawable != null) {
 			iv.setImageDrawable(null);
 			if (drawable instanceof BitmapDrawable) {
-				Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-				if (bitmap != null && !bitmap.isRecycled()) {
-					bitmap.recycle();
-				}
+				final Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+				recycle(bitmap);
 			}
 		}
 	}
@@ -147,45 +154,68 @@ public class ImageUtils {
 	 * @param fromPath 处理前图片的来源路径
 	 * @param toPath 处理完图片保存路径
 	 */
-	public static boolean decodeSampledBitmapToPath(Context context, String fromPath, String toPath){
-//		Bitmap bitmap = null;
-//		if (fromPath.contains("content://")) {
-//			ContentResolver cr = context.getContentResolver();
-//			try {
-//				bitmap = resizeImage(BitmapFactory.decodeStream(cr.openInputStream(Uri.parse(fromPath))), 135, 240);
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//			}
-//		}else {
-//			bitmap = decodeSampledBitmapFromFile(fromPath, 100, 100);
-//		}
-		
+	public static boolean decodeSampledBitmapToPath(Context context, String fromPath, String toPath, int quality) throws Exception {
+		final Bitmap bitmap = decodeSampledBitmapFromFile(fromPath, 100, 100);
+		return save(bitmap, quality, toPath);
+	}
+
+	public static String encode(String path) throws Exception {
+		final Bitmap bitmap = BitmapFactory.decodeFile(path);
+		return encode(bitmap);
+	}
+
+	public static String encode(Bitmap bitmap) throws Exception {
+		try {
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+
+			final Base64 base64 = new Base64();
+			final byte[] encode = base64.encode(baos.toByteArray());
+			final String result = new String(encode);
+
+			return result;
+		} finally {
+			recycle(bitmap);
+		}
+	}
+
+	public static Bitmap decode(String data) throws Exception {
+		final Base64 base64 = new Base64();
+		final byte[] decode = base64.decode(data.getBytes());
+		final Bitmap result = BitmapFactory.decodeByteArray(decode, 0, decode.length);
+		return result;
+	}
+
+	public static void decode(String data, String path) throws Exception {
+		Bitmap bitmap = null;
+		try {
+			bitmap = decode(data);
+			save(bitmap, 100, path);
+		} finally {
+			recycle(bitmap);
+		}
+	}
+
+	public static boolean save(Bitmap bitmap, int quality, String toPath) throws Exception {
 		File folder = new File(toPath);
-        if (!folder.getParentFile().exists()) {
-            folder.getParentFile().mkdirs();
-        }
-		
-        Bitmap bitmap = null;
-        try {
-			FileOutputStream out = new FileOutputStream(folder);
-			bitmap = decodeSampledBitmapFromFile(fromPath, 100, 100);
-			Boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+		if (!folder.getParentFile().exists()) {
+			folder.getParentFile().mkdirs();
+		}
+
+		try {
+			final FileOutputStream out = new FileOutputStream(folder);
+			final boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, quality, out);
 			out.flush();
 			out.close();
 			return isSuccess;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
+		}
+		finally {
 			if (null != bitmap && !bitmap.isRecycled()) {
 				bitmap.recycle();
 			}
 		}
 	}
-	
+
 	private static String getFolder(String filePath) {
         if (filePath == null || filePath.trim().length() == 0) {
             return null;
@@ -195,4 +225,5 @@ public class ImageUtils {
         int index = i > j ? i : j;
         return filePath.substring(0, index);
     }
+
 }

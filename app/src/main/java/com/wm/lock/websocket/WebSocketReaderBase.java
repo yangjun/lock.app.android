@@ -1,0 +1,32 @@
+package com.wm.lock.websocket;
+
+import com.wm.lock.entity.Chat;
+import com.wm.lock.entity.ChatDirective;
+import com.wm.lock.entity.UserInfo;
+import com.wm.lock.module.ModuleFactory;
+import com.wm.lock.module.biz.IBizService;
+import com.wm.lock.module.user.IUserService;
+
+abstract class WebSocketReaderBase {
+
+    abstract void execute(Chat chat);
+
+    protected UserInfo getLoginUser() {
+        final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
+        return userService.getLoginedInfo();
+    }
+
+    protected boolean contains(String content, String flag) {
+        flag = getBizFlag(flag);
+        return content.contains(flag);
+    }
+
+    protected IBizService bizService() {
+        return ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+    }
+
+    private String getBizFlag(String flag) {
+        return String.format("\"business\":\"%s\"", flag);
+    }
+
+}

@@ -1,30 +1,27 @@
 package com.wm.lock.entity.params;
 
-import com.wm.lock.entity.CommunicationTerminal;
-import com.wm.lock.entity.CommunicationType;
-
 public class CommunicationQueryParam extends PageParam {
 
     /** 发起方 */
-    private CommunicationTerminal sender;
+    private String source;
 
     /** 类型 */
-    private CommunicationType type;
+    private String directive;
 
-    public CommunicationTerminal getSender() {
-        return sender;
+    public String getSource() {
+        return source;
     }
 
-    public void setSender(CommunicationTerminal sender) {
-        this.sender = sender;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public CommunicationType getType() {
-        return type;
+    public String getDirective() {
+        return directive;
     }
 
-    public void setType(CommunicationType type) {
-        this.type = type;
+    public void setDirective(String directive) {
+        this.directive = directive;
     }
 
 }

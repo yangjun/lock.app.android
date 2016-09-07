@@ -19,21 +19,20 @@ public class Communication {
     @DatabaseField
     private String id;
 
-    /** 具体内容 */
-    @DatabaseField
-    private String content;
-
-    /** 通信类型 */
-    @DatabaseField
-    private CommunicationType type;
-
     /** 来自哪端 */
     @DatabaseField
-    private CommunicationTerminal sender;
+    private String source;
 
     /** 到哪端 */
     @DatabaseField
-    private CommunicationTerminal receiver;
+    private String target;
+
+    /** 指令 */
+    private String directive;
+
+    /** 具体内容 */
+    @DatabaseField
+    private String content;
 
     /** 创建时间 */
     @DatabaseField
@@ -55,36 +54,36 @@ public class Communication {
         this.id = id;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public String getDirective() {
+        return directive;
+    }
+
+    public void setDirective(String directive) {
+        this.directive = directive;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public CommunicationType getType() {
-        return type;
-    }
-
-    public void setType(CommunicationType type) {
-        this.type = type;
-    }
-
-    public CommunicationTerminal getSender() {
-        return sender;
-    }
-
-    public void setSender(CommunicationTerminal sender) {
-        this.sender = sender;
-    }
-
-    public CommunicationTerminal getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(CommunicationTerminal receiver) {
-        this.receiver = receiver;
     }
 
     public Date getCreate_date() {

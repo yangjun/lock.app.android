@@ -3,6 +3,7 @@ package com.wm.lock.dao;
 import android.text.TextUtils;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.params.InspectionQueryParam;
@@ -28,6 +29,30 @@ public class InspectionDao extends BaseDao<Inspection, Long> {
     public long count(InspectionQueryParam param) {
         try {
             return where(param).countOf();
+        } catch (SQLException e) {
+            throw new DbException(e);
+        }
+    }
+
+    public int add(Inspection inspection) {
+        try {
+            final long count = where().and().eq("plan_id", inspection.getPlan_id())
+                    .and().eq("user_job_number", inspection.getUser_job_number())
+                    .countOf();
+            if (count <= 0) {
+                return dao.create(inspection);
+            }
+        } catch (SQLException e) {
+            throw new DbException(e);
+        }
+        return 0;
+    }
+
+    public void delete(String userJobNumber, String planId) {
+        try {
+            final DeleteBuilder<Inspection, Long> builder = dao.deleteBuilder();
+            builder.where().eq("user_job_number", userJobNumber).and().eq("plan_id", planId);
+            builder.delete();
         } catch (SQLException e) {
             throw new DbException(e);
         }
