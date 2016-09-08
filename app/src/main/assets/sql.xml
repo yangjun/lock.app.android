@@ -19,7 +19,7 @@
 				id_ integer primary key autoincrement,
 				plan_id varchar(100),
 				plan_name varchar(500),
-				send_man varchar(50),
+				dispatch_man varchar(50),
 				create_date timestamp,
 				last_modify_date timestamp,
 				plan_date timestamp,
@@ -44,7 +44,7 @@
 				last_modify_date timestamp,
 				inspection_id integer,
 				state integer,
-				result_name text,
+				result text,
 				note text
 			)
 		</content>

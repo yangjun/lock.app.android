@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalWrapContainerTheme"
+    android:background="@drawable/selector_item"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/wrapHeightTheme"
+        android:lineSpacingExtra="2dp"
+        android:text="12311111111111111111111111111111111111111111111111111111"
+        android:textColor="@color/txt_content"
+        android:textSize="@dimen/text_size_medium" />
+
+    <LinearLayout
+        style="@style/wrapHeightTheme"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/wrapTheme"
+            android:drawableLeft="@mipmap/ic_dispatcher"
+            android:drawablePadding="4dp"
+            android:text="@string/label_dispatcher"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_smaller" />
+
+        <TextView
+            android:id="@+id/tv_dispatcher"
+            style="@style/wrapTheme"
+            android:layout_marginLeft="4dp"
+            android:text="123"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_smaller" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/wrapHeightTheme"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/wrapTheme"
+            android:drawableLeft="@mipmap/ic_plan_time"
+            android:drawablePadding="4dp"
+            android:text="@string/label_plan_end_time"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_smaller" />
+
+        <TextView
+            android:id="@+id/tv_plan_end_time"
+            style="@style/wrapTheme"
+            android:layout_marginLeft="4dp"
+            android:text="123"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_smaller" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -68,7 +68,7 @@ public class WebSocketWriter {
             final Map<String, Object> itemMap = new HashMap<>();
             itemMap.put("item_id", item.getItem_id());
             itemMap.put("state",item.getState());
-            itemMap.put("result_name", item.getResult_name());
+            itemMap.put("result_name", item.getResult());
             itemMap.put("note", item.getNote());
 
             final List<String> attachmentList = bizService.listAttachments(item.getId_(), AttachmentType.PHOTO);

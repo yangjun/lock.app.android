@@ -451,7 +451,7 @@ public class LoadListFragment<T, T2 extends ListView> extends LoadBaseFragment {
         protected View getEmptyView() {
             if (emptyView == null) {
                 emptyView = LayoutInflater.from(mAct).inflate(R.layout.load_inflate_empty, null);
-                ((TextView) emptyView.findViewById(R.id.tview_load_empty)).setText(getEmptyText());
+//                ((TextView) emptyView.findViewById(R.id.tview_load_empty)).setText(getEmptyText());
             }
             return emptyView;
         }

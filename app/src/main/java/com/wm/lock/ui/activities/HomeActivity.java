@@ -19,6 +19,7 @@ import com.wm.lock.core.adapter.PagerTabAdapter;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.http.Rest;
+import com.wm.lock.ui.fragments.InspectionListFragment;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -117,6 +118,10 @@ public class HomeActivity extends BaseActivity {
     private void updateIndicator() {
         final boolean hasNew = BuglyManager.hasUpgradeInfo(getApplicationContext());
         mVIndicator.setVisibility(hasNew ? View.VISIBLE : View.GONE);
+    }
+
+    public void updateCount(long count, InspectionListFragment fragment) {
+        // TODO
     }
 
     private class BookBillFragment extends Fragment {

@@ -143,7 +143,7 @@ public class WebSocketService extends Service {
                                 inspection.setPlan_date(new Date());
                                 inspection.setLock_mac("12:3S:6R:7B");
                                 inspection.setRoom_name("机房1");
-                                inspection.setSend_man("张经理");
+                                inspection.setDispatch_man("张经理");
                                 inspection.setInspection_item_list(inspectionItemList);
 
                                 final Chat.ChatData chatData = new Chat.ChatData();

@@ -18,6 +18,8 @@
     <string name="label_setting_lock_pwd">修改开锁密码</string>
     <string name="label_setting_upgrade">检查更新</string>
     <string name="label_rescan">重新扫描</string>
+    <string name="label_dispatcher">派发人:</string>
+    <string name="label_plan_end_time">要求完成时间:</string>
 
     <string name="header_hint_normal">下拉刷新</string>
     <string name="header_hint_ready">松开刷新数据</string>

@@ -59,7 +59,7 @@ public class InspectionItem {
 
     /** 运行情况 */
     @DatabaseField
-    private String result_name;
+    private String result;
 
     /** 备注 */
     @DatabaseField
@@ -153,12 +153,12 @@ public class InspectionItem {
         this.state = state;
     }
 
-    public String getResult_name() {
-        return result_name;
+    public String getResult() {
+        return result;
     }
 
-    public void setResult_name(String result_name) {
-        this.result_name = result_name;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public String getNote() {

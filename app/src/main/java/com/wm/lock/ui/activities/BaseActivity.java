@@ -7,6 +7,9 @@ import com.wm.lock.R;
 import com.wm.lock.core.AbstractActivity;
 import com.wm.lock.Helper;
 import com.wm.lock.dialog.DialogManager;
+import com.wm.lock.entity.UserInfo;
+import com.wm.lock.module.ModuleFactory;
+import com.wm.lock.module.user.IUserService;
 
 import org.androidannotations.annotations.EActivity;
 
@@ -63,6 +66,11 @@ public abstract class BaseActivity extends AbstractActivity {
     public Dialog showWaittingDialog(int titleId, String message) {
         mDialog = DialogManager.showWaittingDialog(this, titleId, message, false);
         return mDialog;
+    }
+
+    public UserInfo loginUser() {
+        final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
+        return userService.getLoginedInfo();
     }
 
 }

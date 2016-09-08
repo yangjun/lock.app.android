@@ -26,7 +26,7 @@ public class Inspection {
 
     /** 派发人 */
     @DatabaseField
-    private String send_man;
+    private String dispatch_man;
 
     /** 创建时间 */
     @DatabaseField
@@ -87,12 +87,12 @@ public class Inspection {
         this.plan_name = plan_name;
     }
 
-    public String getSend_man() {
-        return send_man;
+    public String getDispatch_man() {
+        return dispatch_man;
     }
 
-    public void setSend_man(String send_man) {
-        this.send_man = send_man;
+    public void setDispatch_man(String dispatch_man) {
+        this.dispatch_man = dispatch_man;
     }
 
     public Date getCreate_date() {
