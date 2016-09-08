@@ -3,15 +3,18 @@ package com.wm.lock.websocket;
 import android.content.Context;
 
 import com.wm.lock.LockApplication;
+import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.core.utils.GsonUtils;
 import com.wm.lock.core.utils.NotificationUtils;
 import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.Chat;
+import com.wm.lock.entity.ChatDirective;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionResult;
 import com.wm.lock.entity.InspectionState;
+import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.ui.activities.HomeActivity_;
 
 import de.greenrobot.event.EventBus;
@@ -25,10 +28,10 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
     void execute(Chat chat) {
         mChat = chat;
         payload = chat.getData().getPayload();
-        if (contains(payload, "PLAN")) {
+        if (contains(payload, LockConstants.BIZ_PLAN)) {
             getInspection();
         }
-        else if (contains(payload, "RESULT_RETURN")) {
+        else if (contains(payload, LockConstants.BIZ_RESULT_RETURN)) {
             getInspectionSubmitResult();
         }
     }
@@ -72,7 +75,13 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
             public InspectionResult execute() throws Exception {
                 final InspectionResult result = GsonUtils.fromJson(payload, InspectionResult.class);
                 if (result.getState() == InspectionState.COMPLETE) {
-                    bizService().deleteCommunication(getLoginUser().getJobNumber(), mChat.getData().getId());
+                    final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
+                    deleteParam.setSource(loginUser().getJobNumber());
+                    deleteParam.setContents(new String[]{
+                            "\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\"",
+                            "\"plan_id\": \"" + result.getPlan_id() + "\""
+                    });
+                    bizService().deleteCommunication(deleteParam);
                 }
                 return result;
             }
@@ -80,6 +89,7 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
             @Override
             public void onSuccess(InspectionResult result) {
                 final InspectionResultDto dto = new InspectionResultDto();
+                dto.setPlan_id(result.getPlan_id());
                 dto.setSuccess(result.getState() == InspectionState.COMPLETE);
                 EventBus.getDefault().post(dto);
                 ask();

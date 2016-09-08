@@ -3,6 +3,7 @@ package com.wm.lock.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.wm.lock.Helper;
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.module.ModuleFactory;
@@ -38,7 +39,7 @@ public class LoginActivity extends BaseActivity {
     @OnActivityResult(REQUEST_GESTURE_PRINT_VERIFY)
     void onVerifyGesturePrintResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            RedirectUtils.goActivity(this, HomeActivity_.class);
+            Helper.goHomePage(this);
         }
         finish();
     }

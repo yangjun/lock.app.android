@@ -10,7 +10,7 @@ class WebSocketReaderASK extends WebSocketReaderBase {
     @Override
     void execute(Chat chat) {
         final String chatId = chat.getData().getId();
-        final String userJobNumber = getLoginUser().getJobNumber();
+        final String userJobNumber = loginUser().getJobNumber();
         final Communication communication = bizService().findCommunication(userJobNumber, chatId);
         if (communication != null) {
             execute(communication);

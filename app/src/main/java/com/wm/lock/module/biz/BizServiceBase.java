@@ -10,6 +10,7 @@ import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionState;
+import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.BaseModule;
 
@@ -188,8 +189,8 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public void deleteCommunication(String userJobNumber, String communicationBizId) {
-        mDaoManager.getCommunicationDao().delete(userJobNumber, communicationBizId);
+    public void deleteCommunication(CommunicationDeleteParam param) {
+        mDaoManager.getCommunicationDao().delete(param);
     }
 
     @Override

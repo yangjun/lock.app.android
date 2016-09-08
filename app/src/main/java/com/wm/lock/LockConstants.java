@@ -26,4 +26,20 @@ public final class LockConstants {
 
     public static final String HTTP_SERVER = "http_server";
     public static final String CONTENT_TYPE = "Content-Type";
+
+
+    /** 业务标识 */
+    public static final String BIZ_FLAG = "business";
+
+    /** 获取推送的巡检项 */
+    public static final String BIZ_PLAN = "PLAN";
+
+    /** 更改巡检计划状态 */
+    public static final String BIZ_PLAN_RETURN = "PLAN_RETURN";
+
+    /** 提交巡检计划 */
+    public static final String BIZ_RESULT = "RESULT";
+
+    /** 提交巡检计划的结果反馈 */
+    public static final String BIZ_RESULT_RETURN = "RESULT_RETURN";
 }

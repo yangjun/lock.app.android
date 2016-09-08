@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.wm.lock.Helper;
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.core.utils.RedirectUtils;
@@ -70,7 +71,7 @@ public class RegisterActivity extends BaseActivity {
             final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
             userService.register(user);
 
-            RedirectUtils.goActivity(this, HomeActivity_.class);
+            Helper.goHomePage(this);
             finish();
         }
     }

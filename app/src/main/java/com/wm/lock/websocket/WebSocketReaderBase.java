@@ -1,5 +1,6 @@
 package com.wm.lock.websocket;
 
+import com.wm.lock.LockConstants;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.ChatDirective;
 import com.wm.lock.entity.UserInfo;
@@ -11,22 +12,18 @@ abstract class WebSocketReaderBase {
 
     abstract void execute(Chat chat);
 
-    protected UserInfo getLoginUser() {
+    protected UserInfo loginUser() {
         final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
         return userService.getLoginedInfo();
     }
 
     protected boolean contains(String content, String flag) {
-        flag = getBizFlag(flag);
+        flag = "\"" + LockConstants.BIZ_FLAG + "\":\"" + flag + "\"";
         return content.contains(flag);
     }
 
     protected IBizService bizService() {
         return ModuleFactory.getInstance().getModuleInstance(IBizService.class);
-    }
-
-    private String getBizFlag(String flag) {
-        return String.format("\"business\":\"%s\"", flag);
     }
 
 }

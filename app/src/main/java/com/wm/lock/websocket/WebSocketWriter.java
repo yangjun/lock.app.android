@@ -2,6 +2,7 @@ package com.wm.lock.websocket;
 
 import android.text.TextUtils;
 
+import com.wm.lock.LockConstants;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.GsonUtils;
@@ -38,7 +39,7 @@ public class WebSocketWriter {
 
     public static void receiveInspection(Inspection inspection) {
         final Map<String, Object> map = new HashMap<>();
-        map.put("business", "PLAN_RETURN");
+        map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_PLAN_RETURN);
         map.put("plan_id", inspection.getPlan_id());
         map.put("state", InspectionState.IN_PROCESS);
         execute(map);
@@ -46,7 +47,7 @@ public class WebSocketWriter {
 
     public static void refuseInspection(Inspection inspection, String reason) {
         final Map<String, Object> map = new HashMap<>();
-        map.put("business", "PLAN_RETURN");
+        map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_PLAN_RETURN);
         map.put("plan_id", inspection.getPlan_id());
         map.put("state", InspectionState.REFUSE);
         map.put("reason", reason);
@@ -59,7 +60,7 @@ public class WebSocketWriter {
         final List<InspectionItem> inspectionItemList = bizService.listInspectionItem(inspectionId);
 
         final Map<String, Object> map = new HashMap<>();
-        map.put("business", "RESULT");
+        map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT);
         map.put("plan_id", inspection.getPlan_id());
 
         final List<Map<String, Object>> itemList = new ArrayList<>();

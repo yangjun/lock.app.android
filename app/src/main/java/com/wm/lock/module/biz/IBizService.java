@@ -4,6 +4,7 @@ import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
 
 import java.util.List;
@@ -108,7 +109,7 @@ public interface IBizService {
     /**
      * 删除通信记录
      */
-    public void deleteCommunication(String userJobNumber, String communicationBizId);
+    public void deleteCommunication(CommunicationDeleteParam param);
 
     /**
      * 获取通信记录

@@ -7,36 +7,18 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.entity.Communication;
-import com.wm.lock.entity.Inspection;
-import com.wm.lock.entity.InspectionItem;
-import com.wm.lock.entity.params.CommunicationQueryParam;
-import com.wm.lock.entity.params.InspectionQueryParam;
+import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.exception.DbException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class CommunicationDao extends BaseDao<Communication, Long> {
 
     public CommunicationDao(Dao<Communication, Long> dao) {
         super(dao);
-    }
-
-    public Communication find(CommunicationQueryParam param) {
-        try {
-            final List<Communication> list = where(param).query();
-            if (CollectionUtils.isEmpty(list)) {
-                return null;
-            }
-            return list.get(0);
-        } catch (SQLException e) {
-            throw new DbException(e);
-        }
     }
 
     public Communication findNextWrite(String userJobNumber, long currId) {
@@ -71,10 +53,24 @@ public class CommunicationDao extends BaseDao<Communication, Long> {
         }
     }
 
-    public void delete(String userJobNumber, String bizId) {
+    public void delete(CommunicationDeleteParam param) {
         try {
             final DeleteBuilder<Communication, Long> builder = dao.deleteBuilder();
-            builder.where().eq("id", bizId).and().eq("source", userJobNumber);
+            final Where<Communication, Long> where = builder.where().gt("id_", 0);
+            if (!TextUtils.isEmpty(param.getChatId())) {
+                where.and().eq("id", param.getChatId());
+            }
+            if (!TextUtils.isEmpty(param.getSource())) {
+                where.and().eq("source", param.getSource());
+            }
+            if (!TextUtils.isEmpty(param.getDirective())) {
+                where.and().eq("directive", param.getDirective());
+            }
+            if (param.getContents() != null && param.getContents().length > 0) {
+                for (String content : param.getContents()) {
+                    where.and().like("content", "%" + content + "%");
+                }
+            }
             builder.delete();
         } catch (SQLException e) {
             throw new DbException(e);
@@ -91,17 +87,6 @@ public class CommunicationDao extends BaseDao<Communication, Long> {
         } catch (SQLException e) {
             throw new DbException(e);
         }
-    }
-
-    private Where<Communication, Long> where(CommunicationQueryParam param) throws SQLException {
-        final Where<Communication, Long> where = where(param.getIndex(), param.getLimit(), "id_", true);
-        if (!TextUtils.isEmpty(param.getDirective())) {
-            where.and().eq("directive", param.getDirective());
-        }
-        if (!TextUtils.isEmpty(param.getSource())) {
-            where.and().eq("source", param.getSource());
-        }
-        return where;
     }
 
 }

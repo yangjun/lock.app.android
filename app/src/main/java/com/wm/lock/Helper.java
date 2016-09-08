@@ -2,6 +2,7 @@ package com.wm.lock;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConfig;
@@ -9,11 +10,16 @@ import com.wm.lock.core.CrashHandler;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.logger.LoggerOption;
+import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.core.utils.ToastUtils;
+import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.exception.BizException;
 import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.module.ModuleFactory;
+import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.module.user.IUserService;
+import com.wm.lock.ui.activities.HomeActivity_;
+import com.wm.lock.websocket.WebSocketService;
 
 /**
  * Created by wangmin on 16/7/27.
@@ -70,6 +76,19 @@ public final class Helper {
 //        UpdateApi.getInstance().init(ctx);
     }
 
+    public static void initByLogin() {
+        final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+        final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
+
+        // 删除提交的通信记录，由用户手动点击提交
+        final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
+        deleteParam.setSource(userService.getLoginedInfo().getJobNumber());
+        deleteParam.setContents(new String[]{
+                "\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\""
+        });
+        bizService.deleteCommunication(deleteParam);
+    }
+
     public static void destroyByExit() {
         ModuleFactory.getInstance().destroy();
         CacheManager.getInstance().deleteAll(CacheManager.CHANNEL_RUNTIME);
@@ -119,6 +138,18 @@ public final class Helper {
 
     public static void showTip(CharSequence cs) {
         ToastUtils.showShortCenterToast(LockApplication.getInstance(), cs, 0, 0);
+    }
+
+    public static void goHomePage(Context ctx) {
+        // 登录初始化
+        initByLogin();
+
+        // 启动web socket服务
+        final Intent webSocketIntent = new Intent(ctx, WebSocketService.class);
+        ctx.startService(webSocketIntent);
+
+        // 跳转到主页
+        RedirectUtils.goActivity(ctx, HomeActivity_.class);
     }
 
 }

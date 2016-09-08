@@ -1,8 +1,13 @@
 package com.wm.lock.websocket;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
+import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockApplication;
+import com.wm.lock.LockConfig;
+import com.wm.lock.LockConstants;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.GsonUtils;
 import com.wm.lock.core.utils.HardwareUtils;
@@ -10,12 +15,15 @@ import com.wm.lock.dto.DataWriteFailDto;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.ChatDirective;
 import com.wm.lock.entity.Communication;
+import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.UserInfo;
 import com.wm.lock.exception.BizException;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.module.user.IUserService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,11 +33,17 @@ class WebSocketWriterProcessor {
 
     private ExecutorService mExecutorService;
 
-    /** 上次写入的通信记录id */
+    /**
+     * 上次写入的通信记录id
+     */
     private long mLastWriteId = 0L;
 
-    /** 是否正在写入 */
+    /**
+     * 是否正在写入
+     */
     private volatile boolean isWriting = false;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private WebSocketWriterProcessor() {
         mExecutorService = Executors.newFixedThreadPool(10);
@@ -50,6 +64,9 @@ class WebSocketWriterProcessor {
                 final Communication communication = toCommunication(chat);
                 bizService().addCommunication(communication);
                 startIfNot();
+
+                // FIXME 测试用,正式发布时去掉该代码
+                simulateAsk(chat);
             }
         });
     }
@@ -103,7 +120,7 @@ class WebSocketWriterProcessor {
         return result;
     }
 
-    private void send(String data) throws Exception{
+    private void send(String data) throws Exception {
         // TODO 发送数据
     }
 
@@ -140,6 +157,57 @@ class WebSocketWriterProcessor {
 
     private IBizService bizService() {
         return ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+    }
+
+    private void simulateAsk(final Chat chat) {
+        if (LockConfig.MODE == LockConfig.MODE_JUNIT) {
+            // 模拟回复
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        final Chat.ChatData chatData = new Chat.ChatData();
+                        chatData.setId(chat.getData().getId());
+                        final Chat askChat = new Chat();
+                        askChat.setDirective(ChatDirective.ASK);
+                        WebSocketReader.execute(GsonUtils.toJson(chat));
+                    } catch (Exception e) {
+                        Logger.d("fail to simulate ask data from web socket server", e);
+                    }
+                }
+            }, 1000);
+
+            // 模拟提交结果反馈
+            if (chat.getData().getPayload().contains("\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\"")) {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final Map<String, Object> map1 = GsonUtils.fromJson(chat.getData().getPayload(), new TypeToken<Map<String, Object>>() {
+                            });
+
+                            final Map<String, Object> map = new HashMap<>();
+                            map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT_RETURN);
+                            map.put("plan_id", map1.get("plan_id"));
+                            map.put("state", InspectionState.COMPLETE);
+
+                            final Chat.ChatData chatData = new Chat.ChatData();
+                            chatData.setId(chat.getData().getId());
+                            chatData.setSource("admin");
+                            chatData.setPayload(GsonUtils.toJson(map));
+
+                            final Chat dataChat = new Chat();
+                            dataChat.setDirective(ChatDirective.DATA);
+                            dataChat.setData(chatData);
+
+                            WebSocketReader.execute(GsonUtils.toJson(dataChat));
+                        } catch (Exception e) {
+                            Logger.d("fail to simulate ask data from web socket server", e);
+                        }
+                    }
+                }, 2000);
+            }
+        }
     }
 
 }
