@@ -20,6 +20,9 @@
     <string name="label_rescan">重新扫描</string>
     <string name="label_dispatcher">派发人:</string>
     <string name="label_plan_end_time">要求完成时间:</string>
+    <string name="label_pending">待处理(%1$s)</string>
+    <string name="label_in_process">处理中(%1$s)</string>
+    <string name="label_submit_fail">未提交(%1$s)</string>
 
     <string name="header_hint_normal">下拉刷新</string>
     <string name="header_hint_ready">松开刷新数据</string>

@@ -11,9 +11,11 @@ import com.wm.lock.core.load.LoadListFragment;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.entity.Inspection;
+import com.wm.lock.entity.UserInfo;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
+import com.wm.lock.module.user.IUserService;
 import com.wm.lock.ui.activities.HomeActivity;
 
 import org.androidannotations.annotations.EFragment;
@@ -66,7 +68,7 @@ public abstract class InspectionListFragment extends BaseFragment {
                 .setPageLimit(mPageLimit)
                 .setIsPullRefreshEnable(false)
                 .setPaddingTop((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
-                .setPaddingBottom((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
+//                .setPaddingBottom((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
                 .setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -78,12 +80,17 @@ public abstract class InspectionListFragment extends BaseFragment {
 
     protected InspectionQueryParam getQueryParam() {
         final InspectionQueryParam param = new InspectionQueryParam();
-        param.setIndex(mListFragment.getPageNow());
+        param.setIndex(mListFragment == null ? 0 : mListFragment.getPageNow());
         param.setLimit(mPageLimit);
-        param.setUser_job_number(mActivity.loginUser().getJobNumber());
+        param.setUser_job_number(loginUser().getJobNumber());
         return param;
     }
     
     protected abstract void onItemClick(Inspection item);
+
+    private UserInfo loginUser() {
+        final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
+        return userService.getLoginedInfo();
+    }
 
 }

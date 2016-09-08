@@ -161,6 +161,10 @@ class WebSocketWriterProcessor {
 
     private void simulateAsk(final Chat chat) {
         if (LockConfig.MODE == LockConfig.MODE_JUNIT) {
+            if (!chat.getDirective().equals(ChatDirective.DATA)) {
+                return;
+            }
+
             // 模拟回复
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -178,7 +182,7 @@ class WebSocketWriterProcessor {
             }, 1000);
 
             // 模拟提交结果反馈
-            if (chat.getDirective().equals(ChatDirective.DATA) && chat.getData().getPayload().contains("\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\"")) {
+            if (chat.getData().getPayload().contains("\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\"")) {
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

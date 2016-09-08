@@ -58,6 +58,7 @@ public class WebSocketService extends Service {
 
     private void start() {
         // FIXME 模拟在没有巡检项的时候有推送到达，替换为正常逻辑
+        // TODO 继续写没有写完的数据
         simulatePush();
     }
 
@@ -120,7 +121,7 @@ public class WebSocketService extends Service {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            for (int i = 0; i < 10; i++) {
+                            for (int i = 0; i < 1; i++) {
                                 try {
                                     final InspectionItem item1 = new InspectionItem();
                                     item1.setCabinet_lock_mac("21:32:4A:5C");

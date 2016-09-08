@@ -10,6 +10,9 @@ import com.viewpagerindicator.TabPageIndicator;
 import com.wm.lock.R;
 import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.core.adapter.PagerTabAdapter;
+import com.wm.lock.core.async.AsyncExecutor;
+import com.wm.lock.core.async.AsyncWork;
+import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.http.Rest;
@@ -39,6 +42,14 @@ public class HomeActivity extends BaseActivity {
 
     @ViewById(R.id.v_indicator)
     View mVIndicator;
+
+    @ViewById(R.id.pager)
+    ViewPager mViewPager;
+
+    @ViewById(R.id.indicator)
+    TabPageIndicator mTabPagerIndicator;
+
+    private PagerTabAdapter.TabItem[] mTabItems;
 
     @Override
     protected int getStatusBarColor() {
@@ -89,27 +100,18 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupTab() {
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
-
-        PagerTabAdapter.TabItem[] tabItems = new PagerTabAdapter.TabItem[] {
-                new PagerTabAdapter.TabItem("待处理", InspectionListPendingFragment_.builder().build()),
-                new PagerTabAdapter.TabItem("处理中", InspectionListInProcessFragment_.builder().build()),
-                new PagerTabAdapter.TabItem("未提交", InspectionListSubmitFailFragment_.builder().build()),
+        mTabItems = new PagerTabAdapter.TabItem[] {
+                new PagerTabAdapter.TabItem(getTabTitle(R.string.label_pending), InspectionListPendingFragment_.builder().build()),
+                new PagerTabAdapter.TabItem(getTabTitle(R.string.label_in_process), InspectionListInProcessFragment_.builder().build()),
+                new PagerTabAdapter.TabItem(getTabTitle(R.string.label_submit_fail), InspectionListSubmitFailFragment_.builder().build()),
         };
 
-        PagerTabAdapter adapter = new PagerTabAdapter(this, tabItems);
-        pager.setAdapter(adapter);
+        PagerTabAdapter adapter = new PagerTabAdapter(this, mTabItems);
+        mViewPager.setAdapter(adapter);
 
-        final TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(pager);
+        mTabPagerIndicator.setViewPager(mViewPager);
 
-        // FIXME 通过这种方式来刷新tab的标题
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                indicator.notifyDataSetChanged();
-            }
-        }, 3000);
+        updateTabTitle();
     }
 
     private void updateIndicator() {
@@ -118,7 +120,56 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void updateCount(long count, InspectionListFragment fragment) {
-        // TODO
+        for (PagerTabAdapter.TabItem tabItem : mTabItems) {
+            if (tabItem.fragment == fragment) {
+                updateTabTitle(tabItem, count);
+                break;
+            }
+        }
+    }
+
+    private String getTabTitle(int resId) {
+        return getTabTitle(resId, "*");
+    }
+
+    private String getTabTitle(int resId, String count) {
+        return String.format(getString(resId), count);
+    }
+
+    private synchronized void updateTabTitle(PagerTabAdapter.TabItem tabItem, long count) {
+        String title = tabItem.title;
+        final int index = title.lastIndexOf("(");
+        title = title.substring(0, index);
+        title = title + "(" + count + ")";
+
+        tabItem.title = title;
+        mTabPagerIndicator.notifyDataSetChanged();
+    }
+
+    private void updateTabTitle() {
+        for (final PagerTabAdapter.TabItem tabItem : mTabItems) {
+            new AsyncExecutor().execute(new AsyncWork<Long>() {
+                @Override
+                public void onPreExecute() {
+
+                }
+
+                @Override
+                public void onSuccess(Long result) {
+                    updateTabTitle(tabItem, result);
+                }
+
+                @Override
+                public void onFail(Exception e) {
+                    Logger.p("fail to load inspection list count for tab:" + tabItem.title, e);
+                }
+
+                @Override
+                public Long onExecute() throws Exception {
+                    return ((InspectionListFragment) tabItem.fragment).getItemCount();
+                }
+            });
+        }
     }
 
 }
