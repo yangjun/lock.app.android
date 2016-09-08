@@ -1,15 +1,17 @@
 package com.wm.lock.ui.fragments;
 
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.wm.lock.R;
+import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.params.InspectionQueryParam;
 
 import org.androidannotations.annotations.EFragment;
-import org.apache.http.util.VersionInfo;
 
 import de.greenrobot.event.EventBus;
 
@@ -64,6 +66,32 @@ public class InspectionListPendingFragment extends InspectionListFragment {
 
     @Override
     protected void onItemClick(Inspection item) {
+        final CharSequence[] items = new CharSequence[]{
+                "1. " + mActivity.getString(R.string.label_receive_task),
+                "2. " + mActivity.getString(R.string.label_refuse_task)
+        };
+        DialogManager.showSingleChoiceDialog(mActivity, R.string.label_dialog_options, items, new MaterialDialog.ListCallbackSingleChoice() {
+            @Override
+            public boolean onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+                switch (i) {
+                    case 0:
+                        receive();
+                        break;
+
+                    case 1:
+                        refuse();
+                        break;
+                }
+                return false;
+            }
+        }, false);
+    }
+
+    private void refuse() {
+        // TODO
+    }
+
+    private void receive() {
         // TODO
     }
 

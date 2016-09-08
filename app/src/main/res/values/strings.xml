@@ -23,6 +23,9 @@
     <string name="label_pending">待处理(%1$s)</string>
     <string name="label_in_process">处理中(%1$s)</string>
     <string name="label_submit_fail">未提交(%1$s)</string>
+    <string name="label_dialog_options">请选择您的操作</string>
+    <string name="label_receive_task">接收任务</string>
+    <string name="label_refuse_task">拒绝任务</string>
 
     <string name="header_hint_normal">下拉刷新</string>
     <string name="header_hint_ready">松开刷新数据</string>
