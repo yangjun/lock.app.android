@@ -1,6 +1,8 @@
 package com.wm.lock.dto;
 
-public class InspectionNewDto {
+import java.io.Serializable;
+
+public class InspectionNewDto implements Serializable {
 
     private long count;
 

@@ -9,6 +9,7 @@ import com.wm.lock.ui.activities.BaseActivity;
 public abstract class BaseFragment extends AbstractFragment {
 
     protected BaseActivity mActivity;
+    protected volatile boolean isPaused = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,18 @@ public abstract class BaseFragment extends AbstractFragment {
     @Override
     protected void onMemoryRecycled() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isPaused = false;
+    }
+
+    @Override
+    public void onPause() {
+        isPaused = true;
+        super.onPause();
     }
 
 }

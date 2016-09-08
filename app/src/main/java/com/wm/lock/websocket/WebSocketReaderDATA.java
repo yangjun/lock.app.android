@@ -1,6 +1,7 @@
 package com.wm.lock.websocket;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConstants;
@@ -59,7 +60,10 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
                     final Context ctx = LockApplication.getInstance();
                     String message = ctx.getResources().getString(R.string.message_new_inspection);
                     message = String.format(message, result);
-                    NotificationUtils.showNotification(LockApplication.getInstance(), 0, message, HomeActivity_.class);
+
+                    final Bundle bundle = new Bundle();
+                    bundle.putSerializable(LockConstants.DATA, dto);
+                    NotificationUtils.showNotification(LockApplication.getInstance(), 0, message, HomeActivity_.class, bundle);
                 }
                 ask();
             }

@@ -74,6 +74,11 @@ public class HomeActivity extends BaseActivity {
         updateIndicator();
     }
 
+    @Override
+    public void onBackPressed() {
+        HardwareUtils.goHome(this);
+    }
+
     @Click(R.id.tv_open_door)
     void onOpenDoorClick() {
         RedirectUtils.goActivity(this, OpenDoorActivity_.class);
