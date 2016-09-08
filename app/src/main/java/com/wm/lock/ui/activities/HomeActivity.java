@@ -1,16 +1,10 @@
 package com.wm.lock.ui.activities;
 
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.viewpagerindicator.TabPageIndicator;
 import com.wm.lock.R;
@@ -20,6 +14,9 @@ import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.http.Rest;
 import com.wm.lock.ui.fragments.InspectionListFragment;
+import com.wm.lock.ui.fragments.InspectionListInProcessFragment_;
+import com.wm.lock.ui.fragments.InspectionListPendingFragment_;
+import com.wm.lock.ui.fragments.InspectionListSubmitFailFragment_;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -95,9 +92,9 @@ public class HomeActivity extends BaseActivity {
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
 
         PagerTabAdapter.TabItem[] tabItems = new PagerTabAdapter.TabItem[] {
-                new PagerTabAdapter.TabItem("待处理", new BookBillFragment("待处理")),
-                new PagerTabAdapter.TabItem("处理中", new BookBillFragment("处理中")),
-                new PagerTabAdapter.TabItem("未提交", new BookBillFragment("未提交")),
+                new PagerTabAdapter.TabItem("待处理", InspectionListPendingFragment_.builder().build()),
+                new PagerTabAdapter.TabItem("处理中", InspectionListInProcessFragment_.builder().build()),
+                new PagerTabAdapter.TabItem("未提交", InspectionListSubmitFailFragment_.builder().build()),
         };
 
         PagerTabAdapter adapter = new PagerTabAdapter(this, tabItems);
@@ -122,27 +119,6 @@ public class HomeActivity extends BaseActivity {
 
     public void updateCount(long count, InspectionListFragment fragment) {
         // TODO
-    }
-
-    private class BookBillFragment extends Fragment {
-
-        private String content;
-
-        private BookBillFragment(String content) {
-            this.content = content;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            TextView tv = new TextView(getActivity());
-            tv.setText(content);
-            tv.setTextColor(Color.BLACK);
-            tv.setGravity(Gravity.CENTER);
-            tv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            return tv;
-        }
-
     }
 
 }

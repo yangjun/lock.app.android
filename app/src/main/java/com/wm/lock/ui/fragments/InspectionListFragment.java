@@ -9,14 +9,18 @@ import com.wm.lock.R;
 import com.wm.lock.adapter.InspectionListAdapter;
 import com.wm.lock.core.load.LoadListFragment;
 import com.wm.lock.core.utils.FragmentUtils;
+import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.ui.activities.HomeActivity;
 
+import org.androidannotations.annotations.EFragment;
+
 import java.util.List;
 
+@EFragment
 public abstract class InspectionListFragment extends BaseFragment {
 
     protected int mPageLimit = Integer.MAX_VALUE;
@@ -61,6 +65,8 @@ public abstract class InspectionListFragment extends BaseFragment {
         mListFragment.setLoadConfig(new LoadListFragment.LoadListConfig()
                 .setPageLimit(mPageLimit)
                 .setIsPullRefreshEnable(false)
+                .setPaddingTop((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
+                .setPaddingBottom((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
                 .setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

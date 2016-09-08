@@ -92,7 +92,7 @@ public class DateUtils {
 	}
 
 	public static String getDateTimeStr2(Date date) {
-		return TIME_FORMAT2.format(date);
+		return DATETIME_FORMAT2.format(date);
 	}
 
 	/**

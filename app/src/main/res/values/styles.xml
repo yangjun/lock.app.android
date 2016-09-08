@@ -162,6 +162,7 @@
         <item name="android:cacheColorHint">@android:color/transparent</item>
         <item name="android:scrollingCache">false</item>
         <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:clipToPadding">false</item>
     </style>
 
     <!-- 按钮样式 -->

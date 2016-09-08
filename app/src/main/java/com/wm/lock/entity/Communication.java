@@ -28,6 +28,7 @@ public class Communication {
     private String target;
 
     /** 指令 */
+    @DatabaseField
     private String directive;
 
     /** 具体内容 */

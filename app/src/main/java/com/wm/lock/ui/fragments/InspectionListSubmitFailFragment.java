@@ -7,12 +7,12 @@ import com.wm.lock.entity.params.InspectionQueryParam;
 import org.androidannotations.annotations.EFragment;
 
 @EFragment
-public class InspectionListPendingFragment extends InspectionListFragment {
+public class InspectionListSubmitFailFragment extends InspectionListFragment {
 
     @Override
     protected InspectionQueryParam getQueryParam() {
         final InspectionQueryParam result = super.getQueryParam();
-        result.setState(InspectionState.PENDING);
+        result.setState(InspectionState.SUBMIT_FAIL);
         return result;
     }
 

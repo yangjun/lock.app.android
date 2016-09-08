@@ -178,7 +178,7 @@ class WebSocketWriterProcessor {
             }, 1000);
 
             // 模拟提交结果反馈
-            if (chat.getData().getPayload().contains("\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\"")) {
+            if (chat.getDirective().equals(ChatDirective.DATA) && chat.getData().getPayload().contains("\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\"")) {
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

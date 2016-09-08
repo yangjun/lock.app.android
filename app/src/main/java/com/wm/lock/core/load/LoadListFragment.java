@@ -1,6 +1,7 @@
 package com.wm.lock.core.load;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -92,7 +93,9 @@ public class LoadListFragment<T, T2 extends ListView> extends LoadBaseFragment {
         if (mLoadListConfig.getDividerDrawable() != null) {
             mListView.setDivider(mLoadListConfig.getDividerDrawable());
         }
-        mListView.setDividerHeight(dp2px(getActivity(), mLoadListConfig.getDividerHeight()));
+        mListView.setDividerHeight(mLoadListConfig.getDividerHeight());
+
+        mListView.setPadding(mLoadListConfig.getPaddingLeft(), mLoadListConfig.getPaddingTop(), mLoadListConfig.getPaddingRight(), mLoadListConfig.getPaddingBottom());
 
 //        mListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
 //            @Override
@@ -419,8 +422,13 @@ public class LoadListFragment<T, T2 extends ListView> extends LoadBaseFragment {
         private int pageStart = 0;
         private boolean isAutoLoadMore = true;
         private View emptyView;
-        private int dividerHeight;
+        private int dividerHeight = 1;
         private Drawable dividerDrawable;
+
+        private int paddingLeft = 0;
+        private int paddingTop = 0;
+        private int paddingRight = 0;
+        private int paddingBottom = 0;
 
         private AdapterView.OnItemClickListener onItemClickListener;
         private AbsListView.OnScrollListener onScrollListener;
@@ -500,6 +508,9 @@ public class LoadListFragment<T, T2 extends ListView> extends LoadBaseFragment {
         }
 
         public Drawable getDividerDrawable() {
+            if (dividerDrawable == null) {
+                dividerDrawable = new ColorDrawable(mAct.getResources().getColor(R.color.bg_item_light));
+            }
             return dividerDrawable;
         }
 
@@ -515,6 +526,42 @@ public class LoadListFragment<T, T2 extends ListView> extends LoadBaseFragment {
 
         public LoadListConfig setDividerDrawable(Drawable dividerDrawable) {
             this.dividerDrawable = dividerDrawable;
+            return this;
+        }
+
+        public int getPaddingLeft() {
+            return paddingLeft;
+        }
+
+        public LoadListConfig setPaddingLeft(int paddingLeft) {
+            this.paddingLeft = paddingLeft;
+            return this;
+        }
+
+        public int getPaddingTop() {
+            return paddingTop;
+        }
+
+        public LoadListConfig setPaddingTop(int paddingTop) {
+            this.paddingTop = paddingTop;
+            return this;
+        }
+
+        public int getPaddingRight() {
+            return paddingRight;
+        }
+
+        public LoadListConfig setPaddingRight(int paddingRight) {
+            this.paddingRight = paddingRight;
+            return this;
+        }
+
+        public int getPaddingBottom() {
+            return paddingBottom;
+        }
+
+        public LoadListConfig setPaddingBottom(int paddingBottom) {
+            this.paddingBottom = paddingBottom;
             return this;
         }
 

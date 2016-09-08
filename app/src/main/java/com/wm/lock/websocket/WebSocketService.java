@@ -11,6 +11,8 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.widget.RemoteViews;
 
+import com.google.gson.reflect.TypeToken;
+import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.GsonUtils;
@@ -26,6 +28,8 @@ import com.wm.lock.module.user.IUserService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class WebSocketService extends Service {
@@ -116,48 +120,53 @@ public class WebSocketService extends Service {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            try {
-                                final InspectionItem item1 = new InspectionItem();
-                                item1.setCabinet_lock_mac("21:32:4A:5C");
-                                item1.setCabinet_name("机柜1");
-                                item1.setEquipment_name("设备1");
-                                item1.setItem_cate_name("分类1");
-                                item1.setItem_id(UUID.randomUUID().toString());
-                                item1.setItem_name("检查冷却液的运行情况");
+                            for (int i = 0; i < 10; i++) {
+                                try {
+                                    final InspectionItem item1 = new InspectionItem();
+                                    item1.setCabinet_lock_mac("21:32:4A:5C");
+                                    item1.setCabinet_name("机柜1");
+                                    item1.setEquipment_name("设备1");
+                                    item1.setItem_cate_name("分类1");
+                                    item1.setItem_id(UUID.randomUUID().toString());
+                                    item1.setItem_name("检查冷却液的运行情况");
 
-                                final InspectionItem item2 = new InspectionItem();
-                                item2.setCabinet_lock_mac("2Q:32:4A:5A");
-                                item2.setCabinet_name("机柜2");
-                                item2.setEquipment_name("设备2");
-                                item2.setItem_cate_name("分类3");
-                                item2.setItem_id(UUID.randomUUID().toString());
-                                item2.setItem_name("检查机柜的温度，湿度，并把对应的结果友好圆满的展示出来");
+                                    final InspectionItem item2 = new InspectionItem();
+                                    item2.setCabinet_lock_mac("2Q:32:4A:5A");
+                                    item2.setCabinet_name("机柜2");
+                                    item2.setEquipment_name("设备2");
+                                    item2.setItem_cate_name("分类3");
+                                    item2.setItem_id(UUID.randomUUID().toString());
+                                    item2.setItem_name("检查机柜的温度，湿度，并把对应的结果友好圆满的展示出来");
 
-                                final List<InspectionItem> inspectionItemList = new ArrayList<>();
-                                inspectionItemList.add(item1);
-                                inspectionItemList.add(item2);
+                                    final List<InspectionItem> inspectionItemList = new ArrayList<>();
+                                    inspectionItemList.add(item1);
+                                    inspectionItemList.add(item2);
 
-                                final Inspection inspection = new Inspection();
-                                inspection.setPlan_id(UUID.randomUUID().toString());
-                                inspection.setPlan_name("巡检计划001");
-                                inspection.setPlan_date(new Date());
-                                inspection.setLock_mac("12:3S:6R:7B");
-                                inspection.setRoom_name("机房1");
-                                inspection.setDispatch_man("张经理");
-                                inspection.setInspection_item_list(inspectionItemList);
+                                    final Inspection inspection = new Inspection();
+                                    inspection.setPlan_id(UUID.randomUUID().toString());
+                                    inspection.setPlan_name("巡检计划001");
+                                    inspection.setPlan_date(new Date());
+                                    inspection.setLock_mac("12:3S:6R:7B");
+                                    inspection.setRoom_name("机房1");
+                                    inspection.setDispatch_man("张经理");
+                                    inspection.setInspection_item_list(inspectionItemList);
 
-                                final Chat.ChatData chatData = new Chat.ChatData();
-                                chatData.setId(UUID.randomUUID().toString());
-                                chatData.setSource("admin");
-                                chatData.setPayload(GsonUtils.toJson(inspection));
+                                    final Chat.ChatData chatData = new Chat.ChatData();
+                                    chatData.setId(UUID.randomUUID().toString());
+                                    chatData.setSource("admin");
 
-                                final Chat chat = new Chat();
-                                chat.setDirective(ChatDirective.DATA);
-                                chat.setData(chatData);
+                                    final Map<String, Object> map = GsonUtils.fromJson(GsonUtils.toJson(inspection), new TypeToken<Map<String, Object>>(){});
+                                    map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_PLAN);
+                                    chatData.setPayload(GsonUtils.toJson(map));
 
-                                WebSocketReader.execute(GsonUtils.toJson(chat));
-                            } catch (Exception e) {
-                                Logger.p("fail to simulate push inspection from web socket server", e);
+                                    final Chat chat = new Chat();
+                                    chat.setDirective(ChatDirective.DATA);
+                                    chat.setData(chatData);
+
+                                    WebSocketReader.execute(GsonUtils.toJson(chat));
+                                } catch (Exception e) {
+                                    Logger.p("fail to simulate push inspection from web socket server", e);
+                                }
                             }
                         }
                     }, 5000);

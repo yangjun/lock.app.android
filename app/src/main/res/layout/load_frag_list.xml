@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.jingantech.iam.mfa.android.app.core.widget.GoogleRefreshLayout
+    <com.wm.lock.core.widget.GoogleRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,8 +15,6 @@
             <ListView
                 android:id="@+id/olv"
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 style="@style/listTheme"/>
 
             <FrameLayout
@@ -31,5 +29,5 @@
                 android:layout_height="match_parent"/>
         </FrameLayout>
 
-    </com.jingantech.iam.mfa.android.app.core.widget.GoogleRefreshLayout>
+    </com.wm.lock.core.widget.GoogleRefreshLayout>
 </FrameLayout>

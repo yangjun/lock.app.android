@@ -27,8 +27,8 @@
                 android:paddingRight="4dp"
                 android:paddingTop="1dp"
                 android:text="@string/title_open_door"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@drawable/selector_txt_title"/>
+                android:textColor="@drawable/selector_txt_title"
+                android:textSize="@dimen/text_size_small" />
 
             <View
                 android:id="@+id/v_indicator"
@@ -40,11 +40,22 @@
         </FrameLayout>
 
     </RelativeLayout>
+    ma
 
-    <com.viewpagerindicator.TabPageIndicator
-        android:id="@+id/indicator"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="34dp" />
+        android:layout_height="34dp">
+
+        <com.viewpagerindicator.TabPageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            style="@style/splitTheme"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

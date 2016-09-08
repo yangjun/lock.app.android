@@ -44,6 +44,7 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
             @Override
             public Long execute() throws Exception {
                 final Inspection inspection = GsonUtils.fromJson(payload, Inspection.class);
+                inspection.setUser_job_number(loginUser().getJobNumber());
                 return bizService().addInspection(inspection);
             }
 
