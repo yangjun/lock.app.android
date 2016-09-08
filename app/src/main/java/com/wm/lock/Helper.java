@@ -84,7 +84,7 @@ public final class Helper {
         final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
         deleteParam.setSource(userService.getLoginedInfo().getJobNumber());
         deleteParam.setContents(new String[]{
-                "\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\""
+                getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT)
         });
         bizService.deleteCommunication(deleteParam);
     }
@@ -150,6 +150,10 @@ public final class Helper {
 
         // 跳转到主页
         RedirectUtils.goActivity(ctx, HomeActivity_.class);
+    }
+
+    public static String getDbJson(String key, String value) {
+       return String.format("\\\"%s\\\":\\\"%s\\\"", key, value);
     }
 
 }

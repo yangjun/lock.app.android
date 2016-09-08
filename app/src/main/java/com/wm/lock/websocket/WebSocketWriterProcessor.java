@@ -174,7 +174,8 @@ class WebSocketWriterProcessor {
                         chatData.setId(chat.getData().getId());
                         final Chat askChat = new Chat();
                         askChat.setDirective(ChatDirective.ASK);
-                        WebSocketReader.execute(GsonUtils.toJson(chat));
+                        askChat.setData(chatData);
+                        WebSocketReader.execute(GsonUtils.toJson(askChat));
                     } catch (Exception e) {
                         Logger.d("fail to simulate ask data from web socket server", e);
                     }

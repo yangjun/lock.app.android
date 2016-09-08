@@ -46,7 +46,10 @@
     <string name="message_setting_lock_pwd_not_same">旧开锁密码错误</string>
     <string name="message_setting_lock_pwd_success">修改开锁密码成功</string>
     <string name="message_new_inspection">收到%1$d条新的巡检计划</string>
-
+    <string name="message_refuse_task_success">拒绝任务成功</string>
+    <string name="message_refuse_task_fail">拒绝任务失败，请稍后重试</string>
+    <string name="message_receive_task_success">接收任务成功</string>
+    <string name="message_receive_task_fail">接收任务失败，请稍后重试</string>
 
     <string name="hint_job_number">请输入工号...</string>
     <string name="hint_name">请输入姓名...</string>
@@ -55,6 +58,7 @@
     <string name="hint_lock_pwd_old">请输入旧开锁密码...</string>
     <string name="hint_lock_pwd_new">请输入新开锁密码...</string>
     <string name="hint_lock_pwd_new_repeat">请重复新开锁密码...</string>
+    <string name="hint_refuse_task">请输入拒绝理由...</string>
 
     <string name="empty_job_number">请输入工号</string>
     <string name="empty_name">请输入姓名</string>
@@ -63,6 +67,7 @@
     <string name="empty_lock_pwd_old">请输入旧开锁密码</string>
     <string name="empty_lock_pwd_new">请输入新开锁密码</string>
     <string name="empty_lock_pwd_new_repeat">请重复新开锁密码</string>
+    <string name="empty_refuse_task">请输入拒绝理由</string>
 
     <string name="title_register">注册</string>
     <string name="title_gesture_print_enroll">设置手势密码</string>

@@ -27,7 +27,7 @@ public abstract class InspectionListFragment extends BaseFragment {
 
     protected int mPageLimit = Integer.MAX_VALUE;
     protected LoadListFragment<Inspection, ListView> mListFragment;
-    private long mItemCount;
+    protected long mItemCount;
 
     @Override
     protected int getContentViewId() {
@@ -61,7 +61,7 @@ public abstract class InspectionListFragment extends BaseFragment {
 
             @Override
             public void onSuccess(List<Inspection> result) {
-                ((HomeActivity) mActivity).updateCount(mItemCount, InspectionListFragment.this);
+                updateTabTitleCount(mItemCount);
             }
         });
         mListFragment.setLoadConfig(new LoadListFragment.LoadListConfig()
@@ -85,7 +85,11 @@ public abstract class InspectionListFragment extends BaseFragment {
         param.setUser_job_number(loginUser().getJobNumber());
         return param;
     }
-    
+
+    protected void updateTabTitleCount(long count) {
+        ((HomeActivity) mActivity).updateCount(count, InspectionListFragment.this);
+    }
+
     protected abstract void onItemClick(Inspection item);
 
     private UserInfo loginUser() {

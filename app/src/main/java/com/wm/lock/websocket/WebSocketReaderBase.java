@@ -18,7 +18,8 @@ abstract class WebSocketReaderBase {
     }
 
     protected boolean contains(String content, String flag) {
-        flag = "\"" + LockConstants.BIZ_FLAG + "\":\"" + flag + "\"";
+        flag = String.format("\"%s\":\"%s\"", LockConstants.BIZ_FLAG, flag);
+        content = content.replace("\\", "");
         return content.contains(flag);
     }
 

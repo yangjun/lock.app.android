@@ -276,6 +276,7 @@
     <style name="inputMultiTheme" parent="inputTheme">
         <item name="android:minHeight">@dimen/height_input_multi</item>
         <item name="android:singleLine">false</item>
+        <item name="android:gravity">left|top</item>
     </style>
 
     <style name="inputRegisterTheme" parent="inputTheme">

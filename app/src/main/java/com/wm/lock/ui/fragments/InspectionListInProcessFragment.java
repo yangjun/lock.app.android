@@ -21,4 +21,8 @@ public class InspectionListInProcessFragment extends InspectionListFragment {
         // TODO
     }
 
+    public void receive(Inspection inspection) {
+        reload();
+    }
+
 }

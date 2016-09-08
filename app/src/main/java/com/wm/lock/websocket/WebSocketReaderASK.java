@@ -1,5 +1,6 @@
 package com.wm.lock.websocket;
 
+import com.wm.lock.LockConstants;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.module.ModuleFactory;
@@ -19,7 +20,7 @@ class WebSocketReaderASK extends WebSocketReaderBase {
 
     private void execute(Communication communication) {
         final String content = communication.getContent();
-        if (contains(content, "PLAN_RETURN")) {
+        if (contains(content, LockConstants.BIZ_PLAN_RETURN)) {
             bizService().deleteCommunication(communication.getId_());
         }
     }

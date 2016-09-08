@@ -15,8 +15,10 @@ import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.entity.Inspection;
 import com.wm.lock.http.Rest;
 import com.wm.lock.ui.fragments.InspectionListFragment;
+import com.wm.lock.ui.fragments.InspectionListInProcessFragment;
 import com.wm.lock.ui.fragments.InspectionListInProcessFragment_;
 import com.wm.lock.ui.fragments.InspectionListPendingFragment_;
 import com.wm.lock.ui.fragments.InspectionListSubmitFailFragment_;
@@ -122,6 +124,12 @@ public class HomeActivity extends BaseActivity {
     private void updateIndicator() {
         final boolean hasNew = BuglyManager.hasUpgradeInfo(getApplicationContext());
         mVIndicator.setVisibility(hasNew ? View.VISIBLE : View.GONE);
+    }
+
+    public void receive(Inspection inspection) {
+        final int index = 1;
+        mViewPager.setCurrentItem(index);
+        ((InspectionListInProcessFragment) mTabItems[index].fragment).receive(inspection);
     }
 
     public void updateCount(long count, InspectionListFragment fragment) {

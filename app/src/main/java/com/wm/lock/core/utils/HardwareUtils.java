@@ -3,6 +3,7 @@ package com.wm.lock.core.utils;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
+import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -523,6 +524,11 @@ public class HardwareUtils {
             attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			ctx.getWindow().setAttributes(attr);
         }
+	}
+
+	public static void showKeyboard(Dialog dialog) {
+		dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.wm.lock.websocket;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.wm.lock.Helper;
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
@@ -83,8 +84,8 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
                     final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
                     deleteParam.setSource(loginUser().getJobNumber());
                     deleteParam.setContents(new String[]{
-                            "\"" + LockConstants.BIZ_FLAG + "\": \"" + LockConstants.BIZ_RESULT + "\"",
-                            "\"plan_id\": \"" + result.getPlan_id() + "\""
+                            Helper.getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT),
+                            Helper.getDbJson("plan_id", result.getPlan_id())
                     });
                     bizService().deleteCommunication(deleteParam);
                 }

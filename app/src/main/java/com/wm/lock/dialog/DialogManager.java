@@ -15,14 +15,12 @@ import com.wm.lock.core.callback.Injector;
  */
 public final class DialogManager {
 
-    private static final Theme theme = Theme.LIGHT;
-
     public static Dialog showWaittingDialog(Context ctx, int titleResId, String msg, boolean isCancelable) {
         return showWaittingDialog(ctx, titleResId, msg, isCancelable, false);
     }
 
     public static Dialog showWaittingDialog(Context ctx, int titleResId, String msg, boolean isCancelable, boolean isCancelableOutside) {
-        MaterialDialog.Builder builder = getBuilder(ctx, ctx.getString(titleResId), isCancelable, theme);
+        MaterialDialog.Builder builder = getBuilder(ctx, ctx.getString(titleResId), isCancelable);
         builder.canceledOnTouchOutside(isCancelableOutside);
         builder.content(msg).progress(true, 0).progressIndeterminateStyle(false);
         return showAndReturn(builder);
@@ -33,7 +31,7 @@ public final class DialogManager {
     }
 
     public static Dialog showNotifyDialog(Context ctx, int titleResId, String msg, boolean isCancelable, final Injector injector) {
-        MaterialDialog.Builder builder = getBuilder(ctx, ctx.getString(titleResId), isCancelable, theme);
+        MaterialDialog.Builder builder = getBuilder(ctx, ctx.getString(titleResId), isCancelable);
         builder.content(msg).positiveText(R.string.concern).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
@@ -73,7 +71,7 @@ public final class DialogManager {
     public static Dialog showConfirmDialog(Context ctx, String title, String msg, boolean isCancelable,
                                    String negativeTxt, final Injector negativeInjector,
                                    String postiveTxt, final Injector positiveInjector) {
-        MaterialDialog.Builder builder = getBuilder(ctx, title, isCancelable, theme);
+        MaterialDialog.Builder builder = getBuilder(ctx, title, isCancelable);
         builder.content(msg).negativeText(negativeTxt).positiveText(postiveTxt).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
@@ -110,7 +108,7 @@ public final class DialogManager {
 
     public static Dialog showSingleChoiceDialog(Context ctx, String title, CharSequence[] items, int selectPos,
                                        final MaterialDialog.ListCallbackSingleChoice injector, final Injector positiveInjector, boolean isCancelable) {
-        MaterialDialog.Builder builder = getBuilder(ctx, title, isCancelable, theme);
+        MaterialDialog.Builder builder = getBuilder(ctx, title, isCancelable);
         builder.items(items).itemsCallbackSingleChoice(selectPos, new MaterialDialog.ListCallbackSingleChoice() {
             @Override
             public boolean onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
@@ -135,7 +133,7 @@ public final class DialogManager {
 
     public static Dialog showMultiChoiceDialog(Context ctx, int titleResId,  CharSequence[] items, Integer[] selectPos,
                                       MaterialDialog.ListCallbackMultiChoice injector, boolean isCancelable) {
-        MaterialDialog.Builder builder = getBuilder(ctx, ctx.getString(titleResId), isCancelable, theme);
+        MaterialDialog.Builder builder = getBuilder(ctx, ctx.getString(titleResId), isCancelable);
         builder.items(items).itemsCallbackMultiChoice(selectPos, injector).positiveText(R.string.concern);
         return showAndReturn(builder);
     }
@@ -146,12 +144,12 @@ public final class DialogManager {
         }
     }
 
-    private static MaterialDialog.Builder getBuilder(Context ctx, String title, boolean isCancelable, Theme theme) {
+    public static MaterialDialog.Builder getBuilder(Context ctx, String title, boolean isCancelable) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(ctx);
         if (!TextUtils.isEmpty(title)) {
             builder.title(title);
         }
-        builder.theme(theme).cancelable(isCancelable);
+        builder.theme(Theme.LIGHT).cancelable(isCancelable);
         return builder;
     }
 
