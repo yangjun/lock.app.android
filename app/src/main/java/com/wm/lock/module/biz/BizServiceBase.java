@@ -127,8 +127,8 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public List<InspectionItem> listInspectionItemByCategory(long inspectionId, String categoryId) {
-        return mDaoManager.getInspectionItemDao().listByCategory(inspectionId, categoryId);
+    public List<InspectionItem> listInspectionItemByCategory(long inspectionId, String categoryName) {
+        return mDaoManager.getInspectionItemDao().listByCategory(inspectionId, categoryName);
     }
 
     @Override
@@ -196,6 +196,11 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     @Override
     public Communication findCommunication(String userJobNumber, String communicationBizId) {
         return mDaoManager.getCommunicationDao().find(userJobNumber, communicationBizId);
+    }
+
+    @Override
+    public <B> B inTransaction(Callable<B> callable) {
+        return mDaoManager.getInspectionDao().doInTransaction(callable);
     }
 
     protected File getAttachmentFolder(long foreignId) {

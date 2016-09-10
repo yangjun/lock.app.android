@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalContainerTheme">
+
+    <TextView
+        android:id="@+id/tv_category"
+        style="@style/wrapTheme"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:minHeight="32dp"
+        android:paddingBottom="@dimen/activity_horizontal_margin_half"
+        android:paddingTop="@dimen/activity_horizontal_margin_half"
+        android:textColor="@color/txt_content"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        style="@style/matchTheme">
+
+        <ScrollView
+            android:id="@+id/sv"
+            style="@style/scrollVTheme">
+
+            <LinearLayout
+                android:id="@+id/ll_container"
+                style="@style/verticalWrapContainerTheme" />
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>

@@ -3,6 +3,7 @@ package com.wm.lock;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConfig;
@@ -133,11 +134,11 @@ public final class Helper {
     }
 
     public static void showTip(int resId) {
-        ToastUtils.showShortCenterToast(LockApplication.getInstance(), resId, 0, 0);
+        Toast.makeText(LockApplication.getInstance(), resId, Toast.LENGTH_SHORT).show();
     }
 
     public static void showTip(CharSequence cs) {
-        ToastUtils.showShortCenterToast(LockApplication.getInstance(), cs, 0, 0);
+        Toast.makeText(LockApplication.getInstance(), cs, Toast.LENGTH_SHORT).show();
     }
 
     public static void goHomePage(Context ctx) {

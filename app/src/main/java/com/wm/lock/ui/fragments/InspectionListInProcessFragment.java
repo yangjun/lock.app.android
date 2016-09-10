@@ -26,6 +26,7 @@ public class InspectionListInProcessFragment extends InspectionListFragment {
         final Bundle bundle = new Bundle();
         bundle.putLong(LockConstants.ID, item.getId_());
         bundle.putString(LockConstants.TITLE, item.getPlan_name());
+        bundle.putBoolean(LockConstants.BOOLEAN, true);
         RedirectUtils.goActivity(mActivity, InspectionConstructActivity_.class, bundle);
     }
 

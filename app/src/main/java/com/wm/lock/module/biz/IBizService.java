@@ -8,6 +8,7 @@ import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public interface IBizService {
 
@@ -64,7 +65,7 @@ public interface IBizService {
     /**
      * 根据分类获取巡检项列表
      */
-    public List<InspectionItem> listInspectionItemByCategory(long inspectionId, String categoryId);
+    public List<InspectionItem> listInspectionItemByCategory(long inspectionId, String categoryName);
 
     /**
      * 根据巡检计划id获取巡检项列表
@@ -115,5 +116,10 @@ public interface IBizService {
      * 获取通信记录
      */
     public Communication findCommunication(String userJobNumber, String communicationBizId);
+
+    /**
+     * 事务处理
+     */
+    public <B> B inTransaction(Callable<B> callable);
 
 }

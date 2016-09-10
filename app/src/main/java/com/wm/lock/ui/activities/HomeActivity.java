@@ -1,13 +1,16 @@
 package com.wm.lock.ui.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.viewpagerindicator.TabPageIndicator;
+import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.core.adapter.PagerTabAdapter;
@@ -16,6 +19,7 @@ import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.http.Rest;
 import com.wm.lock.ui.fragments.InspectionListFragment;
@@ -78,6 +82,25 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        final Bundle bundle = intent.getExtras();
+        if (bundle == null) {
+            return;
+        }
+
+        final Object data = bundle.getSerializable(LockConstants.DATA);
+        if (data == null) {
+            return;
+        }
+
+        if (data instanceof InspectionNewDto && mViewPager.getCurrentItem() != 0) {
+            mViewPager.setCurrentItem(0);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         HardwareUtils.goHome(this);
     }
@@ -122,6 +145,7 @@ public class HomeActivity extends BaseActivity {
         mTabPagerIndicator.setViewPager(mViewPager);
 
         updateTabTitle();
+        mViewPager.setCurrentItem(1); //选中处理中
     }
 
     private void updateIndicator() {
