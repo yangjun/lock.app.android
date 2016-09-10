@@ -77,12 +77,12 @@
             android:name=".ui.activities.HomeActivity_"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators"/>
+            android:theme="@style/StyledIndicators" />
 
         <activity
             android:name=".ui.activities.OpenDoorActivity_"
             android:label="@string/title_open_door"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activities.SettingActivity_"
@@ -94,6 +94,10 @@
             android:label="@string/title_setting_lock_pwd"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <activity
+            android:name=".ui.activities.InspectionConstructActivity_"
+            android:label="" />
 
         <service
             android:name=".websocket.WebSocketService"

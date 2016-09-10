@@ -5,6 +5,7 @@
 
     <string name="cancel">取消</string>
     <string name="concern">确定</string>
+    <string name="submit">提交</string>
     <string name="holdon">请稍后</string>
     <string name="holdon_">请稍后...</string>
 
@@ -26,6 +27,7 @@
     <string name="label_dialog_options">请选择您的操作</string>
     <string name="label_receive_task">接收任务</string>
     <string name="label_refuse_task">拒绝任务</string>
+    <string name="label_category_select">选择巡检类别</string>
 
     <string name="header_hint_normal">下拉刷新</string>
     <string name="header_hint_ready">松开刷新数据</string>

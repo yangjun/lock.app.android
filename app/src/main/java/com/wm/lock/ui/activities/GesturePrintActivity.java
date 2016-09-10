@@ -22,8 +22,8 @@ public abstract class GesturePrintActivity extends BaseActivity implements Gestu
     @ViewById(R.id.gpv)
     GesturePrintView mGpv;
 
-    private boolean mEnableBack;
-    private boolean mShowBackBtn;
+    private boolean mEnableBack = true;
+    private boolean mShowBackBtn = true;
 
     @Override
     public void onBackPressed() {

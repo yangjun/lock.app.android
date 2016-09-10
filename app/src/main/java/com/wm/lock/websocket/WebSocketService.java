@@ -135,13 +135,31 @@ public class WebSocketService extends Service {
                                     item2.setCabinet_lock_mac("2Q:32:4A:5A");
                                     item2.setCabinet_name("机柜2");
                                     item2.setEquipment_name("设备2");
-                                    item2.setItem_cate_name("分类3");
+                                    item2.setItem_cate_name("分类2分类2分类2分类2分类2分类2分类2分类2分类2分类2");
                                     item2.setItem_id(UUID.randomUUID().toString());
                                     item2.setItem_name("检查机柜的温度，湿度，并把对应的结果友好圆满的展示出来");
+
+                                    final InspectionItem item3 = new InspectionItem();
+                                    item3.setCabinet_lock_mac("2Q:32:4A:5A");
+                                    item3.setCabinet_name("机柜3");
+                                    item3.setEquipment_name("设备3");
+                                    item3.setItem_cate_name("分类2分类2分类2分类2分类2分类2分类2分类2分类2分类2");
+                                    item3.setItem_id(UUID.randomUUID().toString());
+                                    item3.setItem_name("检查冷却液的运行情况");
+
+                                    final InspectionItem item4 = new InspectionItem();
+                                    item4.setCabinet_lock_mac("2Q:32:4A:5A");
+                                    item4.setCabinet_name("机柜4");
+                                    item4.setEquipment_name("设备4");
+                                    item4.setItem_cate_name("分类2分类2分类2分类2分类2分类2分类2分类2分类2分类2");
+                                    item4.setItem_id(UUID.randomUUID().toString());
+                                    item4.setItem_name("颜色会显示在最上面，记录上的文字被遮住，所以点击文字不放，文字就看不到");
 
                                     final List<InspectionItem> inspectionItemList = new ArrayList<>();
                                     inspectionItemList.add(item1);
                                     inspectionItemList.add(item2);
+                                    inspectionItemList.add(item3);
+                                    inspectionItemList.add(item4);
 
                                     final Inspection inspection = new Inspection();
                                     inspection.setPlan_id(UUID.randomUUID().toString());
