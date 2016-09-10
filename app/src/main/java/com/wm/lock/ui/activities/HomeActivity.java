@@ -1,6 +1,7 @@
 package com.wm.lock.ui.activities;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
@@ -98,9 +99,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupActionBar() {
-        final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mContainerHeader.getLayoutParams();
-        params.topMargin = HardwareUtils.getStatusBarHeight(getApplicationContext());
-        mContainerHeader.setLayoutParams(params);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mContainerHeader.getLayoutParams();
+            params.topMargin = HardwareUtils.getStatusBarHeight(getApplicationContext());
+            mContainerHeader.setLayoutParams(params);
+        }
 
         setBackBtnVisible(false);
         mToolbar.setBackgroundResource(Color.TRANSPARENT);
