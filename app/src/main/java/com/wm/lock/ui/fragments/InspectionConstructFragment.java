@@ -1,6 +1,7 @@
 package com.wm.lock.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,6 @@ import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.HardwareUtils;
-import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
@@ -40,11 +40,17 @@ public class InspectionConstructFragment extends BaseFragment {
     @ViewById(R.id.sv)
     ScrollView mSv;
 
-    private int mIndex;
+    private int mCategoryIndex;
     private long mInspectionId;
     private String mCategory;
     private boolean mEnable;
     private List<InspectionItem> mItemList;
+
+    private boolean mHasRenderer = false;
+    private int mSelectOffset = 0;
+    private int mSelectIndex = -1;
+
+    private Handler mHandler = new Handler();
 
     @Override
     protected int getContentViewId() {
@@ -54,12 +60,12 @@ public class InspectionConstructFragment extends BaseFragment {
     @Override
     protected void init() {
         final Bundle bundle = getArguments();
-        mIndex = bundle.getInt(LockConstants.POS);
+        mCategoryIndex = bundle.getInt(LockConstants.POS);
         mCategory = bundle.getString(LockConstants.DATA);
         mInspectionId = bundle.getLong(LockConstants.ID);
         mEnable = bundle.getBoolean(LockConstants.BOOLEAN);
 
-        mTvCategory.setText(String.format("%s. %s", mIndex + 1, mCategory));
+        mTvCategory.setText(String.format("%s. %s", mCategoryIndex + 1, mCategory));
         loadData();
     }
 
@@ -89,6 +95,34 @@ public class InspectionConstructFragment extends BaseFragment {
         });
     }
 
+    private int getOffset(int index) {
+        final int childCount = mLlContainer.getChildCount();
+        if (childCount <= 0) {
+            return 0;
+        }
+
+        if (index < 0) {
+            index = 0;
+        }
+        else if (index >= childCount) {
+            index = childCount - 1;
+        }
+        final View v = mLlContainer.getChildAt(index);
+        if (v !=null) {
+            return v.getTop();
+        }
+        return 0;
+    }
+
+    private void scrollTo(final int offset) {
+        mSv.post(new Runnable() {
+            @Override
+            public void run() {
+                mSv.smoothScrollTo(0, offset);
+            }
+        });
+    }
+
     private void renderer() {
         mLlContainer.removeAllViews();
         for (int i = 0, size = mItemList.size(); i < size; i++) {
@@ -96,11 +130,17 @@ public class InspectionConstructFragment extends BaseFragment {
             rendererItem(i, item);
         }
 
-        final int lastPos = CacheManager.getInstance().getInt(LockConstants.POS, CacheManager.CHANNEL_PREFERENCE);
-        mSv.postDelayed(new Runnable() {
+        mHasRenderer = true;
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mSv.scrollTo(0, lastPos);
+                int offset = 0;
+                if (mSelectIndex >= 0) {
+                    offset = getOffset(mSelectIndex);
+                } else if (mSelectOffset > 0) {
+                    offset = mSelectOffset;
+                }
+                scrollTo(offset);
             }
         }, 200);
     }
@@ -113,7 +153,7 @@ public class InspectionConstructFragment extends BaseFragment {
 
         // 名称
         final TextView tvName = (TextView) view.findViewById(R.id.tv_category);
-        tvName.setText(String.format("%s %s", (mIndex + 1) + "." + (index + 1), item.getItem_name()));
+        tvName.setText(String.format("%s %s", (mCategoryIndex + 1) + "." + (index + 1), item.getItem_name()));
 
         // 是否正常
         final RadioGroup rgNormal = (RadioGroup) view.findViewById(R.id.rg_normal);
@@ -215,6 +255,24 @@ public class InspectionConstructFragment extends BaseFragment {
                 return null;
             }
         });
+    }
+
+    public void selectIndex(int index) {
+        if (mHasRenderer) {
+            scrollTo(getOffset(index));
+        }
+        else {
+            mSelectIndex = index;
+        }
+    }
+
+    public void selectOffset(int offset) {
+        if (mHasRenderer) {
+            scrollTo(offset);
+        }
+        else {
+            mSelectOffset = offset;
+        }
     }
 
     private void saveItem(View v) {

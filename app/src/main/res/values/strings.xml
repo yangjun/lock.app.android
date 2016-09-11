@@ -44,6 +44,7 @@
     <string name="footer_hint_normal">查看更多</string>
     <string name="footer_hint_ready">松开载入更多</string>
 
+    <string name="message_no_net">网络连接已断开</string>
     <string name="message_fail_connect_server">暂时无法连接，请稍后重试</string>
     <string name="message_fail_connect_network">网络连接已断开，请检查重试</string>
     <string name="message_fail_load">加载失败，请稍后重试</string>
@@ -64,7 +65,12 @@
     <string name="message_inspection_category_no_backward">已经是最后一个分类了</string>
     <string name="message_photo_processing">正在处理照片...</string>
     <string name="message_photo_process_fail">处理照片失败</string>
-
+    <string name="message_submit_checking">正在检查数据</string>
+    <string name="message_submit_check_fail">检查数据失败，请稍后重试</string>
+    <string name="message_submit_check_success">%1$s未填写巡检内容</string>
+    <string name="message_submiting">正在提交...</string>
+    <string name="message_submit_success">提交成功</string>
+    <string name="message_submit_fail">提交失败</string>
 
     <string name="hint_job_number">请输入工号...</string>
     <string name="hint_name">请输入姓名...</string>

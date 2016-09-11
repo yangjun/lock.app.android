@@ -168,6 +168,10 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    public void reloadSubmitFail() {
+        ((InspectionListFragment) mTabItems[2].fragment).reloadDelay();
+    }
+
     private String getTabTitle(int resId) {
         return getTabTitle(resId, "*");
     }

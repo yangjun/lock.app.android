@@ -60,6 +60,7 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
         final Inspection inspection = mDaoManager.getInspectionDao().queryForId(inspectionId);
         inspection.setState(InspectionState.SUBMIT_FAIL);
         inspection.setLast_modify_date(new Date());
+        mDaoManager.getInspectionDao().update(inspection);
     }
 
     @Override

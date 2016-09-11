@@ -19,6 +19,7 @@ import com.wm.lock.module.user.IUserService;
 import com.wm.lock.ui.activities.HomeActivity;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
 
 import java.util.List;
 
@@ -76,6 +77,11 @@ public abstract class InspectionListFragment extends BaseFragment {
                     }
                 }));
         FragmentUtils.replaceFragment(getChildFragmentManager(), R.id.fl, mListFragment);
+    }
+
+    @UiThread(delay = 200)
+    public void reloadDelay() {
+        reload();
     }
 
     protected InspectionQueryParam getQueryParam() {

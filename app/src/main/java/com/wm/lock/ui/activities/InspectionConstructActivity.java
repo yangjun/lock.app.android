@@ -2,6 +2,7 @@ package com.wm.lock.ui.activities;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -14,13 +15,19 @@ import android.widget.TextView;
 
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
+import com.wm.lock.core.async.AsyncExecutor;
+import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.load.LoadApi;
+import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.FragmentUtils;
+import com.wm.lock.dto.InspectionResultDto;
+import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.ui.fragments.InspectionConstructFragment;
 import com.wm.lock.ui.fragments.InspectionConstructFragment_;
+import com.wm.lock.websocket.WebSocketWriter;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -28,6 +35,8 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 @EActivity
 public class InspectionConstructActivity extends BaseActivity {
@@ -50,12 +59,33 @@ public class InspectionConstructActivity extends BaseActivity {
     private int mSelectCategoryIndex = -1;
 
     private MenuAdapter menuAdapter;
+    private InspectionConstructFragment mCurrContentFragment;
+
+    private boolean mIsTrySunmit = false;
 
     @Override
     protected int getContentViewId() {
         return R.layout.act_inspection_construct;
     }
 
+    @Override
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        // 记住选择的分类
+        CacheManager.getInstance().putInt(LockConstants.INDEX, mSelectCategoryIndex, CacheManager.CHANNEL_PREFERENCE);
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
     @Override
     protected void init() {
         mEnable = mSaveBundle.getBoolean(LockConstants.BOOLEAN, true);
@@ -78,22 +108,18 @@ public class InspectionConstructActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (!closeMenuIfOpen()) {
-            super.onBackPressed();
+            if (mIsTrySunmit) {
+                setResult(RESULT_FIRST_USER);
+            }
+            finish();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        // 记住选择的分类
-        CacheManager.getInstance().putInt(LockConstants.INDEX, mSelectCategoryIndex, CacheManager.CHANNEL_PREFERENCE);
-        super.onPause();
     }
 
     @OptionsItem(R.id.menu_submit)
     void onSubmitClick() {
         closeMenuIfOpen();
-        showTip("提交...");
-        // TODO
+        mCurrContentFragment.save(); // 保存当前数据
+        submit();
     }
 
     @Click(R.id.iv_category)
@@ -115,7 +141,7 @@ public class InspectionConstructActivity extends BaseActivity {
             showTip(R.string.message_inspection_category_no_forward);
         }
         else {
-            setupContent(mSelectCategoryIndex - 1);
+            setupContent(mSelectCategoryIndex - 1, false);
         }
     }
 
@@ -126,8 +152,114 @@ public class InspectionConstructActivity extends BaseActivity {
             showTip(R.string.message_inspection_category_no_backward);
         }
         else {
-            setupContent(mSelectCategoryIndex + 1);
+            setupContent(mSelectCategoryIndex + 1, false);
         }
+    }
+
+    private void submit() {
+        new AsyncExecutor().execute(new AsyncWork<InspectionItem>() {
+
+            @Override
+            public void onPreExecute() {
+                showWaittingDialog(R.string.message_submit_checking);
+            }
+
+            @Override
+            public void onSuccess(InspectionItem result) {
+                dismissDialog();
+                if (result == null) {
+                    doSubmit();
+                } else {
+                    int categoryIndex = -1;
+                    for (int i = 0, len = mCategories.size(); i < len; i++) {
+                        if (mCategories.get(i).equals(result.getItem_cate_name())) {
+                            categoryIndex = i;
+                            break;
+                        }
+                    }
+
+                    int index = -1;
+                    final List<InspectionItem> itemList = bizService().listInspectionItemByCategory(mInspectionId, mCategories.get(categoryIndex));
+                    for (int i = 0, len = itemList.size(); i < len; i++) {
+                        if (itemList.get(i).getId_() == result.getId_()) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    final String msg = String.format(getString(R.string.message_submit_check_success), (categoryIndex + 1) + "." + (index + 1));
+                    showTip(msg);
+                }
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                Logger.p("fail to check before submit", e);
+                dismissDialog();
+                showTip(R.string.message_submit_check_fail);
+            }
+
+            @Override
+            public InspectionItem onExecute() throws Exception {
+                final List<InspectionItem> itemList = bizService().listInspectionItem(mInspectionId);
+                for (int i = 0, len = itemList.size(); i < len; i++) {
+                    final InspectionItem item = itemList.get(i);
+                    if (TextUtils.isEmpty(item.getResult())) {
+                        return item;
+                    }
+                }
+                return null;
+            }
+
+        });
+    }
+
+    private void doSubmit() {
+        new AsyncExecutor().execute(new AsyncWork<Void>() {
+            @Override
+            public void onPreExecute() {
+                mIsTrySunmit = true;
+                showWaittingDialog(R.string.message_submiting);
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                Logger.p("fail to submit inspection", e);
+
+                final InspectionResultDto dto = new InspectionResultDto();
+                dto.setSuccess(false);
+                EventBus.getDefault().post(dto);
+            }
+
+            @Override
+            public Void onExecute() throws Exception {
+                bizService().submitInspection(mInspectionId);
+                WebSocketWriter.submitInspection(mInspectionId);
+                return null;
+            }
+        });
+    }
+
+    public void onEventMainThread(InspectionResultDto dto) {
+        dismissDialog();
+        if (dto.isSuccess()) {
+            bizService().deleteInspection(mInspectionId);
+            showTip(R.string.message_submit_success);
+            setResult(RESULT_OK);
+            finish();
+        }
+        else {
+            showTip(R.string.message_submit_fail);
+        }
+    }
+
+    private IBizService bizService() {
+        return ModuleFactory.getInstance().getModuleInstance(IBizService.class);
     }
 
     private void loadCategories() {
@@ -140,15 +272,14 @@ public class InspectionConstructActivity extends BaseActivity {
 
             @Override
             public List<String> onExecute() {
-                final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
-                return bizService.listInspectionCategory(mInspectionId);
+                return bizService().listInspectionCategory(mInspectionId);
             }
 
             @Override
             public void onSuccess(List<String> result) {
                 mCategories = result;
                 setupMenu();
-                setupContent(CacheManager.getInstance().getInt(LockConstants.INDEX, CacheManager.CHANNEL_PREFERENCE));
+                setupContent(CacheManager.getInstance().getInt(LockConstants.INDEX, CacheManager.CHANNEL_PREFERENCE), true);
                 mFooter.setVisibility(View.VISIBLE);
             }
 
@@ -167,13 +298,13 @@ public class InspectionConstructActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 closeMenu();
                 if (mSelectCategoryIndex != position) {
-                    setupContent(position);
+                    setupContent(position, false);
                 }
             }
         });
     }
 
-    private void setupContent(int index) {
+    private void setupContent(int index, boolean isFirst) {
         mSelectCategoryIndex = index;
         menuAdapter.notifyDataSetInvalidated();
 
@@ -183,9 +314,12 @@ public class InspectionConstructActivity extends BaseActivity {
         bundle.putString(LockConstants.DATA, mCategories.get(mSelectCategoryIndex));
         bundle.putBoolean(LockConstants.BOOLEAN, mEnable);
 
-        final InspectionConstructFragment fragment = InspectionConstructFragment_.builder().build();
-        fragment.setArguments(bundle);
-        FragmentUtils.replaceFragment(getSupportFragmentManager(), R.id.content_frame, fragment);
+        mCurrContentFragment = InspectionConstructFragment_.builder().build();
+        mCurrContentFragment.setArguments(bundle);
+        if (isFirst) {
+            mCurrContentFragment.selectOffset(CacheManager.getInstance().getInt(LockConstants.POS, CacheManager.CHANNEL_PREFERENCE));
+        }
+        FragmentUtils.replaceFragment(getSupportFragmentManager(), R.id.content_frame, mCurrContentFragment);
     }
 
     private boolean isMenuOpen() {

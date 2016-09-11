@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 public class RedirectUtils {
 
@@ -25,34 +26,34 @@ public class RedirectUtils {
 		goActivity(ctx, clazz, bundle, requestCode);
 	}
 
-//	/**
-//	 * 公用跳转
-//	 * @param fragment 当前fragment
-//	 * @param clazz 跳转页面
-//	 */
-//	public static void goActivityForResult(Fragment fragment, Class<?> clazz, int requestCode) {
-//		goActivityForResult(fragment, clazz, null, requestCode);
-//	}
-//
-//	/**
-//	 * 公用跳转
-//	 * @param fragment 当前fragment
-//	 * @param clazz 跳转页面
-//	 * @param bundle 封装传输的数据
-//	 */
-//	public static void goActivityForResult(Fragment fragment, Class<?> clazz, Bundle bundle, int requestCode) {
-//		Intent intent = new Intent();
-//		if (null != bundle) {
-//			intent.putExtras(bundle);
-//		}
-//		intent.setClass(fragment.getActivity(), clazz);
-//		if (requestCode == INVALIDATE_REQUEST) {
-//			fragment.startActivity(intent);
-//		}
-//		else {
-//			fragment.startActivityForResult(intent, requestCode);
-//		}
-//	}
+	/**
+	 * 公用跳转
+	 * @param fragment 当前fragment
+	 * @param clazz 跳转页面
+	 */
+	public static void goActivityForResult(Fragment fragment, Class<?> clazz, int requestCode) {
+		goActivityForResult(fragment, clazz, null, requestCode);
+	}
+
+	/**
+	 * 公用跳转
+	 * @param fragment 当前fragment
+	 * @param clazz 跳转页面
+	 * @param bundle 封装传输的数据
+	 */
+	public static void goActivityForResult(Fragment fragment, Class<?> clazz, Bundle bundle, int requestCode) {
+		Intent intent = new Intent();
+		if (null != bundle) {
+			intent.putExtras(bundle);
+		}
+		intent.setClass(fragment.getActivity(), clazz);
+		if (requestCode == INVALIDATE_REQUEST) {
+			fragment.startActivity(intent);
+		}
+		else {
+			fragment.startActivityForResult(intent, requestCode);
+		}
+	}
 
 	public static void goActivity(Context ctx, Class<?> clazz, Bundle bundle, int requestCode) {
 		Intent intent = new Intent();

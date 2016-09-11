@@ -88,6 +88,9 @@ public class WebSocketWriter {
                 }
                 itemMap.put("pics", photoList);
             }
+            else {
+                itemMap.put("pic_count", 0);
+            }
             itemList.add(itemMap);
         }
         map.put("items", itemList);

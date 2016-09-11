@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.wm.lock.ExceptionProcessor;
 import com.wm.lock.R;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
-import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.dto.InspectionNewDto;
@@ -48,6 +48,12 @@ public class InspectionListPendingFragment extends InspectionListFragment {
     }
 
     @Override
+    public void onDetach() {
+        EventBus.getDefault().unregister(this);
+        super.onDetach();
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden && needReload) {
@@ -56,9 +62,9 @@ public class InspectionListPendingFragment extends InspectionListFragment {
     }
 
     @Override
-    public void onDetach() {
-        EventBus.getDefault().unregister(this);
-        super.onDetach();
+    public void reload() {
+        needReload = false;
+        super.reload();
     }
 
     public void onEventMainThread(InspectionNewDto dto) {
@@ -153,8 +159,7 @@ public class InspectionListPendingFragment extends InspectionListFragment {
 
             @Override
             public void onFail(Exception e) {
-                Logger.p("fail to refuse inspection", e);
-                mActivity.showTip(R.string.message_refuse_task_fail);
+                ExceptionProcessor.show("fail to refuse inspection", e, getString(R.string.message_refuse_task_fail));
             }
 
             @Override
@@ -184,8 +189,7 @@ public class InspectionListPendingFragment extends InspectionListFragment {
 
             @Override
             public void onFail(Exception e) {
-                Logger.p("fail to refuse inspection", e);
-                mActivity.showTip(R.string.message_receive_task_fail);
+                ExceptionProcessor.show("fail to receive inspection", e, getString(R.string.message_receive_task_fail));
             }
 
             @Override
