@@ -98,7 +98,7 @@
         <activity
             android:name=".ui.activities.InspectionConstructActivity_"
             android:label=""
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden"/>
 
         <service
             android:name=".websocket.WebSocketService"

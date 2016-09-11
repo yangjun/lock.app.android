@@ -3,6 +3,7 @@ package com.wm.lock.core.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,39 @@ public class CollectionUtils {
 
     public static Set listToSet(List list) {
         return list == null ? null : new HashSet(list);
+    }
+
+    public static <E> void diff(Collection<E> target, Collection<E> all, Collection<E> result, Comparator<E> comparator) {
+        if (isEmpty(all)) {
+            return;
+        }
+
+        if (isEmpty(target)) {
+            result.addAll(all);
+            return;
+        }
+
+        for (E item : all) {
+            if (!isExists(item, target, comparator)) {
+                result.add(item);
+            }
+        }
+    }
+
+    public static <E> boolean isExists(E item, Collection<E> collection, Comparator<E> comparator) {
+        for (E allItem : collection) {
+            if (comparator == null) {
+                if (item == allItem) {
+                    return true;
+                }
+            }
+            else {
+                if(comparator.compare(item, allItem) == 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

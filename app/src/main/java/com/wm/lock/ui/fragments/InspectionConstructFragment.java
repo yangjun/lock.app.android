@@ -15,6 +15,8 @@ import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.load.LoadApi;
+import com.wm.lock.core.utils.FragmentUtils;
+import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.module.ModuleFactory;
@@ -128,10 +130,32 @@ public class InspectionConstructFragment extends BaseFragment {
         // 备注
         final EditText etNote = (EditText) view.findViewById(R.id.et_note);
         etNote.setText(item.getNote());
-        rendererUnNecessary(view, R.id.ll_add_note, R.id.ll_note, TextUtils.isEmpty(item.getNote()));
+        etNote.setEnabled(mEnable);
+        rendererUnNecessary(view, R.id.ll_add_note, R.id.ll_note, TextUtils.isEmpty(item.getNote()), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HardwareUtils.showKeyboard(mActivity, etNote);
+            }
+        });
 
         // 照片
-        // TODO
+        final Bundle bundle = new Bundle();
+        bundle.putLong(LockConstants.ID, item.getId_());
+        bundle.putBoolean(LockConstants.BOOLEAN, mEnable);
+        final AttachPhotoFragment photoFragment = new AttachPhotoFragment_();
+        photoFragment.setArguments(bundle);
+
+        final int photoAreaId = 1000 + index;
+        final View photoArea = view.findViewById(R.id.fl_photo_area);
+        photoArea.setId(photoAreaId);
+        FragmentUtils.replaceFragment(getChildFragmentManager(), photoAreaId, photoFragment);
+
+        rendererUnNecessary(view, R.id.ll_add_photo, R.id.ll_photo, photoFragment.count(item.getId_()) <= 0, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photoFragment.takePhoto();
+            }
+        });
     }
 
     private IBizService bizService() {
@@ -142,7 +166,7 @@ public class InspectionConstructFragment extends BaseFragment {
         v.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    private void rendererUnNecessary(View parent, int btnId, int containerId, boolean empty) {
+    private void rendererUnNecessary(View parent, int btnId, int containerId, boolean empty, final View.OnClickListener listener) {
         final View btn = parent.findViewById(btnId);
         final View container = parent.findViewById(containerId);
         if (mEnable) {
@@ -153,6 +177,9 @@ public class InspectionConstructFragment extends BaseFragment {
                 public void onClick(View v) {
                     setVisible(container, true);
                     setVisible(btn, false);
+                    if (listener != null) {
+                        listener.onClick(v);
+                    }
                 }
             });
         } else {
@@ -202,10 +229,7 @@ public class InspectionConstructFragment extends BaseFragment {
         final EditText etNote = (EditText) v.findViewById(R.id.et_note);
         item.setNote(etNote.getText().toString().trim());
 
-        // 照片
-        // TODO
         bizService().updateInspectionItem(item);
-
     }
 
 }

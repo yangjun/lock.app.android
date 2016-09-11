@@ -116,11 +116,10 @@
                 android:layout_width="wrap_content"
                 android:text="@string/label_photo" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="@dimen/activity_horizontal_margin_half"
-                android:background="@color/bg_item_light" />
+            <FrameLayout
+                android:id="@+id/fl_photo_area"
+                style="@style/wrapHeightTheme"
+                android:layout_marginTop="@dimen/activity_horizontal_margin_half"/>
         </LinearLayout>
 
         <LinearLayout
@@ -134,7 +133,8 @@
                 android:id="@+id/ll_add_photo"
                 style="@style/wrapTheme"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
 
                 <ImageView
                     style="@style/wrapTheme"
@@ -151,7 +151,6 @@
             <LinearLayout
                 android:id="@+id/ll_add_note"
                 style="@style/wrapTheme"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 

@@ -65,7 +65,7 @@ public final class ImageUtils {
     }
 
     public static DisplayImageOptions getRoundCornerImageOptions(int iconId) {
-        return getDisplayImageOptions(iconId, new RoundedBitmapDisplayer(20));
+        return getDisplayImageOptions(iconId, new RoundedBitmapDisplayer(10));
     }
 
     public static void clearCache() {

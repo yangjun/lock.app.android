@@ -78,6 +78,11 @@ public interface IBizService {
     public void updateInspectionItem(InspectionItem item);
 
     /**
+     * 获取附件数量
+     */
+    public int countAttachments(long foreignId, AttachmentType type);
+
+    /**
      * 获取附件列表
      */
     public List<String> listAttachments(long foreignId, AttachmentType type);

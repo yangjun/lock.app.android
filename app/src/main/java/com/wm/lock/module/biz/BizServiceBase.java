@@ -142,6 +142,13 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
+    public int countAttachments(long foreignId, AttachmentType type) {
+        final File folder = getAttachmentFolder(foreignId);
+        final File[] files = folder.listFiles();
+        return files == null ? 0 : files.length;
+    }
+
+    @Override
     public List<String> listAttachments(long foreignId, AttachmentType type) {
         final File folder = getAttachmentFolder(foreignId);
         final File[] files = folder.listFiles();

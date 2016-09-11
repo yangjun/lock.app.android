@@ -5,6 +5,9 @@ package com.wm.lock;
  */
 public final class LockConfig {
 
+    public static final int PHOTO_COUNT_MAX = 8;
+    public static final int PHOTO_WIDTH_MAX = 1024;
+
     public static final int GESTURE_PRINT_MIN_CONNECT = 1;
 
     public static final String MODE_JUNIT = "mode_junit";

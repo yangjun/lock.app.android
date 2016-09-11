@@ -1,0 +1,7 @@
+<com.wm.lock.core.widget.NoScrollGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/scrollVTheme"
+    android:id="@+id/nsg"
+    android:numColumns="4"
+    android:stretchMode="columnWidth"
+    android:horizontalSpacing="32dp"
+    android:verticalSpacing="@dimen/activity_horizontal_margin_half"/>
