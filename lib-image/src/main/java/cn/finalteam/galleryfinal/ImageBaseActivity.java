@@ -179,7 +179,7 @@ public abstract class ImageBaseActivity extends ActionBarActivity implements OnM
             mTvTitle = (TextView) mToolbar.findViewById(R.id.tv_title);
             setSupportActionBar(mToolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_return);
+            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_back);
             mToolbar.setLogo(null);
             mToolbar.setOnMenuItemClickListener(this);
         } else {

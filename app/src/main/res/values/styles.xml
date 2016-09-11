@@ -265,7 +265,7 @@
         <item name="android:paddingRight">8dp</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
-        <item name="android:textColor">@color/txt_content</item>
+        <item name="android:textColor">@drawable/selector_txt_content</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColorHint">@color/txt_desc</item>
         <item name="android:background">@drawable/selector_bg_input</item>
@@ -288,6 +288,7 @@
 
     <style name="scrollVTheme" parent="matchTheme">
         <item name="android:scrollbars">none</item>
+        <item name="android:listSelector">@color/transparent</item>
     </style>
 
     <style name="listVTheme" parent="listTheme">

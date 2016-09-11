@@ -103,7 +103,6 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin_half" />
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/ll_photo"
             style="@style/verticalWrapContainerTheme"
@@ -119,22 +118,22 @@
             <FrameLayout
                 android:id="@+id/fl_photo_area"
                 style="@style/wrapHeightTheme"
-                android:layout_marginTop="@dimen/activity_horizontal_margin_half"/>
+                android:layout_marginTop="@dimen/activity_horizontal_margin_half" />
         </LinearLayout>
 
         <LinearLayout
             style="@style/wrapTheme"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:gravity="bottom">
 
             <LinearLayout
                 android:id="@+id/ll_add_photo"
                 style="@style/wrapTheme"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:layout_marginRight="@dimen/activity_horizontal_margin">
+                android:orientation="vertical">
 
                 <ImageView
                     style="@style/wrapTheme"
@@ -151,6 +150,8 @@
             <LinearLayout
                 android:id="@+id/ll_add_note"
                 style="@style/wrapTheme"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 

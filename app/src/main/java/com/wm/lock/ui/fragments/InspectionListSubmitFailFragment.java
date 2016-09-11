@@ -1,8 +1,13 @@
 package com.wm.lock.ui.fragments;
 
+import android.os.Bundle;
+
+import com.wm.lock.LockConstants;
+import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.params.InspectionQueryParam;
+import com.wm.lock.ui.activities.InspectionConstructActivity_;
 
 import org.androidannotations.annotations.EFragment;
 
@@ -18,7 +23,11 @@ public class InspectionListSubmitFailFragment extends InspectionListFragment {
 
     @Override
     protected void onItemClick(Inspection item) {
-        // TODO
+        final Bundle bundle = new Bundle();
+        bundle.putLong(LockConstants.ID, item.getId_());
+        bundle.putString(LockConstants.TITLE, item.getPlan_name());
+        bundle.putBoolean(LockConstants.BOOLEAN, false);
+        RedirectUtils.goActivity(mActivity, InspectionConstructActivity_.class, bundle);
     }
 
 }

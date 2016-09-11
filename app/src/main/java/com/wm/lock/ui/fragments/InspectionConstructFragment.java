@@ -117,10 +117,14 @@ public class InspectionConstructFragment extends BaseFragment {
 
         // 是否正常
         final RadioGroup rgNormal = (RadioGroup) view.findViewById(R.id.rg_normal);
-        view.findViewById(R.id.rb_normal_yes).setTag(true);
-        view.findViewById(R.id.rb_normal_no).setTag(false);
+        final RadioButton rbNormalYes = (RadioButton) view.findViewById(R.id.rb_normal_yes);
+        final RadioButton rbNormalNo = (RadioButton) view.findViewById(R.id.rb_normal_no);
+        rbNormalYes.setTag(true);
+        rbNormalNo.setTag(false);
         rgNormal.check(item.getState() ? R.id.rb_normal_yes : R.id.rb_normal_no);
         rgNormal.setEnabled(mEnable);
+        rbNormalYes.setEnabled(mEnable);
+        rbNormalNo.setEnabled(mEnable);
 
         // 巡视情况/运行情况
         final EditText etResult = (EditText) view.findViewById(R.id.et_result);

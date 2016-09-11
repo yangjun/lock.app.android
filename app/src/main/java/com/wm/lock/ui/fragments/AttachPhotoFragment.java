@@ -65,9 +65,7 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
         mPhotoPathList = loadPathList(mForeignId);
         mGridAdapter = new GridAdapter();
         mGridView.setAdapter(mGridAdapter);
-        if (mEnable) {
-            mGridView.setOnItemClickListener(this);
-        }
+        mGridView.setOnItemClickListener(this);
     }
 
     public static int count(long foreignId) {
@@ -117,16 +115,23 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ImageHandler.ImagePreviewConfig config = new ImageHandler.ImagePreviewConfig()
-                .setCanEdit(true)
-                .setCurrent(position)
-                .setInitList(toImageInfoList())
-                .setIsBackValid(true);
-        ImageHandler.getInstance().preview(mActivity, config, this);
+        final Object obj = parent.getItemAtPosition(position);
+        if (obj != null) {
+            ImageHandler.ImagePreviewConfig config = new ImageHandler.ImagePreviewConfig()
+                    .setCanEdit(mEnable)
+                    .setCurrent(position)
+                    .setInitList(toImageInfoList())
+                    .setIsBackValid(mEnable);
+            ImageHandler.getInstance().preview(mActivity, config, this);
+        }
     }
 
     @Override
     public void onImagePreviewFinished(List<ImageInfo> result) {
+        if (!mEnable) {
+            return;
+        }
+
         final List<ImageInfo> deleteList = new ArrayList<>();
         final List<ImageInfo> allList = toImageInfoList();
         CollectionUtils.diff(result, allList, deleteList, new Comparator<ImageInfo>() {
@@ -186,7 +191,7 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
 
         @Override
         public Object getItem(int position) {
-            if (hasBtn() && position == mPhotoPathList.size() - 1) {
+            if (hasBtn() && position == getCount() - 1) {
                 return null;
             }
             return mPhotoPathList.get(position);

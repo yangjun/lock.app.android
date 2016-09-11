@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/delete"
-        android:icon="@drawable/ic_recycle"
+        android:icon="@mipmap/ic_delete"
         android:orderInCategory="1"
         android:title="@string/delete"
         app:showAsAction="ifRoom"/>
