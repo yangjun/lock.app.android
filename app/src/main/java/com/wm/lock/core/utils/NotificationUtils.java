@@ -20,20 +20,22 @@ public class NotificationUtils {
                 .setContentText(message)
                 .setSmallIcon(R.mipmap.ic_launcher);
 
-        final Intent resultIntent = new Intent(ctx, targetClazz);
-        resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        if (bundle != null) {
-            resultIntent.putExtras(bundle);
-        }
+        if (targetClazz != null) {
+            final Intent resultIntent = new Intent(ctx, targetClazz);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            if (bundle != null) {
+                resultIntent.putExtras(bundle);
+            }
 
-        int requestCode = (int) SystemClock.uptimeMillis();
-        final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, requestCode, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
+            int requestCode = (int) SystemClock.uptimeMillis();
+            final PendingIntent pendingIntent = PendingIntent.getActivity(ctx, requestCode, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+        }
 
         final Notification notification = builder.build();
         notification.defaults = Notification.DEFAULT_ALL;
-        notification.flags =Notification.FLAG_AUTO_CANCEL;
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(id, notification);
     }
 

@@ -8,9 +8,11 @@ import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConfig;
 import com.wm.lock.LockConstants;
+import com.wm.lock.R;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.GsonUtils;
 import com.wm.lock.core.utils.HardwareUtils;
+import com.wm.lock.core.utils.NotificationUtils;
 import com.wm.lock.dto.DataWriteFailDto;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.ChatDirective;
@@ -76,24 +78,22 @@ class WebSocketWriterProcessor {
         }
 
         isWriting = true;
+        showNotification();
 
         new Thread() {
             @Override
             public void run() {
                 final Communication communication = bizService().findNextWriteCommunication(loginUser().getJobNumber(), mLastWriteId);
                 if (communication == null) {
-                    isWriting = false;
+                    WebSocketWriterProcessor.this.stop();
                     return;
                 }
                 try {
                     send(communication.getContent());
                     sendSuccess(communication);
-                    mLastWriteId = communication.getId_();
-                    isWriting = false;
                     startIfNot(); //继续
                 } catch (Exception e) {
                     sendFail(e);
-                    isWriting = false;
                 }
             }
         }.start();
@@ -101,6 +101,7 @@ class WebSocketWriterProcessor {
 
     public void stop() {
         isWriting = false;
+        cancelNotification();
     }
 
     private Communication toCommunication(Chat chat) {
@@ -134,6 +135,10 @@ class WebSocketWriterProcessor {
         if (chat != null && TextUtils.equals(chat.getDirective(), ChatDirective.ASK)) {
             bizService().deleteCommunication(communication.getId_());
         }
+
+        mLastWriteId = communication.getId_();
+
+        stop();
     }
 
     private void sendFail(Exception e) {
@@ -147,6 +152,8 @@ class WebSocketWriterProcessor {
         final DataWriteFailDto dto = new DataWriteFailDto();
         dto.setError(error);
         EventBus.getDefault().post(dto);
+
+        stop();
     }
 
     private UserInfo loginUser() {
@@ -156,6 +163,18 @@ class WebSocketWriterProcessor {
 
     private IBizService bizService() {
         return ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+    }
+
+    private void showNotification() {
+        NotificationUtils.showNotification(LockApplication.getInstance(), 110, getString(R.string.message_sync_notification), null, null);
+    }
+
+    private void cancelNotification() {
+        NotificationUtils.cancelNotification(LockApplication.getInstance(), 110);
+    }
+
+    private String getString(int resId) {
+        return LockApplication.getInstance().getString(resId);
     }
 
 //    private void simulateAsk(final Chat chat) {
