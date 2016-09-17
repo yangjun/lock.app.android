@@ -61,18 +61,18 @@ public class InspectionConstructActivity extends BaseActivity {
     private MenuAdapter menuAdapter;
     private InspectionConstructFragment mCurrContentFragment;
 
-    private boolean mIsTrySunmit = false;
+//    private boolean mIsTrySubmit = false;
 
     @Override
     protected int getContentViewId() {
         return R.layout.act_inspection_construct;
     }
 
-    @Override
-    public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-        EventBus.getDefault().register(this);
-    }
+//    @Override
+//    public void onCreate(Bundle arg0) {
+//        super.onCreate(arg0);
+//        EventBus.getDefault().register(this);
+//    }
 
     @Override
     protected void onPause() {
@@ -81,11 +81,12 @@ public class InspectionConstructActivity extends BaseActivity {
         super.onPause();
     }
 
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        EventBus.getDefault().unregister(this);
+//        super.onDestroy();
+//    }
+
     @Override
     protected void init() {
         mEnable = mSaveBundle.getBoolean(LockConstants.BOOLEAN, true);
@@ -101,16 +102,18 @@ public class InspectionConstructActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_act_inspection_construct, menu);
+        if (mEnable) {
+            getMenuInflater().inflate(R.menu.menu_act_inspection_construct, menu);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public void onBackPressed() {
         if (!closeMenuIfOpen()) {
-            if (mIsTrySunmit) {
-                setResult(RESULT_FIRST_USER);
-            }
+//            if (mIsTrySubmit) {
+//                setResult(RESULT_FIRST_USER);
+//            }
             finish();
         }
     }
@@ -215,48 +218,53 @@ public class InspectionConstructActivity extends BaseActivity {
     }
 
     private void doSubmit() {
-        new AsyncExecutor().execute(new AsyncWork<Void>() {
-            @Override
-            public void onPreExecute() {
-                mIsTrySunmit = true;
-                showWaittingDialog(R.string.message_submiting);
-            }
-
-            @Override
-            public void onSuccess(Void result) {
-
-            }
-
-            @Override
-            public void onFail(Exception e) {
-                Logger.p("fail to submit inspection", e);
-
-                final InspectionResultDto dto = new InspectionResultDto();
-                dto.setSuccess(false);
-                EventBus.getDefault().post(dto);
-            }
-
-            @Override
-            public Void onExecute() throws Exception {
-                bizService().submitInspection(mInspectionId);
-                WebSocketWriter.submitInspection(mInspectionId);
-                return null;
-            }
-        });
+        bizService().submitInspection(mInspectionId);
+        WebSocketWriter.submitInspection(mInspectionId);
+        showTip(R.string.message_submit_to_background);
+        setResult(RESULT_FIRST_USER);
+        finish();
+//        new AsyncExecutor().execute(new AsyncWork<Void>() {
+//            @Override
+//            public void onPreExecute() {
+//                mIsTrySubmit = true;
+//                showWaittingDialog(R.string.message_submiting);
+//            }
+//
+//            @Override
+//            public void onSuccess(Void result) {
+//
+//            }
+//
+//            @Override
+//            public void onFail(Exception e) {
+//                Logger.p("fail to submit inspection", e);
+//
+//                final InspectionResultDto dto = new InspectionResultDto();
+//                dto.setSuccess(false);
+//                EventBus.getDefault().post(dto);
+//            }
+//
+//            @Override
+//            public Void onExecute() throws Exception {
+//                bizService().submitInspection(mInspectionId);
+//                WebSocketWriter.submitInspection(mInspectionId);
+//                return null;
+//            }
+//        });
     }
 
-    public void onEventMainThread(InspectionResultDto dto) {
-        dismissDialog();
-        if (dto.isSuccess()) {
-            bizService().deleteInspection(mInspectionId);
-            showTip(R.string.message_submit_success);
-            setResult(RESULT_OK);
-            finish();
-        }
-        else {
-            showTip(R.string.message_submit_fail);
-        }
-    }
+//    public void onEventMainThread(InspectionResultDto dto) {
+//        dismissDialog();
+//        if (dto.isSuccess()) {
+//            bizService().deleteInspection(mInspectionId);
+//            showTip(R.string.message_submit_success);
+//            setResult(RESULT_OK);
+//            finish();
+//        }
+//        else {
+//            showTip(R.string.message_submit_fail);
+//        }
+//    }
 
     private IBizService bizService() {
         return ModuleFactory.getInstance().getModuleInstance(IBizService.class);

@@ -109,7 +109,10 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
 
     @Override
     public void deleteInspection(String userJobNumber, String planId) {
-        mDaoManager.getInspectionDao().delete(userJobNumber, planId);
+        final Inspection inspection = mDaoManager.getInspectionDao().findByPlanId(userJobNumber, planId);
+        if (inspection != null) {
+            deleteInspection(inspection.getId_());
+        }
     }
 
     @Override

@@ -5,17 +5,32 @@ import android.text.TextUtils;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.Where;
+import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.exception.DbException;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InspectionDao extends BaseDao<Inspection, Long> {
 
     public InspectionDao(Dao<Inspection, Long> dao) {
         super(dao);
+    }
+
+    public Inspection findByPlanId(String userJobNumber, String planId) {
+        try {
+            final Map<String, Object> map = new HashMap<>();
+            map.put("user_job_number", userJobNumber);
+            map.put("plan_id", planId);
+            final List<Inspection> list = queryForFieldValues(map);
+            return CollectionUtils.isEmpty(list) ? null : list.get(0);
+        } catch (Exception e) {
+            throw new DbException(e);
+        }
     }
 
     public List<Inspection> list(InspectionQueryParam param) {

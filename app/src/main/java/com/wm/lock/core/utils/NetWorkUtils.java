@@ -7,11 +7,11 @@ import android.telephony.TelephonyManager;
 
 public class NetWorkUtils {
 
-    public static final int NETWORK_NONE = 0;
-    public static final int NETWORK_WIFI = 1;
+    public static final int NETWORK_NONE = 1;
     public static final int NETWORK_2G = 2;
     public static final int NETWORK_3G = 3;
     public static final int NETWORK_4G = 4;
+    public static final int NETWORK_WIFI = 5;
 
     public static int getNetworkState(Context context) {
         //获取系统的网络服务

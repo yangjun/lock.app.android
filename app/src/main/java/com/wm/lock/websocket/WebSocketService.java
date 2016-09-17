@@ -31,13 +31,18 @@ import java.net.URI;
 
 public class WebSocketService extends Service {
 
+    private static final int STATUS_DISCONNECTED = 1;
+    private static final int STATUS_CONNECTED = 2;
+    private static final int STATUS_TRY_CONNECTING = 3;
+
     private static final long DELAY = 60000;
 
     private static final int NOTIFICATION_ID = 1017;
     private static WebSocketClient mClient;
     private BroadcastReceiver mNetChangeReceiver;
 
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private Handler mHandler = new Handler();
+    private volatile int mConnectStatus = STATUS_DISCONNECTED;
 
     @Nullable
     @Override
@@ -77,6 +82,9 @@ public class WebSocketService extends Service {
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(mNetChangeReceiver, intentFilter);
 
+        connect();
+        // 不用手动调用connect()，广播会自动执行一次
+
 //        simulatePush();
     }
 
@@ -96,13 +104,30 @@ public class WebSocketService extends Service {
         return notification;
     }
 
+    private boolean canConnect() {
+        if (mConnectStatus != STATUS_DISCONNECTED) {
+            return false;
+        }
+
+        final int type = NetWorkUtils.getNetworkState(getApplicationContext());
+        return type >= NetWorkUtils.NETWORK_2G;
+    }
+
     private synchronized void connect() {
+        // 判断是否能执行连接
+        if (!canConnect()) {
+            return;
+        }
+
+        mConnectStatus = STATUS_TRY_CONNECTING;
+
         try {
             final String address = LockConfig.WS_SERVER + userInfo().getJobNumber();
             final URI uri = new URI(address);
             mClient = new WebSocketClient(uri, new Draft_10()) {
                 @Override
                 public void onOpen(final ServerHandshake serverHandshakeData) {
+                    mConnectStatus = STATUS_CONNECTED;
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -125,6 +150,7 @@ public class WebSocketService extends Service {
 
                 @Override
                 public void onClose(final int code, final String reason, final boolean remote) {
+                    mConnectStatus = STATUS_DISCONNECTED;
                     if (code != 1000 || remote) { //如果不是手动关闭，记录日志并尝试重新连接
                         mHandler.post(new Runnable() {
                             @Override
@@ -138,6 +164,7 @@ public class WebSocketService extends Service {
 
                 @Override
                 public void onError(final Exception e) {
+                    mConnectStatus = STATUS_DISCONNECTED;
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -149,20 +176,18 @@ public class WebSocketService extends Service {
             };
             mClient.connect();
         } catch (Exception e) {
+            mConnectStatus = STATUS_DISCONNECTED;
             Logger.p("fail to connect web socket server", e);
         }
     }
 
     private void connectDelay(long timeMills) {
-        // 有网络的情况下尝试重新连接。没有网络的情况，交给广播去处理
-        if (HardwareUtils.isNetworkAvailable(getApplicationContext())) {
-            mHandler.postDelayed(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     connect();
                 }
             }, timeMills);
-        }
     }
 
     private synchronized void disConnect() {
@@ -196,17 +221,8 @@ public class WebSocketService extends Service {
 
         private void onNetWorkChanged(Context context) {
             final int type = NetWorkUtils.getNetworkState(context);
-            switch (type) {
-                case NetWorkUtils.NETWORK_NONE:
-                    disConnect();
-                    break;
-
-                case NetWorkUtils.NETWORK_2G:
-                case NetWorkUtils.NETWORK_3G:
-                case NetWorkUtils.NETWORK_4G:
-                case NetWorkUtils.NETWORK_WIFI:
-                    connect();
-                    break;
+            if (type != NetWorkUtils.NETWORK_NONE) {
+                connectDelay(0);
             }
         }
 

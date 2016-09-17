@@ -94,6 +94,10 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
 
             @Override
             public void onSuccess(InspectionResult result) {
+                // 删除数据
+                bizService().deleteInspection(loginUser().getJobNumber(), result.getPlan_id());
+
+                // 发送通知
                 final InspectionResultDto dto = new InspectionResultDto();
                 dto.setPlan_id(result.getPlan_id());
                 dto.setSuccess(result.getState() == InspectionState.COMPLETE);

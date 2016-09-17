@@ -71,6 +71,7 @@
     <string name="message_submiting">正在提交...</string>
     <string name="message_submit_success">提交成功</string>
     <string name="message_submit_fail">提交失败</string>
+    <string name="message_submit_to_background">已转到后台提交</string>
 
     <string name="hint_job_number">请输入工号...</string>
     <string name="hint_name">请输入姓名...</string>
