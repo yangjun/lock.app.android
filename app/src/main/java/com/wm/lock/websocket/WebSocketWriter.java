@@ -24,11 +24,11 @@ import java.util.UUID;
 
 public class WebSocketWriter {
 
-    public void start() {
+    public static void start() {
         WebSocketWriterProcessor.getInstance().startIfNot();
     }
 
-    public void stop() {
+    public static void stop() {
         WebSocketWriterProcessor.getInstance().stop();
     }
 

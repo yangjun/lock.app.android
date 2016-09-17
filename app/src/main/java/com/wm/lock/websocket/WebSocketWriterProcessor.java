@@ -65,8 +65,7 @@ class WebSocketWriterProcessor {
                 bizService().addCommunication(communication);
                 startIfNot();
 
-                // FIXME 测试用,正式发布时去掉该代码
-                simulateAsk(chat);
+//                simulateAsk(chat);
             }
         });
     }
@@ -121,7 +120,7 @@ class WebSocketWriterProcessor {
     }
 
     private void send(String data) throws Exception {
-        // TODO 发送数据
+        WebSocketService.send(data);
     }
 
     private void sendSuccess(Communication communication) {
@@ -159,60 +158,60 @@ class WebSocketWriterProcessor {
         return ModuleFactory.getInstance().getModuleInstance(IBizService.class);
     }
 
-    private void simulateAsk(final Chat chat) {
-        if (LockConfig.MODE == LockConfig.MODE_JUNIT) {
-            if (!chat.getDirective().equals(ChatDirective.DATA)) {
-                return;
-            }
-
-            // 模拟回复
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        final Chat.ChatData chatData = new Chat.ChatData();
-                        chatData.setId(chat.getData().getId());
-                        final Chat askChat = new Chat();
-                        askChat.setDirective(ChatDirective.ASK);
-                        askChat.setData(chatData);
-                        WebSocketReader.execute(GsonUtils.toJson(askChat));
-                    } catch (Exception e) {
-                        Logger.d("fail to simulate ask data from web socket server", e);
-                    }
-                }
-            }, 1000);
-
-            // 模拟提交结果反馈
-            if (chat.getData().getPayload().contains("\"" + LockConstants.BIZ_FLAG + "\":\"" + LockConstants.BIZ_RESULT + "\"")) {
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            final Map<String, Object> map1 = GsonUtils.fromJson(chat.getData().getPayload(), new TypeToken<Map<String, Object>>() {
-                            });
-
-                            final Map<String, Object> map = new HashMap<>();
-                            map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT_RETURN);
-                            map.put("plan_id", map1.get("plan_id"));
-                            map.put("state", InspectionState.COMPLETE);
-
-                            final Chat.ChatData chatData = new Chat.ChatData();
-                            chatData.setId(chat.getData().getId());
-                            chatData.setSource("admin");
-                            chatData.setPayload(GsonUtils.toJson(map));
-
-                            final Chat dataChat = new Chat();
-                            dataChat.setDirective(ChatDirective.DATA);
-                            dataChat.setData(chatData);
-
-                            WebSocketReader.execute(GsonUtils.toJson(dataChat));
-                        } catch (Exception e) {
-                            Logger.d("fail to simulate ask data from web socket server", e);
-                        }
-                    }
-                }, 2000);
-            }
-        }
-    }
+//    private void simulateAsk(final Chat chat) {
+//        if (LockConfig.MODE == LockConfig.MODE_JUNIT) {
+//            if (!chat.getDirective().equals(ChatDirective.DATA)) {
+//                return;
+//            }
+//
+//            // 模拟回复
+//            mHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        final Chat.ChatData chatData = new Chat.ChatData();
+//                        chatData.setId(chat.getData().getId());
+//                        final Chat askChat = new Chat();
+//                        askChat.setDirective(ChatDirective.ASK);
+//                        askChat.setData(chatData);
+//                        WebSocketReader.execute(GsonUtils.toJson(askChat));
+//                    } catch (Exception e) {
+//                        Logger.d("fail to simulate ask data from web socket server", e);
+//                    }
+//                }
+//            }, 1000);
+//
+//            // 模拟提交结果反馈
+//            if (chat.getData().getPayload().contains("\"" + LockConstants.BIZ_FLAG + "\":\"" + LockConstants.BIZ_RESULT + "\"")) {
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            final Map<String, Object> map1 = GsonUtils.fromJson(chat.getData().getPayload(), new TypeToken<Map<String, Object>>() {
+//                            });
+//
+//                            final Map<String, Object> map = new HashMap<>();
+//                            map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT_RETURN);
+//                            map.put("plan_id", map1.get("plan_id"));
+//                            map.put("state", InspectionState.COMPLETE);
+//
+//                            final Chat.ChatData chatData = new Chat.ChatData();
+//                            chatData.setId(chat.getData().getId());
+//                            chatData.setSource("admin");
+//                            chatData.setPayload(GsonUtils.toJson(map));
+//
+//                            final Chat dataChat = new Chat();
+//                            dataChat.setDirective(ChatDirective.DATA);
+//                            dataChat.setData(chatData);
+//
+//                            WebSocketReader.execute(GsonUtils.toJson(dataChat));
+//                        } catch (Exception e) {
+//                            Logger.d("fail to simulate ask data from web socket server", e);
+//                        }
+//                    }
+//                }, 2000);
+//            }
+//        }
+//    }
 
 }
