@@ -99,6 +99,7 @@
     <string name="title_setting">设置</string>
     <string name="title_setting_lock_pwd">修改开锁密码</string>
     <string name="title_open_door">开门</string>
+    <string name="title_open_lock">开锁</string>
 
     <string name="gestureprint_enroll_hint">请输入手势密码</string>
     <string name="gestureprint_enroll_repeat">请重新输入手势密码</string>

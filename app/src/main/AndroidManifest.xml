@@ -85,6 +85,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.activities.OpenCabinetActivity_"
+            android:label="@string/title_open_lock"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.activities.SettingActivity_"
             android:label="@string/title_setting"
             android:screenOrientation="portrait" />
@@ -98,7 +103,7 @@
         <activity
             android:name=".ui.activities.InspectionConstructActivity_"
             android:label=""
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
         <service
             android:name=".websocket.WebSocketService"

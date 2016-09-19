@@ -6,11 +6,13 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.wm.lock.core.utils.CollectionUtils;
+import com.wm.lock.entity.BluetoothDevice;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.exception.DbException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,11 @@ public class InspectionDao extends BaseDao<Inspection, Long> {
         } catch (SQLException e) {
             throw new DbException(e);
         }
+    }
+
+    public List<BluetoothDevice> listBluetooth(InspectionQueryParam param) {
+        final List<Inspection> list = list(param);
+        return toBluetoothDeviceList(list);
     }
 
     public long count(InspectionQueryParam param) {
@@ -82,6 +89,29 @@ public class InspectionDao extends BaseDao<Inspection, Long> {
             where.and().eq("user_job_number", param.getUser_job_number());
         }
         return where;
+    }
+
+    private List<BluetoothDevice> toBluetoothDeviceList(List<Inspection> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        final List<BluetoothDevice> result = new ArrayList<>();
+        for (Inspection item : list) {
+            final BluetoothDevice bluetoothDevice = toBluetoothDevice(item);
+            if (bluetoothDevice != null) {
+                result.add(bluetoothDevice);
+            }
+        }
+        return result;
+    }
+
+    private BluetoothDevice toBluetoothDevice(Inspection inspection) {
+        if (TextUtils.isEmpty(inspection.getLock_mac())) {
+            return null;
+        }
+        final BluetoothDevice result = new BluetoothDevice();
+        result.setMacAddress(inspection.getLock_mac());
+        return result;
     }
 
 }

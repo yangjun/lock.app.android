@@ -21,6 +21,7 @@ import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.FragmentUtils;
+import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.module.ModuleFactory;
@@ -133,8 +134,7 @@ public class InspectionConstructActivity extends BaseActivity {
     @Click(R.id.iv_unlock)
     void onUnLockClick() {
         closeMenuIfOpen();
-        showTip("开锁...");
-        // TODO
+        RedirectUtils.goActivity(this, OpenCabinetActivity_.class);
     }
 
     @Click(R.id.iv_forward)
