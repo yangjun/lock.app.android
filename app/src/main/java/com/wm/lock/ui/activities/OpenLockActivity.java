@@ -1,17 +1,25 @@
 package com.wm.lock.ui.activities;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.adapter.BlueDeviceLockListAdapter;
 import com.wm.lock.bluetooth.BluetoothManager;
 import com.wm.lock.core.callback.Injector;
+import com.wm.lock.core.utils.CollectionUtils;
+import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.dialog.DialogManager;
 
 import org.androidannotations.annotations.EActivity;
@@ -26,6 +34,7 @@ import java.util.List;
 public abstract class OpenLockActivity extends BaseActivity implements BluetoothManager.ScanCallback {
 
     private static final int REQUEST_ENABLE_BT = 1;
+    private static final int REQUEST_OPEN = 2;
 
     @ViewById(R.id.ll_progress)
     View mVLoading;
@@ -37,6 +46,21 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
     private boolean mScanning = false;
     private List<com.wm.lock.entity.BluetoothDevice> mDeviceList;
     private boolean mIsRequestEnable = false;
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+                int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,-1);
+                switch (state) {
+                    case BluetoothAdapter.STATE_OFF:
+                        showTip(R.string.message_bluetooth_disconnect);
+                        finish();
+                        break;
+                }
+            }
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -51,14 +75,26 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO
+                final com.wm.lock.entity.BluetoothDevice device = (com.wm.lock.entity.BluetoothDevice) parent.getItemAtPosition(position);
+                final Bundle bundle = new Bundle();
+                bundle.putString(LockConstants.DATA, device.getMacAddress());
+                RedirectUtils.goActivityForResult(OpenLockActivity.this, LockControlActivity_.class, bundle, REQUEST_OPEN);
             }
         });
     }
 
     @Override
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(mReceiver, filter);
 
         // 如果没有扫描到设备，立即重新扫描
         if (!mIsRequestEnable && mDeviceList.isEmpty()) {
@@ -69,7 +105,16 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
     @Override
     protected void onPause() {
         stopScan();
+        mScanning = false;
+        mVLoading.setVisibility(View.GONE);
+        invalidateOptionsMenu();
+        unregisterReceiver(mReceiver);
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -99,7 +144,7 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
     }
 
     @OnActivityResult(REQUEST_ENABLE_BT)
-    void onRequestBluetoothResult(int resultCode, Intent data) {
+    void onRequestEnableResult(int resultCode, Intent data) {
         mIsRequestEnable = false;
         switch (resultCode) {
             case RESULT_OK:
@@ -112,6 +157,13 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         }
     }
 
+    @OnActivityResult(REQUEST_OPEN)
+    void onOpenResult(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            finish();
+        }
+    }
+
     @Override
     public void onPreExecute() {
         mScanning = true;
@@ -120,12 +172,17 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
     }
 
     @Override
-    public void onScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-        final com.wm.lock.entity.BluetoothDevice bluetoothDevice = filter(device);
-        if (bluetoothDevice != null) {
-            mDeviceList.add(0, bluetoothDevice);
-            mListAdapter.notifyDataSetChanged();
-        }
+    public void onScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                final com.wm.lock.entity.BluetoothDevice bluetoothDevice = filter(device);
+                if (bluetoothDevice != null) {
+                    mDeviceList.add(0, bluetoothDevice);
+                    mListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
@@ -178,6 +235,9 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
     }
 
     protected com.wm.lock.entity.BluetoothDevice findExist(List<com.wm.lock.entity.BluetoothDevice> list, BluetoothDevice device) {
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
         for (com.wm.lock.entity.BluetoothDevice item : list) {
             if (item.getMacAddress().equals(device.getAddress())) {
                 return item;

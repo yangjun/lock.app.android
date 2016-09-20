@@ -37,5 +37,8 @@
 
     <ListView
         android:id="@+id/lst"
-        style="@style/listVTheme" />
+        style="@style/listVTheme"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:clipToPadding="false"/>
 </LinearLayout>

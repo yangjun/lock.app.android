@@ -77,6 +77,16 @@
     <string name="message_submit_fail">提交失败</string>
     <string name="message_submit_to_background">已转到后台提交</string>
     <string name="message_sync_notification">正在同步数据...</string>
+    <string name="message_open_lock_success">开锁成功</string>
+    <string name="message_open_lock_fail">开锁失败</string>
+    <string name="message_open_lock_fail_reason">开锁失败，%1$s</string>
+    <string name="message_open_lock_try_open">正在尝试开锁...</string>
+    <string name="message_open_lock_try_connect">正在尝试连接蓝牙设备...</string>
+    <string name="message_open_lock_try_connect_fail">连接蓝牙失败</string>
+    <string name="message_bluetooth_disconnect">蓝牙开关已关闭</string>
+
+
+
 
     <string name="hint_job_number">请输入工号...</string>
     <string name="hint_name">请输入姓名...</string>

@@ -96,6 +96,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.activities.LockControlActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTransparentTheme" />
+
+        <activity
             android:name=".ui.activities.SettingActivity_"
             android:label="@string/title_setting"
             android:screenOrientation="portrait" />
