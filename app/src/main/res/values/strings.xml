@@ -36,6 +36,10 @@
     <string name="label_note_add">添加备注</string>
     <string name="label_photo">照片:</string>
     <string name="label_photo_add">添加照片</string>
+    <string name="label_scaning">扫描中...</string>
+    <string name="label_scan_null">未发现蓝牙设备</string>
+    <string name="label_rescan_notify">是否需要重新扫描？</string>
+
 
     <string name="header_hint_normal">下拉刷新</string>
     <string name="header_hint_ready">松开刷新数据</string>
@@ -73,8 +77,6 @@
     <string name="message_submit_fail">提交失败</string>
     <string name="message_submit_to_background">已转到后台提交</string>
     <string name="message_sync_notification">正在同步数据...</string>
-    <string name="message_bluetooth_not_supported">设备不支持蓝牙</string>
-    <string name="message_bluetooth_ble_not_supported">设备不支持BLE</string>
 
     <string name="hint_job_number">请输入工号...</string>
     <string name="hint_name">请输入姓名...</string>

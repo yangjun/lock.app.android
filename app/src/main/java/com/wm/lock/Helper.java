@@ -3,10 +3,12 @@ package com.wm.lock;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConfig;
+import com.wm.lock.bluetooth.BluetoothManager;
 import com.wm.lock.core.CrashHandler;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.logger.Logger;
@@ -75,6 +77,12 @@ public final class Helper {
 
 //        //update
 //        UpdateApi.getInstance().init(ctx);
+
+        // bluetooth
+        final String error = BluetoothManager.getInstance().checkHardware(ctx);
+        if (!TextUtils.isEmpty(error)) {
+            throw new BizException(error);
+        }
     }
 
     public static void initByLogin() {

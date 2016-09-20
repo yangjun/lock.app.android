@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/itemTheme"
+    android:gravity="center_vertical"
+    android:background="@drawable/selector_item">
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/horizontalWeightTheme"
+        android:lineSpacingExtra="2dp"
+        android:text="12311111111111111111111111111111111111111111111111111111"
+        android:textColor="@color/txt_content"
+        android:textSize="@dimen/text_size_medium" />
+
+    <ImageView
+        android:id="@+id/iv_arrow"
+        style="@style/wrapTheme"
+        android:src="@mipmap/ic_category_arrow_normal"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+</LinearLayout>

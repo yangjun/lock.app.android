@@ -3,6 +3,39 @@
     style="@style/verticalContainerTheme"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/inflate_header" />
+    <RelativeLayout style="@style/wrapHeightTheme">
 
+        <include layout="@layout/inflate_header" />
+
+        <LinearLayout
+            android:id="@+id/ll_progress"
+            style="@style/wrapTheme"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                style="@style/wrapTheme"
+                android:indeterminateDrawable="@drawable/selector_progressbar_titlebar"
+                android:minWidth="18dp"
+                android:minHeight="18dp"
+                android:maxWidth="18dp"
+                android:maxHeight="18dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                style="@style/wrapTheme"
+                android:text="@string/label_scaning"
+                android:textColor="@color/txt_title"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginLeft="2dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lst"
+        style="@style/listVTheme" />
 </LinearLayout>

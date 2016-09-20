@@ -8,23 +8,25 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 
 import com.wm.lock.R;
 
 public class BluetoothManager {
 
-    private static final long SCAN_PERIOD = 6000;
+    private static final long SCAN_PERIOD = 60000;
 
     private boolean mScanning;
     private Handler mHandler;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
     private ScanCallback mScanCallback;
+    private Runnable mScanTimeoutRunnable;
 
     private BluetoothService mBluetoothService;
     private ServiceConnection mServiceConnection;
 
     private BluetoothManager() {
-        mHandler = new Handler();
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     private static class InstanceHolder {
@@ -35,16 +37,16 @@ public class BluetoothManager {
         return InstanceHolder.instance;
     }
 
-    public int checkHardware(Context ctx) {
+    public String checkHardware(Context ctx) {
         if (getAdapter(ctx) == null) {
-            return R.string.message_bluetooth_not_supported;
+            return "设备不支持蓝牙";
         }
 
         if (!ctx.getPackageManager().hasSystemFeature("android.hardware.bluetooth_le")) {
-            return R.string.message_bluetooth_ble_not_supported;
+            return "设备不支持BLE";
         }
 
-        return 0;
+        return null;
     }
 
     public boolean isEnabled(Context ctx) {
@@ -107,7 +109,7 @@ public class BluetoothManager {
     private void scan(Context ctx, boolean enable) {
         final BluetoothAdapter adapter = getAdapter(ctx);
         if (enable) {
-            mHandler.postDelayed(new Runnable() {
+            mScanTimeoutRunnable = new Runnable() {
                 public void run() {
                     mScanning = false;
                     adapter.stopLeScan(getScanCallback());
@@ -115,15 +117,22 @@ public class BluetoothManager {
                         mScanCallback.onComplete();
                     }
                 }
-            }, SCAN_PERIOD);
+            };
+            mHandler.postDelayed(mScanTimeoutRunnable, SCAN_PERIOD);
             mScanning = true;
             adapter.startLeScan(getScanCallback());
         }
         else {
             mScanning = false;
+            if (mScanTimeoutRunnable != null) {
+                mHandler.removeCallbacks(mScanTimeoutRunnable);
+            }
             if (mLeScanCallback != null) {
                 adapter.stopLeScan(mLeScanCallback);
             }
+//            if (mScanCallback != null) {
+//                mScanCallback.onComplete();
+//            }
         }
     }
 

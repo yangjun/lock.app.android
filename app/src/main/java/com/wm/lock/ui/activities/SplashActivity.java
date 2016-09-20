@@ -8,6 +8,7 @@ import com.wm.lock.R;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.ExceptionProcessor;
 import com.wm.lock.Helper;
+import com.wm.lock.exception.BizException;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
@@ -52,7 +53,12 @@ public class SplashActivity extends BaseActivity {
     @UiThread
     void onInitFailed(Throwable e) {
         ExceptionProcessor.log("fail to init app", e);
-        showTip(R.string.message_inner_error);
+        if (e instanceof BizException) {
+            showTip(e.getMessage());
+        }
+        else {
+            showTip(R.string.message_inner_error);
+        }
         finish();
     }
 

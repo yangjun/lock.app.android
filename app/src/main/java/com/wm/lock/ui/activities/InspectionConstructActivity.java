@@ -134,7 +134,11 @@ public class InspectionConstructActivity extends BaseActivity {
     @Click(R.id.iv_unlock)
     void onUnLockClick() {
         closeMenuIfOpen();
-        RedirectUtils.goActivity(this, OpenCabinetActivity_.class);
+
+        final Bundle bundle = new Bundle();
+        bundle.putLong(LockConstants.ID, mInspectionId);
+        bundle.putString(LockConstants.DATA, mCategories.get(mSelectCategoryIndex));
+        RedirectUtils.goActivity(this, OpenCabinetActivity_.class, bundle);
     }
 
     @Click(R.id.iv_forward)
