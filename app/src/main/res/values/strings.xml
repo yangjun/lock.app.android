@@ -73,7 +73,8 @@
     <string name="message_submit_fail">提交失败</string>
     <string name="message_submit_to_background">已转到后台提交</string>
     <string name="message_sync_notification">正在同步数据...</string>
-
+    <string name="message_bluetooth_not_supported">设备不支持蓝牙</string>
+    <string name="message_bluetooth_ble_not_supported">设备不支持BLE</string>
 
     <string name="hint_job_number">请输入工号...</string>
     <string name="hint_name">请输入姓名...</string>
