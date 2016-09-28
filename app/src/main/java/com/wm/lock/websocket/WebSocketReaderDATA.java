@@ -3,7 +3,7 @@ package com.wm.lock.websocket;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.wm.lock.Helper;
+import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
@@ -12,12 +12,14 @@ import com.wm.lock.core.utils.NotificationUtils;
 import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.Chat;
-import com.wm.lock.entity.ChatDirective;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionResult;
 import com.wm.lock.entity.InspectionState;
-import com.wm.lock.entity.params.CommunicationDeleteParam;
+import com.wm.lock.entity.LockDevice;
+import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.ui.activities.HomeActivity_;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -36,6 +38,12 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
         else if (contains(payload, LockConstants.BIZ_RESULT_RETURN)) {
             getInspectionSubmitResult();
         }
+        else if (contains(payload, LockConstants.BIZ_LOCKS_AUTH)) {
+            getDeviceLocks();
+        }
+        else if (contains(payload, LockConstants.BIZ_HUMITURE)) {
+            getTemperatureHumidity();
+        }
     }
 
     /**
@@ -45,7 +53,7 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
         WebSocketReaderProcessor.getInstance().execute(new WebSocketReaderProcessor.WebSocketReaderWork<Long>() {
             @Override
             public Long execute() throws Exception {
-                final Inspection inspection = converFormJson(payload, Inspection.class);
+                final Inspection inspection = convertFormJson(payload, Inspection.class);
                 inspection.setUser_job_number(loginUser().getJobNumber());
                 return bizService().addInspection(inspection);
             }
@@ -106,6 +114,44 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
                 dto.setSuccess(result.getState() == InspectionState.COMPLETE);
                 EventBus.getDefault().post(dto);
 
+                ask();
+            }
+        });
+    }
+
+    /**
+     * 获取到推送的开锁列表
+     */
+    private void getDeviceLocks() {
+        WebSocketReaderProcessor.getInstance().execute(new WebSocketReaderProcessor.WebSocketReaderWork<Void>() {
+            @Override
+            public Void execute() throws Exception {
+                final List<LockDevice> list = convertFormJson(payload, new TypeToken<List<LockDevice>>() {});
+                bizService().syncLockDevice(loginUser().getJobNumber(), list);
+                return null;
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                ask();
+            }
+        });
+    }
+
+    /**
+     * 获取到推送的温湿度变化
+     */
+    private void getTemperatureHumidity() {
+        WebSocketReaderProcessor.getInstance().execute(new WebSocketReaderProcessor.WebSocketReaderWork<Void>() {
+            @Override
+            public Void execute() throws Exception {
+                final TemperatureHumidity temperatureHumidity = convertFormJson(payload, TemperatureHumidity.class);
+                bizService().syncTemperatureHumidity(temperatureHumidity);
+                return null;
+            }
+
+            @Override
+            public void onSuccess(Void result) {
                 ask();
             }
         });

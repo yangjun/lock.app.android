@@ -2,6 +2,12 @@ package com.wm.lock.websocket;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.CollectionUtils;
@@ -16,7 +22,12 @@ import com.wm.lock.entity.InspectionState;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 
+import org.codehaus.jackson.map.ser.std.DateSerializer;
+
+import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +124,7 @@ public class WebSocketWriter {
 
         String payload = null;
         try {
-            payload = GsonUtils.toJson(obj);
+            payload = convertToString(obj);
         } catch (Exception e) {
             Logger.p("fail to parse object to json string", e);
         }
@@ -149,6 +160,24 @@ public class WebSocketWriter {
 
     private static String encodePhoto(String path) throws Exception {
         return ImageUtils.encode(path);
+    }
+
+    private static String convertToString(Object obj) {
+        final Gson gson = getGsonBuilder().create();
+        return gson.toJson(obj);
+    }
+
+    private static GsonBuilder getGsonBuilder() {
+        return new GsonBuilder()
+                .registerTypeAdapter(Date.class, new DateSerializer())
+                .setDateFormat(DateFormat.LONG);
+    }
+
+    private static class DateSerializer implements JsonSerializer<Date> {
+        @Override
+        public JsonElement serialize(Date date, Type type, JsonSerializationContext jsonSerializationContext) {
+            return new JsonPrimitive(date.getTime());
+        }
     }
 
 }

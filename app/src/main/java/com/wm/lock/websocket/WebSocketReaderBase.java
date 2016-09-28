@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockConstants;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.UserInfo;
@@ -34,19 +36,25 @@ abstract class WebSocketReaderBase {
         return ModuleFactory.getInstance().getModuleInstance(IBizService.class);
     }
 
-    protected <T> T converFormJson(String json, Class<T> clazz) {
-        final GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer() {
-
-            @Override
-            public Date deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2)
-                    throws com.google.gson.JsonParseException {
-                return new Date(arg0.getAsJsonPrimitive().getAsLong());
-            }
-
-        });
-        final Gson gson = builder.create();
+    protected <T> T convertFormJson(String json, Class<T> clazz) {
+        final Gson gson = getGsonBuilder().create();
         return gson.fromJson(json, clazz);
+    }
+
+    protected <T> T convertFormJson(String json, TypeToken<T> typeToken) {
+        final Gson gson = getGsonBuilder().create();
+        return gson.fromJson(json, typeToken.getType());
+    }
+
+    private GsonBuilder getGsonBuilder() {
+        return new GsonBuilder().registerTypeAdapter(Date.class, new DateDeserializer());
+    }
+
+    private static class DateDeserializer implements JsonDeserializer{
+        @Override
+        public Object deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            return new Date(jsonElement.getAsJsonPrimitive().getAsLong());
+        }
     }
 
 }

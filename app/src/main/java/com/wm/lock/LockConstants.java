@@ -44,4 +44,11 @@ public final class LockConstants {
 
     /** 提交巡检计划的结果反馈 */
     public static final String BIZ_RESULT_RETURN = "RESULT_RETURN";
+
+    /** 管理端同步给移动端的可开锁的蓝牙列表 */
+    public static final String BIZ_LOCKS_AUTH = "LOCKS_AUTH";
+
+    /** 管理端同步给移动端的机房温湿度 */
+    public static final String BIZ_HUMITURE = "HUMITURE";
+
 }

@@ -11,6 +11,7 @@ import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.LockDevice;
+import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.BaseModule;
@@ -220,6 +221,26 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     @Override
     public Communication findCommunication(String userJobNumber, String communicationBizId) {
         return mDaoManager.getCommunicationDao().find(userJobNumber, communicationBizId);
+    }
+
+    @Override
+    public void syncLockDevice(String userJobNumber, List<LockDevice> list) {
+        mDaoManager.getLockDeviceDao().sync(userJobNumber, list);
+    }
+
+    @Override
+    public List<LockDevice> listLockDevice(String userJobNumber) {
+        return mDaoManager.getLockDeviceDao().list(userJobNumber);
+    }
+
+    @Override
+    public void syncTemperatureHumidity(TemperatureHumidity input) {
+        mDaoManager.getTemperatureHumidityDao().sync(input);
+    }
+
+    @Override
+    public TemperatureHumidity findTemperatureHumidityByRoomName(String roomName) {
+        return mDaoManager.getTemperatureHumidityDao().findByRoomName(roomName);
     }
 
     @Override

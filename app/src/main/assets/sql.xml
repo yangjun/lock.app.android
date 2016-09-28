@@ -54,7 +54,8 @@
 			create table tb_lock_device (
 				id_ integer primary key autoincrement,
 				lock_mac varchar(50),
-				lock_name varchar(500)
+				lock_name varchar(500),
+				user_job_number varchar(20)
 			)
 		</content>
 

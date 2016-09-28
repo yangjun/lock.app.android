@@ -8,6 +8,8 @@ import com.wm.lock.core.logger.Logger;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.entity.LockDevice;
+import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.exception.DbException;
 
 import org.androidannotations.annotations.AfterInject;
@@ -27,6 +29,8 @@ public class DaoManager {
     private InspectionDao inspectionDao;
     private InspectionItemDao inspectionItemDao;
     private CommunicationDao communicationDao;
+    private LockDeviceDao lockDeviceDao;
+    private TemperatureHumidityDao temperatureHumidityDao;
 
     @AfterInject
     void init() {
@@ -35,6 +39,8 @@ public class DaoManager {
             inspectionDao = new InspectionDao((Dao<Inspection, Long>) helper.getDao(Inspection.class));
             inspectionItemDao = new InspectionItemDao((Dao<InspectionItem, Long>) helper.getDao(InspectionItem.class));
             communicationDao = new CommunicationDao((Dao<Communication, Long>) helper.getDao(Communication.class));
+            lockDeviceDao = new LockDeviceDao((Dao<LockDevice, Long>) helper.getDao(LockDevice.class));
+            temperatureHumidityDao = new TemperatureHumidityDao((Dao<TemperatureHumidity, Long>) helper.getDao(TemperatureHumidity.class));
         } catch (SQLException e) {
             Logger.p("fail to instance dao", e);
             throw new DbException(e);
@@ -59,6 +65,14 @@ public class DaoManager {
 
     public CommunicationDao getCommunicationDao() {
         return communicationDao;
+    }
+
+    public LockDeviceDao getLockDeviceDao() {
+        return lockDeviceDao;
+    }
+
+    public TemperatureHumidityDao getTemperatureHumidityDao() {
+        return temperatureHumidityDao;
     }
 
     public SqlOpenHelper getHelper() {

@@ -21,6 +21,10 @@ public class LockDevice {
     @DatabaseField
     private String lock_name;
 
+    /** 执行人员的工号 */
+    @DatabaseField
+    private String user_job_number;
+
     public long getId_() {
         return id_;
     }
@@ -43,6 +47,14 @@ public class LockDevice {
 
     public void setLock_name(String lock_name) {
         this.lock_name = lock_name;
+    }
+
+    public String getUser_job_number() {
+        return user_job_number;
+    }
+
+    public void setUser_job_number(String user_job_number) {
+        this.user_job_number = user_job_number;
     }
 
 }

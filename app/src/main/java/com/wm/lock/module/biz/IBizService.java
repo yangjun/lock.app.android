@@ -5,6 +5,7 @@ import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.LockDevice;
+import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
 
@@ -137,6 +138,26 @@ public interface IBizService {
      * 获取通信记录
      */
     public Communication findCommunication(String userJobNumber, String communicationBizId);
+
+    /**
+     * 同步可开锁的蓝牙列表
+     */
+    public void syncLockDevice(String userJobNumber, List<LockDevice> list);
+
+    /**
+     * 获取某个用户可开锁的蓝牙列表
+     */
+    public List<LockDevice> listLockDevice(String userJobNumber);
+
+    /**
+     * 同步温湿度
+     */
+    public void syncTemperatureHumidity(TemperatureHumidity input);
+
+    /**
+     * 根据机房找到对应的温湿度
+     */
+    public TemperatureHumidity findTemperatureHumidityByRoomName(String roomName);
 
     /**
      * 事务处理
