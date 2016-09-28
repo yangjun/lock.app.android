@@ -44,6 +44,11 @@ public interface IBizService {
     public Inspection findInspection(long inspectionId);
 
     /**
+     * 查询巡检计划
+     */
+    public Inspection findInspection(String userJobNumber, String planId);
+
+    /**
      * 删除巡检计划
      */
     public void deleteInspection(long inspectionId);

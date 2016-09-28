@@ -78,7 +78,6 @@ class WebSocketWriterProcessor {
         }
 
         isWriting = true;
-        showNotification();
 
         new Thread() {
             @Override
@@ -121,6 +120,7 @@ class WebSocketWriterProcessor {
     }
 
     private void send(String data) throws Exception {
+        showNotification();
         WebSocketService.send(data);
     }
 

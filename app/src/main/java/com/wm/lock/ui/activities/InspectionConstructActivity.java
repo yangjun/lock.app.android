@@ -222,7 +222,6 @@ public class InspectionConstructActivity extends BaseActivity {
     }
 
     private void doSubmit() {
-        bizService().submitInspection(mInspectionId);
         WebSocketWriter.submitInspection(mInspectionId);
         showTip(R.string.message_submit_to_background);
         setResult(RESULT_FIRST_USER);

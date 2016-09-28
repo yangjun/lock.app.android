@@ -59,14 +59,16 @@ public class WebSocketWriter {
             @Override
             public void run() {
                 final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+
+                bizService.submitInspection(inspectionId);
                 final Inspection inspection = bizService.findInspection(inspectionId);
-                final List<InspectionItem> inspectionItemList = bizService.listInspectionItem(inspectionId);
 
                 final Map<String, Object> map = new HashMap<>();
                 map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT);
                 map.put("plan_id", inspection.getPlan_id());
 
                 final List<Map<String, Object>> itemList = new ArrayList<>();
+                final List<InspectionItem> inspectionItemList = bizService.listInspectionItem(inspectionId);
                 for (InspectionItem item : inspectionItemList) {
                     final Map<String, Object> itemMap = new HashMap<>();
                     itemMap.put("item_id", item.getItem_id());

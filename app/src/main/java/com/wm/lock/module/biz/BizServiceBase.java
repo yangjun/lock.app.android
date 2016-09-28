@@ -124,6 +124,11 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
+    public Inspection findInspection(String userJobNumber, String planId) {
+        return mDaoManager.getInspectionDao().findByPlanId(userJobNumber, planId);
+    }
+
+    @Override
     public List<String> listInspectionCategory(long inspectionId) {
         return mDaoManager.getInspectionItemDao().listCategory(inspectionId);
     }

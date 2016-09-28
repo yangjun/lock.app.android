@@ -80,28 +80,32 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
             @Override
             public InspectionResult execute() throws Exception {
                 final InspectionResult result = GsonUtils.fromJson(payload, InspectionResult.class);
-                if (result.getState() == InspectionState.COMPLETE) {
-                    final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
-                    deleteParam.setSource(loginUser().getJobNumber());
-                    deleteParam.setContents(new String[]{
-                            Helper.getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT),
-                            Helper.getDbJson("plan_id", result.getPlan_id())
-                    });
-                    bizService().deleteCommunication(deleteParam);
+                if (result.getState() == InspectionState.COMPLETE) { //提交成功
+//                    final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
+//                    deleteParam.setSource(loginUser().getJobNumber());
+//                    deleteParam.setContents(new String[]{
+//                            Helper.getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT),
+//                            Helper.getDbJson("plan_id", result.getPlan_id())
+//                    });
+//                    bizService().deleteCommunication(deleteParam);
+                    bizService().deleteInspection(loginUser().getJobNumber(), result.getPlan_id());
+                }
+                else if (result.getState() == InspectionState.IN_PROCESS) { //提交失败
+                    final Inspection inspection = bizService().findInspection(loginUser().getJobNumber(), result.getPlan_id());
+                    if (inspection != null) {
+                        WebSocketWriter.submitInspection(inspection.getId_());
+                    }
                 }
                 return result;
             }
 
             @Override
             public void onSuccess(InspectionResult result) {
-                // 删除数据
-                bizService().deleteInspection(loginUser().getJobNumber(), result.getPlan_id());
-
-                // 发送通知
                 final InspectionResultDto dto = new InspectionResultDto();
                 dto.setPlan_id(result.getPlan_id());
                 dto.setSuccess(result.getState() == InspectionState.COMPLETE);
                 EventBus.getDefault().post(dto);
+
                 ask();
             }
         });

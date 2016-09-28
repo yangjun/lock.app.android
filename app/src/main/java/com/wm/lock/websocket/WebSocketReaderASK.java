@@ -1,10 +1,7 @@
 package com.wm.lock.websocket;
 
-import com.wm.lock.LockConstants;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.Communication;
-import com.wm.lock.module.ModuleFactory;
-import com.wm.lock.module.biz.IBizService;
 
 class WebSocketReaderASK extends WebSocketReaderBase {
 
@@ -19,10 +16,11 @@ class WebSocketReaderASK extends WebSocketReaderBase {
     }
 
     private void execute(Communication communication) {
-        final String content = communication.getContent();
-        if (contains(content, LockConstants.BIZ_PLAN_RETURN)) {
-            bizService().deleteCommunication(communication.getId_());
-        }
+        bizService().deleteCommunication(communication.getId_());
+//        final String content = communication.getContent();
+//        if (contains(content, LockConstants.BIZ_PLAN_RETURN)) {
+//            bizService().deleteCommunication(communication.getId_());
+//        }
     }
 
 }
