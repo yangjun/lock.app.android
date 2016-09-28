@@ -40,12 +40,30 @@
 				equipment_name varchar(500),
 				cabinet_name varchar(500),
 				cabinet_lock_mac varchar(50),
+				item_flag integer,
 				create_date timestamp,
 				last_modify_date timestamp,
 				inspection_id integer,
 				state integer,
 				result text,
 				note text
+			)
+		</content>
+
+		<content>
+			create table tb_lock_device (
+				id_ integer primary key autoincrement,
+				lock_mac varchar(50),
+				lock_name varchar(500)
+			)
+		</content>
+
+		<content>
+			create table tb_temperature_humidity (
+				id_ integer primary key autoincrement,
+				temperature varchar(100),
+				humidity varchar(100),
+				room_name varchar(500)
 			)
 		</content>
 

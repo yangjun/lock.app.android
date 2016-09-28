@@ -6,11 +6,11 @@ import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.IoUtils;
 import com.wm.lock.dao.DaoManager;
 import com.wm.lock.entity.AttachmentType;
-import com.wm.lock.entity.BluetoothDevice;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionState;
+import com.wm.lock.entity.LockDevice;
 import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.BaseModule;
@@ -149,12 +149,12 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public List<BluetoothDevice> listInspectionBluetooth(InspectionQueryParam param) {
+    public List<LockDevice> listInspectionBluetooth(InspectionQueryParam param) {
         return mDaoManager.getInspectionDao().listBluetooth(param);
     }
 
     @Override
-    public List<BluetoothDevice> listInspectionItemCategoryBluetooth(long inspectionId, String category) {
+    public List<LockDevice> listInspectionItemCategoryBluetooth(long inspectionId, String category) {
         return mDaoManager.getInspectionItemDao().listBluetoothByCategory(inspectionId, category);
     }
 

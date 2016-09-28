@@ -3,20 +3,15 @@ package com.wm.lock.dao;
 import android.text.TextUtils;
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.Where;
 import com.wm.lock.core.utils.CollectionUtils;
-import com.wm.lock.entity.BluetoothDevice;
-import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
-import com.wm.lock.entity.params.InspectionQueryParam;
+import com.wm.lock.entity.LockDevice;
 import com.wm.lock.exception.DbException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class InspectionItemDao extends BaseDao<InspectionItem, Long> {
 
@@ -48,7 +43,7 @@ public class InspectionItemDao extends BaseDao<InspectionItem, Long> {
         }
     }
 
-    public List<BluetoothDevice> listBluetoothByCategory(long inspectionId, String category) {
+    public List<LockDevice> listBluetoothByCategory(long inspectionId, String category) {
         final List<InspectionItem> list = listByCategory(inspectionId, category);
         return toBluetoothDeviceList(list);
     }
@@ -71,13 +66,13 @@ public class InspectionItemDao extends BaseDao<InspectionItem, Long> {
         return false;
     }
 
-    private List<BluetoothDevice> toBluetoothDeviceList(List<InspectionItem> list) {
+    private List<LockDevice> toBluetoothDeviceList(List<InspectionItem> list) {
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
-        final List<BluetoothDevice> result = new ArrayList<>();
+        final List<LockDevice> result = new ArrayList<>();
         for (InspectionItem item : list) {
-            final BluetoothDevice bluetoothDevice = toBluetoothDevice(item);
+            final LockDevice bluetoothDevice = toBluetoothDevice(item);
             if (bluetoothDevice != null) {
                 result.add(bluetoothDevice);
             }
@@ -85,13 +80,13 @@ public class InspectionItemDao extends BaseDao<InspectionItem, Long> {
         return result;
     }
 
-    private BluetoothDevice toBluetoothDevice(InspectionItem inspectionItem) {
+    private LockDevice toBluetoothDevice(InspectionItem inspectionItem) {
         if (TextUtils.isEmpty(inspectionItem.getCabinet_lock_mac())) {
             return null;
         }
-        final BluetoothDevice result = new BluetoothDevice();
-        result.setMacAddress(inspectionItem.getCabinet_lock_mac());
-        result.setName(inspectionItem.getCabinet_name());
+        final LockDevice result = new LockDevice();
+        result.setLock_mac(inspectionItem.getCabinet_lock_mac());
+        result.setLock_name(inspectionItem.getCabinet_name());
         return result;
     }
 

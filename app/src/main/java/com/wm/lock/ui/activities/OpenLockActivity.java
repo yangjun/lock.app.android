@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +20,7 @@ import com.wm.lock.core.callback.Injector;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.dialog.DialogManager;
+import com.wm.lock.entity.LockDevice;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
@@ -44,7 +44,7 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
 
     private BlueDeviceLockListAdapter mListAdapter;
     private boolean mScanning = false;
-    private List<com.wm.lock.entity.BluetoothDevice> mDeviceList;
+    private List<LockDevice> mDeviceList;
     private boolean mIsRequestEnable = false;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -75,9 +75,9 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final com.wm.lock.entity.BluetoothDevice device = (com.wm.lock.entity.BluetoothDevice) parent.getItemAtPosition(position);
+                final LockDevice device = (LockDevice) parent.getItemAtPosition(position);
                 final Bundle bundle = new Bundle();
-                bundle.putString(LockConstants.DATA, device.getMacAddress());
+                bundle.putString(LockConstants.DATA, device.getLock_mac());
                 RedirectUtils.goActivityForResult(OpenLockActivity.this, LockControlActivity_.class, bundle, REQUEST_OPEN);
             }
         });
@@ -176,7 +176,7 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final com.wm.lock.entity.BluetoothDevice bluetoothDevice = filter(device);
+                final LockDevice bluetoothDevice = filter(device);
                 if (bluetoothDevice != null) {
                     mDeviceList.add(0, bluetoothDevice);
                     mListAdapter.notifyDataSetChanged();
@@ -227,32 +227,32 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         );
     }
 
-    private com.wm.lock.entity.BluetoothDevice filter(BluetoothDevice device) {
+    private LockDevice filter(BluetoothDevice device) {
         if (findExist(mDeviceList, device) != null) {
             return null;
         }
         return fix(device);
     }
 
-    protected com.wm.lock.entity.BluetoothDevice findExist(List<com.wm.lock.entity.BluetoothDevice> list, BluetoothDevice device) {
+    protected LockDevice findExist(List<LockDevice> list, BluetoothDevice device) {
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
-        for (com.wm.lock.entity.BluetoothDevice item : list) {
-            if (item.getMacAddress().equals(device.getAddress())) {
+        for (LockDevice item : list) {
+            if (item.getLock_mac().equals(device.getAddress())) {
                 return item;
             }
         }
         return null;
     }
 
-    protected com.wm.lock.entity.BluetoothDevice convert(BluetoothDevice device) {
-        final com.wm.lock.entity.BluetoothDevice result = new com.wm.lock.entity.BluetoothDevice();
-        result.setMacAddress(device.getAddress());
-        result.setName(device.getName());
+    protected LockDevice convert(BluetoothDevice device) {
+        final LockDevice result = new LockDevice();
+        result.setLock_mac(device.getAddress());
+        result.setLock_name(device.getName());
         return result;
     }
 
-    protected abstract com.wm.lock.entity.BluetoothDevice fix(BluetoothDevice device);
+    protected abstract LockDevice fix(BluetoothDevice device);
 
 }

@@ -41,6 +41,10 @@ public class InspectionItem {
     @DatabaseField
     private String cabinet_lock_mac;
 
+    /** 标记 */
+    @DatabaseField
+    private String item_flag;
+
     /** 创建时间 */
     @DatabaseField
     private Date create_date;
@@ -169,4 +173,11 @@ public class InspectionItem {
         this.note = note;
     }
 
+    public String getItem_flag() {
+        return item_flag;
+    }
+
+    public void setItem_flag(String item_flag) {
+        this.item_flag = item_flag;
+    }
 }

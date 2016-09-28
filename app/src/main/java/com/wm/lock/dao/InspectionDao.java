@@ -6,8 +6,8 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.wm.lock.core.utils.CollectionUtils;
-import com.wm.lock.entity.BluetoothDevice;
 import com.wm.lock.entity.Inspection;
+import com.wm.lock.entity.LockDevice;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.exception.DbException;
 
@@ -43,7 +43,7 @@ public class InspectionDao extends BaseDao<Inspection, Long> {
         }
     }
 
-    public List<BluetoothDevice> listBluetooth(InspectionQueryParam param) {
+    public List<LockDevice> listBluetooth(InspectionQueryParam param) {
         final List<Inspection> list = list(param);
         return toBluetoothDeviceList(list);
     }
@@ -91,13 +91,13 @@ public class InspectionDao extends BaseDao<Inspection, Long> {
         return where;
     }
 
-    private List<BluetoothDevice> toBluetoothDeviceList(List<Inspection> list) {
+    private List<LockDevice> toBluetoothDeviceList(List<Inspection> list) {
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
-        final List<BluetoothDevice> result = new ArrayList<>();
+        final List<LockDevice> result = new ArrayList<>();
         for (Inspection item : list) {
-            final BluetoothDevice bluetoothDevice = toBluetoothDevice(item);
+            final LockDevice bluetoothDevice = toBluetoothDevice(item);
             if (bluetoothDevice != null) {
                 result.add(bluetoothDevice);
             }
@@ -105,13 +105,13 @@ public class InspectionDao extends BaseDao<Inspection, Long> {
         return result;
     }
 
-    private BluetoothDevice toBluetoothDevice(Inspection inspection) {
+    private LockDevice toBluetoothDevice(Inspection inspection) {
         if (TextUtils.isEmpty(inspection.getLock_mac())) {
             return null;
         }
-        final BluetoothDevice result = new BluetoothDevice();
-        result.setMacAddress(inspection.getLock_mac());
-        result.setName(inspection.getRoom_name());
+        final LockDevice result = new LockDevice();
+        result.setLock_mac(inspection.getLock_mac());
+        result.setLock_name(inspection.getRoom_name());
         return result;
     }
 

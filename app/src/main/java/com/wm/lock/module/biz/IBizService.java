@@ -1,10 +1,10 @@
 package com.wm.lock.module.biz;
 
 import com.wm.lock.entity.AttachmentType;
-import com.wm.lock.entity.BluetoothDevice;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.entity.LockDevice;
 import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
 
@@ -86,12 +86,12 @@ public interface IBizService {
     /**
      * 获取巡检计划的蓝牙列表
      */
-    public List<BluetoothDevice> listInspectionBluetooth(InspectionQueryParam param);
+    public List<LockDevice> listInspectionBluetooth(InspectionQueryParam param);
 
     /**
      * 根据巡检项的分类，获取对应机柜的蓝牙列表
      */
-    public List<BluetoothDevice> listInspectionItemCategoryBluetooth(long inspectionId, String category);
+    public List<LockDevice> listInspectionItemCategoryBluetooth(long inspectionId, String category);
 
     /**
      * 获取附件数量

@@ -2,6 +2,7 @@ package com.wm.lock.ui.activities;
 
 import android.bluetooth.BluetoothDevice;
 
+import com.wm.lock.entity.LockDevice;
 import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
@@ -14,14 +15,14 @@ import java.util.List;
 public class OpenDoorActivity extends OpenLockActivity {
 
     @Override
-    protected com.wm.lock.entity.BluetoothDevice fix(BluetoothDevice device) {
-        final List<com.wm.lock.entity.BluetoothDevice> list =  list();
+    protected LockDevice fix(BluetoothDevice device) {
+        final List<LockDevice> list =  list();
         return findExist(list, device);
     }
 
-    private List<com.wm.lock.entity.BluetoothDevice> list() {
+    private List<LockDevice> list() {
         final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
-        final List<com.wm.lock.entity.BluetoothDevice> result =  bizService.listInspectionBluetooth(constructParam());
+        final List<LockDevice> result =  bizService.listInspectionBluetooth(constructParam());
         return result;
     }
 
