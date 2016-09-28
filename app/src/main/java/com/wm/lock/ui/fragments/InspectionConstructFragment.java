@@ -19,6 +19,8 @@ import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.entity.InspectionItemFlag;
+import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 
@@ -42,6 +44,7 @@ public class InspectionConstructFragment extends BaseFragment {
 
     private int mCategoryIndex;
     private long mInspectionId;
+    private String mInspectionRoomName;
     private String mCategory;
     private boolean mEnable;
     private List<InspectionItem> mItemList;
@@ -63,6 +66,7 @@ public class InspectionConstructFragment extends BaseFragment {
         mCategoryIndex = bundle.getInt(LockConstants.POS);
         mCategory = bundle.getString(LockConstants.DATA);
         mInspectionId = bundle.getLong(LockConstants.ID);
+        mInspectionRoomName = bundle.getString(LockConstants.NAME);
         mEnable = bundle.getBoolean(LockConstants.BOOLEAN);
 
         mTvCategory.setText(String.format("%s. %s", mCategoryIndex + 1, mCategory));
@@ -168,8 +172,8 @@ public class InspectionConstructFragment extends BaseFragment {
 
         // 巡视情况/运行情况
         final EditText etResult = (EditText) view.findViewById(R.id.et_result);
-        etResult.setText(item.getResult());
-        etResult.setEnabled(mEnable);
+        etResult.setText(getDisplayResult(item));
+        etResult.setEnabled(getDisplayResultEnable(item));
 
         // 备注
         final EditText etNote = (EditText) view.findViewById(R.id.et_note);
@@ -200,6 +204,38 @@ public class InspectionConstructFragment extends BaseFragment {
                 photoFragment.takePhoto();
             }
         });
+    }
+
+    private String getDisplayResult(InspectionItem item) {
+        if (item.getItem_flag() == InspectionItemFlag.NORMAL) {
+            return item.getResult();
+        }
+
+        final TemperatureHumidity temperatureHumidity = bizService().findTemperatureHumidityByRoomName(mInspectionRoomName);
+        if (temperatureHumidity == null) {
+            return null;
+        }
+
+        switch (item.getItem_flag()) {
+            case InspectionItemFlag.TEMPERATURE:
+                return temperatureHumidity.getTemperature();
+
+            case InspectionItemFlag.HUMIDITY:
+                return temperatureHumidity.getHumidity();
+
+            case InspectionItemFlag.TEMPERATURE_HUMIDITY:
+                return String.format("%s, %s", temperatureHumidity.getTemperature(), temperatureHumidity.getHumidity());
+        }
+        return null;
+    }
+
+    private boolean getDisplayResultEnable(InspectionItem item) {
+        if (item.getItem_flag() == InspectionItemFlag.NORMAL) {
+            return mEnable;
+        }
+        else {
+            return false;
+        }
     }
 
     private IBizService bizService() {

@@ -22,7 +22,6 @@ import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.RedirectUtils;
-import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
@@ -36,8 +35,6 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 @EActivity
 public class InspectionConstructActivity extends BaseActivity {
@@ -56,6 +53,7 @@ public class InspectionConstructActivity extends BaseActivity {
 
     private boolean mEnable;
     private long mInspectionId;
+    private String mInspectionName;
     private List<String> mCategories;
     private int mSelectCategoryIndex = -1;
 
@@ -92,6 +90,7 @@ public class InspectionConstructActivity extends BaseActivity {
     protected void init() {
         mEnable = mSaveBundle.getBoolean(LockConstants.BOOLEAN, true);
         mInspectionId = mSaveBundle.getLong(LockConstants.ID);
+        mInspectionName = mSaveBundle.getString(LockConstants.NAME);
         loadCategories();
     }
 
@@ -321,6 +320,7 @@ public class InspectionConstructActivity extends BaseActivity {
 
         final Bundle bundle = new Bundle();
         bundle.putLong(LockConstants.ID, mInspectionId);
+        bundle.putString(LockConstants.NAME, mInspectionName);
         bundle.putInt(LockConstants.POS, mSelectCategoryIndex);
         bundle.putString(LockConstants.DATA, mCategories.get(mSelectCategoryIndex));
         bundle.putBoolean(LockConstants.BOOLEAN, mEnable);

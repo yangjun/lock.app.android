@@ -19,11 +19,19 @@ public class OpenCabinetActivity extends OpenLockActivity {
     private long mInspectionId;
     private String mCategory;
 
+    private List<LockDevice> mAllList;
+
     @Override
     protected void init() {
         super.init();
         mInspectionId = mSaveBundle.getLong(LockConstants.ID);
         mCategory = mSaveBundle.getString(LockConstants.DATA);
+    }
+
+    @Override
+    void onReScanClick() {
+        mAllList = null;
+        super.onReScanClick();
     }
 
     @Override
@@ -33,8 +41,9 @@ public class OpenCabinetActivity extends OpenLockActivity {
     }
 
     private List<LockDevice> list() {
-        final List<LockDevice> result = new ArrayList<>();
-        final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+        if (mAllList == null) {
+            mAllList = new ArrayList<>();
+            final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
 
 //        // 巡检任务对应的大门的蓝牙设备
 //        final Inspection inspection = bizService.findInspection(mInspectionId);
@@ -44,13 +53,13 @@ public class OpenCabinetActivity extends OpenLockActivity {
 //            result.add(device);
 //        }
 
-        // 指定分类的所有机柜的蓝牙设备
-        final List<LockDevice> cabinetList = bizService.listInspectionItemCategoryBluetooth(mInspectionId, mCategory);
-        if (!CollectionUtils.isEmpty(cabinetList)) {
-            result.addAll(cabinetList);
+            // 指定分类的所有机柜的蓝牙设备
+            final List<LockDevice> cabinetList = bizService.listInspectionItemCategoryBluetooth(mInspectionId, mCategory);
+            if (!CollectionUtils.isEmpty(cabinetList)) {
+                mAllList.addAll(cabinetList);
+            }
         }
-
-        return result;
+        return mAllList;
     }
 
 }

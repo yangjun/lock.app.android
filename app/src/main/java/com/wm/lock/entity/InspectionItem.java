@@ -43,7 +43,7 @@ public class InspectionItem {
 
     /** 标记 */
     @DatabaseField
-    private String item_flag;
+    private int item_flag;
 
     /** 创建时间 */
     @DatabaseField
@@ -173,11 +173,11 @@ public class InspectionItem {
         this.note = note;
     }
 
-    public String getItem_flag() {
+    public int getItem_flag() {
         return item_flag;
     }
 
-    public void setItem_flag(String item_flag) {
+    public void setItem_flag(int item_flag) {
         this.item_flag = item_flag;
     }
 }
