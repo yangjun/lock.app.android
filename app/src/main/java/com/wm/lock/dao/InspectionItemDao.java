@@ -91,6 +91,7 @@ public class InspectionItemDao extends BaseDao<InspectionItem, Long> {
         }
         final BluetoothDevice result = new BluetoothDevice();
         result.setMacAddress(inspectionItem.getCabinet_lock_mac());
+        result.setName(inspectionItem.getCabinet_name());
         return result;
     }
 

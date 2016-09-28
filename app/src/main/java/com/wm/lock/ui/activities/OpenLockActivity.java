@@ -246,16 +246,6 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         return null;
     }
 
-    protected com.wm.lock.entity.BluetoothDevice convert(com.wm.lock.entity.BluetoothDevice bluetoothDevice, BluetoothDevice device) {
-        if (bluetoothDevice == null) {
-            return convert(device);
-        }
-        if (TextUtils.isEmpty(bluetoothDevice.getName())) {
-            bluetoothDevice.setName(device.getName());
-        }
-        return bluetoothDevice;
-    }
-
     protected com.wm.lock.entity.BluetoothDevice convert(BluetoothDevice device) {
         final com.wm.lock.entity.BluetoothDevice result = new com.wm.lock.entity.BluetoothDevice();
         result.setMacAddress(device.getAddress());

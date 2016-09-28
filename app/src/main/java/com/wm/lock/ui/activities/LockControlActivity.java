@@ -99,10 +99,15 @@ public class LockControlActivity extends BaseActivity {
     @Override
     protected void onPause() {
         unregisterReceiver(mReceiver);
-        BluetoothManager.getInstance().getBluetoothService().disconnect();
-        BluetoothManager.getInstance().unbind(getApplicationContext());
+//        BluetoothManager.getInstance().getBluetoothService().disconnect();
         super.onPause();
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        BluetoothManager.getInstance().unbind(getApplicationContext());
+        super.onDestroy();
     }
 
     private void showResult(byte[] data) {

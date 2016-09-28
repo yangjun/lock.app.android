@@ -54,48 +54,53 @@ public class WebSocketWriter {
         execute(map);
     }
 
-    public static void submitInspection(long inspectionId) {
-        final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
-        final Inspection inspection = bizService.findInspection(inspectionId);
-        final List<InspectionItem> inspectionItemList = bizService.listInspectionItem(inspectionId);
+    public static void submitInspection(final long inspectionId) {
+        new Thread() {
+            @Override
+            public void run() {
+                final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+                final Inspection inspection = bizService.findInspection(inspectionId);
+                final List<InspectionItem> inspectionItemList = bizService.listInspectionItem(inspectionId);
 
-        final Map<String, Object> map = new HashMap<>();
-        map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT);
-        map.put("plan_id", inspection.getPlan_id());
+                final Map<String, Object> map = new HashMap<>();
+                map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT);
+                map.put("plan_id", inspection.getPlan_id());
 
-        final List<Map<String, Object>> itemList = new ArrayList<>();
-        for (InspectionItem item : inspectionItemList) {
-            final Map<String, Object> itemMap = new HashMap<>();
-            itemMap.put("item_id", item.getItem_id());
-            itemMap.put("state",item.getState());
-            itemMap.put("result_name", item.getResult());
-            itemMap.put("note", item.getNote());
+                final List<Map<String, Object>> itemList = new ArrayList<>();
+                for (InspectionItem item : inspectionItemList) {
+                    final Map<String, Object> itemMap = new HashMap<>();
+                    itemMap.put("item_id", item.getItem_id());
+                    itemMap.put("state",item.getState() ? 1 : 0);
+                    itemMap.put("result", item.getResult());
+                    itemMap.put("note", item.getNote());
 
-            final List<String> attachmentList = bizService.listAttachments(item.getId_(), AttachmentType.PHOTO);
-            if (!CollectionUtils.isEmpty(attachmentList)) {
-                itemMap.put("pic_count", attachmentList.size());
-
-                final List<Map<String, Object>> photoList = new ArrayList<>();
-                for (String path : attachmentList) {
-                    try {
-                        final String encodeString = encodePhoto(path);
-                        final Map<String, Object> photoMap = new HashMap<>();
-                        photoMap.put("pic", encodeString);
-                        photoList.add(photoMap);
-                    } catch (Exception e) {
-                        Logger.p("fail to encode bitmap to string, the path is: " + path, e);
+                    final List<String> attachmentList = bizService.listAttachments(item.getId_(), AttachmentType.PHOTO);
+                    if (!CollectionUtils.isEmpty(attachmentList)) {
+                        final List<Map<String, Object>> photoList = new ArrayList<>();
+                        for (String path : attachmentList) {
+                            try {
+                                final String encodeString = encodePhoto(path);
+                                final Map<String, Object> photoMap = new HashMap<>();
+                                photoMap.put("pic", encodeString);
+                                photoList.add(photoMap);
+                            } catch (Exception e) {
+                                Logger.p("fail to encode bitmap to string, the path is: " + path, e);
+                            }
+                        }
+                        itemMap.put("pics", photoList);
+                        itemMap.put("pic_count", attachmentList.size());
                     }
+                    else {
+                        itemMap.put("pics", new ArrayList<>());
+                        itemMap.put("pic_count", 0);
+                    }
+                    itemList.add(itemMap);
                 }
-                itemMap.put("pics", photoList);
-            }
-            else {
-                itemMap.put("pic_count", 0);
-            }
-            itemList.add(itemMap);
-        }
-        map.put("items", itemList);
+                map.put("items", itemList);
 
-        execute(map);
+                execute(map);
+            }
+        }.start();
     }
 
     private static void execute(Object obj) {

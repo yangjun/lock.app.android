@@ -40,7 +40,6 @@
         </FrameLayout>
 
     </RelativeLayout>
-    ma
 
     <RelativeLayout
         android:layout_width="match_parent"

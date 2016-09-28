@@ -74,7 +74,7 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
         mDaoManager.getInspectionItemDao().doInTransaction(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                final List<InspectionItem> inspectionItemList = inspection.getInspection_item_list();
+                final List<InspectionItem> inspectionItemList = inspection.getItems();
                 for (InspectionItem item : inspectionItemList) {
                     item.setCreate_date(new Date());
                     item.setLast_modify_date(new Date());

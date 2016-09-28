@@ -16,8 +16,7 @@ public class OpenDoorActivity extends OpenLockActivity {
     @Override
     protected com.wm.lock.entity.BluetoothDevice fix(BluetoothDevice device) {
         final List<com.wm.lock.entity.BluetoothDevice> list =  list();
-        final com.wm.lock.entity.BluetoothDevice result = findExist(list, device);
-        return convert(result, device);
+        return findExist(list, device);
     }
 
     private List<com.wm.lock.entity.BluetoothDevice> list() {

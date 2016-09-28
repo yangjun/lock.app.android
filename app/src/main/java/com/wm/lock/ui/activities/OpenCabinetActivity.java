@@ -30,24 +30,20 @@ public class OpenCabinetActivity extends OpenLockActivity {
     @Override
     protected com.wm.lock.entity.BluetoothDevice fix(BluetoothDevice device) {
         final List<com.wm.lock.entity.BluetoothDevice> list = list();
-        final com.wm.lock.entity.BluetoothDevice result = findExist(list, device);
-        if (result != null) {
-            return convert(result, device);
-        }
-        return null;
+        return findExist(list, device);
     }
 
     private List<com.wm.lock.entity.BluetoothDevice> list() {
         final List<com.wm.lock.entity.BluetoothDevice> result = new ArrayList<>();
         final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
 
-        // 巡检任务对应的大门的蓝牙设备
-        final Inspection inspection = bizService.findInspection(mInspectionId);
-        if (!TextUtils.isEmpty(inspection.getLock_mac())) {
-            final com.wm.lock.entity.BluetoothDevice device = new com.wm.lock.entity.BluetoothDevice();
-            device.setMacAddress(inspection.getLock_mac());
-            result.add(device);
-        }
+//        // 巡检任务对应的大门的蓝牙设备
+//        final Inspection inspection = bizService.findInspection(mInspectionId);
+//        if (!TextUtils.isEmpty(inspection.getLock_mac())) {
+//            final com.wm.lock.entity.BluetoothDevice device = new com.wm.lock.entity.BluetoothDevice();
+//            device.setMacAddress(inspection.getLock_mac());
+//            result.add(device);
+//        }
 
         // 指定分类的所有机柜的蓝牙设备
         final List<com.wm.lock.entity.BluetoothDevice> cabinetList = bizService.listInspectionItemCategoryBluetooth(mInspectionId, mCategory);
