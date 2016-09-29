@@ -69,6 +69,10 @@ public class InspectionItem {
     @DatabaseField
     private String note;
 
+    /** 是否使用的默认值 */
+    @DatabaseField
+    private transient Boolean is_default_input = true;
+
     public long getId_() {
         return id_;
     }
@@ -180,4 +184,13 @@ public class InspectionItem {
     public void setItem_flag(int item_flag) {
         this.item_flag = item_flag;
     }
+
+    public Boolean is_default_input() {
+        return is_default_input;
+    }
+
+    public void setIs_default_input(Boolean is_default_input) {
+        this.is_default_input = is_default_input;
+    }
+
 }

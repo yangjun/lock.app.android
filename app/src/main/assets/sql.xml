@@ -46,7 +46,8 @@
 				inspection_id integer,
 				state integer,
 				result text,
-				note text
+				note text,
+				is_default_input integer
 			)
 		</content>
 

@@ -53,6 +53,8 @@ public class InspectionConstructFragment extends BaseFragment {
     private int mSelectOffset = 0;
     private int mSelectIndex = -1;
 
+    private TemperatureHumidity mTemperatureHumidity;
+    private boolean mmTemperatureHumidityLoaded = false;
     private Handler mHandler = new Handler();
 
     @Override
@@ -172,8 +174,8 @@ public class InspectionConstructFragment extends BaseFragment {
 
         // 巡视情况/运行情况
         final EditText etResult = (EditText) view.findViewById(R.id.et_result);
-        etResult.setText(getDisplayResult(item));
-        etResult.setEnabled(getDisplayResultEnable(item));
+        etResult.setText(getDisplayResultString(item));
+        etResult.setEnabled(mEnable);
 
         // 备注
         final EditText etNote = (EditText) view.findViewById(R.id.et_note);
@@ -204,38 +206,6 @@ public class InspectionConstructFragment extends BaseFragment {
                 photoFragment.takePhoto();
             }
         });
-    }
-
-    private String getDisplayResult(InspectionItem item) {
-        if (item.getItem_flag() == InspectionItemFlag.NORMAL) {
-            return item.getResult();
-        }
-
-        final TemperatureHumidity temperatureHumidity = bizService().findTemperatureHumidityByRoomName(mInspectionRoomName);
-        if (temperatureHumidity == null) {
-            return null;
-        }
-
-        switch (item.getItem_flag()) {
-            case InspectionItemFlag.TEMPERATURE:
-                return temperatureHumidity.getTemperature();
-
-            case InspectionItemFlag.HUMIDITY:
-                return temperatureHumidity.getHumidity();
-
-            case InspectionItemFlag.TEMPERATURE_HUMIDITY:
-                return String.format("%s, %s", temperatureHumidity.getTemperature(), temperatureHumidity.getHumidity());
-        }
-        return null;
-    }
-
-    private boolean getDisplayResultEnable(InspectionItem item) {
-        if (item.getItem_flag() == InspectionItemFlag.NORMAL) {
-            return mEnable;
-        }
-        else {
-            return false;
-        }
     }
 
     private IBizService bizService() {
@@ -322,12 +292,58 @@ public class InspectionConstructFragment extends BaseFragment {
         // 运行情况
         final EditText etRun = (EditText) v.findViewById(R.id.et_result);
         item.setResult(etRun.getText().toString().trim());
+        item.setIs_default_input(isResultInputDefault(item));
 
         // 备注
         final EditText etNote = (EditText) v.findViewById(R.id.et_note);
         item.setNote(etNote.getText().toString().trim());
 
         bizService().updateInspectionItem(item);
+    }
+
+    private boolean isResultInputDefault(InspectionItem item) {
+        if (item.getItem_flag() == InspectionItemFlag.NORMAL) {
+            return true;
+        }
+        if (!item.is_default_input()) {
+            return false;
+        }
+        return TextUtils.equals(item.getResult(), getDefaultTemperatureHumidityString(item));
+    }
+
+    private String getDisplayResultString(InspectionItem item) {
+        if (item.getItem_flag() == InspectionItemFlag.NORMAL) {
+            return item.getResult();
+        }
+
+        if (!item.is_default_input() && !TextUtils.isEmpty(item.getResult())) {
+            return item.getResult();
+        }
+
+        return getDefaultTemperatureHumidityString(item);
+    }
+
+    private String getDefaultTemperatureHumidityString(InspectionItem item) {
+        if (!mmTemperatureHumidityLoaded) {
+            mTemperatureHumidity = bizService().findTemperatureHumidityByRoomName(mInspectionRoomName);
+            mmTemperatureHumidityLoaded = true;
+        }
+
+        if (mTemperatureHumidity == null) {
+            return null;
+        }
+
+        switch (item.getItem_flag()) {
+            case InspectionItemFlag.TEMPERATURE:
+                return mTemperatureHumidity.getTemperature();
+
+            case InspectionItemFlag.HUMIDITY:
+                return mTemperatureHumidity.getHumidity();
+
+            case InspectionItemFlag.TEMPERATURE_HUMIDITY:
+                return String.format("%s, %s", mTemperatureHumidity.getTemperature(), mTemperatureHumidity.getHumidity());
+        }
+        return null;
     }
 
 }
