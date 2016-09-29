@@ -42,7 +42,7 @@ public class LockDeviceDao extends BaseDao<LockDevice, Long> {
 
     public List<LockDevice> list(String userJobNumber) {
         try {
-            return where().eq("user_job_number", userJobNumber).query();
+            return where().and().eq("user_job_number", userJobNumber).query();
         } catch (SQLException e) {
             throw new DbException(e);
         }

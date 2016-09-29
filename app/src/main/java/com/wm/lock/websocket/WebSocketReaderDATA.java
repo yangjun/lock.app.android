@@ -3,7 +3,6 @@ package com.wm.lock.websocket;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockApplication;
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
@@ -15,11 +14,9 @@ import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionResult;
 import com.wm.lock.entity.InspectionState;
-import com.wm.lock.entity.LockDevice;
+import com.wm.lock.entity.LockDeviceGroup;
 import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.ui.activities.HomeActivity_;
-
-import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -126,8 +123,8 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
         WebSocketReaderProcessor.getInstance().execute(new WebSocketReaderProcessor.WebSocketReaderWork<Void>() {
             @Override
             public Void execute() throws Exception {
-                final List<LockDevice> list = convertFormJson(payload, new TypeToken<List<LockDevice>>() {});
-                bizService().syncLockDevice(loginUser().getJobNumber(), list);
+                final LockDeviceGroup lockDeviceGroup = convertFormJson(payload, LockDeviceGroup.class);
+                bizService().syncLockDevice(loginUser().getJobNumber(), lockDeviceGroup.getLocks());
                 return null;
             }
 

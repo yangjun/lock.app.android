@@ -16,7 +16,7 @@ public class TemperatureHumidityDao extends BaseDao<TemperatureHumidity, Long> {
 
     public void sync(TemperatureHumidity input) {
         try {
-            final long count = where().eq("room_name", input.getRoom_name()).countOf();
+            final long count = where().and().eq("room_name", input.getRoom_name()).countOf();
             if (count == 0) {
                 create(input);
             }
@@ -30,7 +30,7 @@ public class TemperatureHumidityDao extends BaseDao<TemperatureHumidity, Long> {
 
     public TemperatureHumidity findByRoomName(String roomName) {
         try {
-            final List<TemperatureHumidity> list = where().eq("room_name", roomName).query();
+            final List<TemperatureHumidity> list = where().and().eq("room_name", roomName).query();
             return CollectionUtils.isEmpty(list) ? null : list.get(0);
         } catch (SQLException e) {
             throw new DbException(e);
