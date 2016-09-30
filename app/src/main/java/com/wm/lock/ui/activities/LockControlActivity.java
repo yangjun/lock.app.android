@@ -8,10 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
@@ -76,7 +72,7 @@ public class LockControlActivity extends BaseActivity {
     @Override
     protected void init() {
         mDeviceAddress = mSaveBundle.getString(LockConstants.DATA);
-        BluetoothManager.getInstance().bind(getApplicationContext(), mDeviceAddress);
+        BluetoothManager.getInstance().bind(this, mDeviceAddress);
 
         doorManager = new DoorManager(this);
     }
@@ -104,11 +100,11 @@ public class LockControlActivity extends BaseActivity {
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        BluetoothManager.getInstance().unbind(getApplicationContext());
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        BluetoothManager.getInstance().unbind(getApplicationContext());
+//        super.onDestroy();
+//    }
 
     private void showResult(byte[] data) {
         try {
