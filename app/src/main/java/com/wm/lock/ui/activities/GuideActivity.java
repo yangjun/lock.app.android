@@ -40,12 +40,12 @@ public class GuideActivity extends BaseActivity {
         mSysService = ModuleFactory.getInstance().getModuleInstance(ISysService.class);
         isByStart = (mSaveBundle != null && mSaveBundle.getBoolean(LockConstants.FLAG, false));
 
-        if (isByStart && !mSysService.isNewInstall()) {
+//        if (isByStart && !mSysService.isNewInstall()) {
             next();
-        }
-        else {
-            setupGroup();
-        }
+//        }
+//        else {
+//            setupGroup();
+//        }
     }
 
     private void setupGroup() {
