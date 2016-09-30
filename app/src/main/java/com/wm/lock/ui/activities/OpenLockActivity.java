@@ -84,11 +84,6 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
     }
 
     @Override
-    public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
@@ -110,11 +105,6 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         invalidateOptionsMenu();
         unregisterReceiver(mReceiver);
         super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
