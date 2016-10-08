@@ -37,7 +37,13 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTransparentTheme" parent="AppFullScreenTheme">
+    <style name="AppTransparentFullScreenTheme" parent="AppFullScreenTheme">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
+    <style name="AppTransparentTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>

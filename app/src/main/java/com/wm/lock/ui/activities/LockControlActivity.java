@@ -72,7 +72,7 @@ public class LockControlActivity extends BaseActivity {
     @Override
     protected void init() {
         mDeviceAddress = mSaveBundle.getString(LockConstants.DATA);
-        BluetoothManager.getInstance().bind(this, mDeviceAddress);
+        BluetoothManager.getInstance().bind(getApplicationContext(), mDeviceAddress);
 
         doorManager = new DoorManager(this);
     }
@@ -95,16 +95,15 @@ public class LockControlActivity extends BaseActivity {
     @Override
     protected void onPause() {
         unregisterReceiver(mReceiver);
-//        BluetoothManager.getInstance().getBluetoothService().disconnect();
         super.onPause();
         finish();
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        BluetoothManager.getInstance().unbind(getApplicationContext());
-//        super.onDestroy();
-//    }
+    @Override
+    protected void onDestroy() {
+        BluetoothManager.getInstance().unbind(getApplicationContext());
+        super.onDestroy();
+    }
 
     private void showResult(byte[] data) {
         try {

@@ -51,7 +51,7 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         @Override
         public void onReceive(Context context, Intent intent) {
             if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
-                int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,-1);
+                int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
                 switch (state) {
                     case BluetoothAdapter.STATE_OFF:
                         showTip(R.string.message_bluetooth_disconnect);

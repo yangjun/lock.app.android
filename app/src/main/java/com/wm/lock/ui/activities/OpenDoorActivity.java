@@ -29,6 +29,10 @@ public class OpenDoorActivity extends OpenLockActivity {
     protected LockDevice fix(BluetoothDevice device) {
         final List<LockDevice> list =  list();
         return findExist(list, device);
+//        final LockDevice result = new LockDevice();
+//        result.setLock_mac(device.getAddress());
+//        result.setLock_name(device.getName());
+//        return result;
     }
 
     private List<LockDevice> list() {

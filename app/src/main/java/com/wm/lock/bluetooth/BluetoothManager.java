@@ -94,6 +94,7 @@ public class BluetoothManager {
         if (mServiceConnection != null) {
             ctx.unbindService(mServiceConnection);
             mServiceConnection = null;
+            mBluetoothService = null;
         }
     }
 
