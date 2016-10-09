@@ -18,6 +18,7 @@ import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.HardwareUtils;
+import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionItemFlag;
 import com.wm.lock.entity.TemperatureHumidity;
@@ -191,6 +192,7 @@ public class InspectionConstructFragment extends BaseFragment {
         // 照片
         final Bundle bundle = new Bundle();
         bundle.putLong(LockConstants.ID, item.getId_());
+        bundle.putString(LockConstants.FLAG, AttachmentSource.INSPECTION_ITEM.name());
         bundle.putBoolean(LockConstants.BOOLEAN, mEnable);
         final AttachPhotoFragment photoFragment = new AttachPhotoFragment_();
         photoFragment.setArguments(bundle);
@@ -200,7 +202,8 @@ public class InspectionConstructFragment extends BaseFragment {
         photoArea.setId(photoAreaId);
         FragmentUtils.replaceFragment(getChildFragmentManager(), photoAreaId, photoFragment);
 
-        rendererUnNecessary(view, R.id.ll_add_photo, R.id.ll_photo, photoFragment.count(item.getId_()) <= 0, new View.OnClickListener() {
+        final int attachmentCount = photoFragment.count(AttachmentSource.INSPECTION_ITEM, item.getId_());
+        rendererUnNecessary(view, R.id.ll_add_photo, R.id.ll_photo,  attachmentCount <= 0, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 photoFragment.takePhoto();

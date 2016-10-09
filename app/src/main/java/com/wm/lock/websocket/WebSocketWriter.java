@@ -13,6 +13,7 @@ import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.GsonUtils;
 import com.wm.lock.core.utils.ImageUtils;
+import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.ChatDirective;
@@ -87,7 +88,7 @@ public class WebSocketWriter {
                     itemMap.put("result", item.getResult());
                     itemMap.put("note", item.getNote());
 
-                    final List<String> attachmentList = bizService.listAttachments(item.getId_(), AttachmentType.PHOTO);
+                    final List<String> attachmentList = bizService.listAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, AttachmentType.PHOTO);
                     if (!CollectionUtils.isEmpty(attachmentList)) {
                         final List<Map<String, Object>> photoList = new ArrayList<>();
                         for (String path : attachmentList) {

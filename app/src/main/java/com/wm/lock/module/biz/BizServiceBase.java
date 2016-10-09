@@ -5,6 +5,7 @@ import android.content.Context;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.IoUtils;
 import com.wm.lock.dao.DaoManager;
+import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
@@ -96,7 +97,8 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
                 final List<InspectionItem> inspectionItems = mDaoManager.getInspectionItemDao().list(inspectionId);
                 if (!CollectionUtils.isEmpty(inspectionItems)) {
                     for (InspectionItem inspectionItem : inspectionItems) {
-                        IoUtils.deleteFiles(getAttachmentFolder(inspectionItem.getId_()).getAbsolutePath());
+                        final File file = getAttachmentFolder(AttachmentSource.INSPECTION_ITEM, inspectionItem.getId_());
+                        IoUtils.deleteFiles(file.getAbsolutePath());
                         mDaoManager.getInspectionItemDao().deleteById(inspectionItem.getId_());
                     }
                 }
@@ -160,15 +162,15 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public int countAttachments(long foreignId, AttachmentType type) {
-        final File folder = getAttachmentFolder(foreignId);
+    public int countAttachments(long foreignId, AttachmentSource source, AttachmentType type) {
+        final File folder = getAttachmentFolder(source, foreignId);
         final File[] files = folder.listFiles();
         return files == null ? 0 : files.length;
     }
 
     @Override
-    public List<String> listAttachments(long foreignId, AttachmentType type) {
-        final File folder = getAttachmentFolder(foreignId);
+    public List<String> listAttachments(long foreignId, AttachmentSource source, AttachmentType type) {
+        final File folder = getAttachmentFolder(source, foreignId);
         final File[] files = folder.listFiles();
 
         if (files == null && files.length == 0) {
@@ -186,15 +188,15 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public void deleteAttachment(String path) {
-        IoUtils.deleteFile(path);
+    public String getAttachmentSavePath(long foreignId, AttachmentSource source, AttachmentType type) {
+        final File folder = getAttachmentFolder(source, foreignId);
+        final String name = new Date().getTime() + getAttachmentSuffix(type);
+        return new File(folder, name).getAbsolutePath();
     }
 
     @Override
-    public String getAttachmentSavePath(long foreignId, AttachmentType type) {
-        final File folder = getAttachmentFolder(foreignId);
-        final String name = new Date().getTime() + getAttachmentSuffix(type);
-        return new File(folder, name).getAbsolutePath();
+    public void deleteAttachment(String path) {
+        IoUtils.deleteFile(path);
     }
 
     @Override
@@ -248,8 +250,17 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
         return mDaoManager.getInspectionDao().doInTransaction(callable);
     }
 
-    protected File getAttachmentFolder(long foreignId) {
-        final File folder = new File(mCtx.getExternalCacheDir().getAbsolutePath() + File.separator + "attachments" + File.separator + foreignId + File.separator);
+    protected File getAttachmentFolder(AttachmentSource source, long foreignId) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(mCtx.getExternalCacheDir().getAbsolutePath())
+                .append(File.separator)
+                .append("attachments")
+                .append(File.separator)
+                .append(source.name())
+                .append(File.separator)
+                .append(foreignId)
+                .append(File.separator);
+        final File folder = new File(builder.toString());
         if (!folder.exists()) {
             folder.mkdirs();
         }

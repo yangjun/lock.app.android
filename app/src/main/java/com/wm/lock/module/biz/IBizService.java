@@ -1,5 +1,6 @@
 package com.wm.lock.module.biz;
 
+import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
@@ -97,22 +98,22 @@ public interface IBizService {
     /**
      * 获取附件数量
      */
-    public int countAttachments(long foreignId, AttachmentType type);
+    public int countAttachments(long foreignId, AttachmentSource source, AttachmentType type);
 
     /**
      * 获取附件列表
      */
-    public List<String> listAttachments(long foreignId, AttachmentType type);
+    public List<String> listAttachments(long foreignId, AttachmentSource source, AttachmentType type);
+
+    /**
+     * 获取要保存的附件的路径
+     */
+    public String getAttachmentSavePath(long foreignId, AttachmentSource source, AttachmentType type);
 
     /**
      * 删除某个路径的附件
      */
     public void deleteAttachment(String path);
-
-    /**
-     * 获取要保存的附件的路径
-     */
-    public String getAttachmentSavePath(long foreignId, AttachmentType type);
 
     /**
      * 查找下一个写入的通信记录

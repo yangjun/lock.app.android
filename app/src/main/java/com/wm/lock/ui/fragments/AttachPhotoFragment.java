@@ -20,6 +20,7 @@ import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.IoUtils;
+import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
@@ -41,6 +42,7 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
         ImageHandler.ImagePreviewCallback,  AdapterView.OnItemClickListener {
 
     private long mForeignId;
+    private AttachmentSource mSource;
     private boolean mEnable;
 
     @ViewById(R.id.nsg)
@@ -60,6 +62,7 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
     protected void init() {
         final Bundle bundle = getArguments();
         mForeignId = bundle.getLong(LockConstants.ID);
+        mSource = AttachmentSource.valueOf(bundle.getString(LockConstants.FLAG));
         mEnable = bundle.getBoolean(LockConstants.BOOLEAN);
 
         mPhotoPathList = loadPathList(mForeignId);
@@ -68,12 +71,12 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
         mGridView.setOnItemClickListener(this);
     }
 
-    public static int count(long foreignId) {
-        return bizService().countAttachments(foreignId, AttachmentType.PHOTO);
+    public static int count(AttachmentSource source, long foreignId) {
+        return bizService().countAttachments(foreignId, source, AttachmentType.PHOTO);
     }
 
     public void takePhoto() {
-        mLastPhotoPath = bizService().getAttachmentSavePath(mForeignId, AttachmentType.PHOTO);
+        mLastPhotoPath = bizService().getAttachmentSavePath(mForeignId, mSource, AttachmentType.PHOTO);
         final ImageHandler.ImageTakeConfig config = new ImageHandler.ImageTakeConfig().setPath(mLastPhotoPath);
         ImageHandler.getInstance().takePhoto(mActivity, config, this);
     }
@@ -151,7 +154,7 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
     }
 
     private List<String> loadPathList(long foreignId) {
-        List<String> result = bizService().listAttachments(foreignId, AttachmentType.PHOTO);
+        List<String> result = bizService().listAttachments(foreignId, mSource, AttachmentType.PHOTO);
         if (result == null) {
             result = new ArrayList<>();
         }
