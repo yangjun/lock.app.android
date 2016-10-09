@@ -166,11 +166,11 @@ class WebSocketWriterProcessor {
     }
 
     private void showNotification() {
-        NotificationUtils.showNotification(LockApplication.getInstance(), 110, getString(R.string.message_sync_notification), null, null);
+        NotificationUtils.showNotification(LockApplication.getInstance(), LockConstants.NOTIFICATION_ID, getString(R.string.message_sync_notification), null, null);
     }
 
     private void cancelNotification() {
-        NotificationUtils.cancelNotification(LockApplication.getInstance(), 110);
+        NotificationUtils.cancelNotification(LockApplication.getInstance(), LockConstants.NOTIFICATION_ID);
     }
 
     private String getString(int resId) {

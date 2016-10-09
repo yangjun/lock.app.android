@@ -2,6 +2,8 @@ package com.wm.lock.module.biz;
 
 import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
+import com.wm.lock.entity.AttachmentUpload;
+import com.wm.lock.entity.AttachmentUploadSource;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
@@ -36,6 +38,11 @@ public interface IBizService {
     public void submitInspection(long inspectionId);
 
     /**
+     * 提交巡检计划成功
+     */
+    public void submitInspectionSuccess(String userJobNumber, String planId);
+
+    /**
      * 新增巡检计划
      */
     public long addInspection(Inspection inspection);
@@ -55,10 +62,10 @@ public interface IBizService {
      */
     public void deleteInspection(long inspectionId);
 
-    /**
-     * 删除巡检计划
-     */
-    public void deleteInspection(String userJobNumber, String planId);
+//    /**
+//     * 删除巡检计划
+//     */
+//    public void deleteInspection(String userJobNumber, String planId);
 
     /**
      * 获取巡检计划数量
@@ -95,6 +102,14 @@ public interface IBizService {
      */
     public List<LockDevice> listInspectionItemCategoryBluetooth(long inspectionId, String category);
 
+
+
+
+    /**
+     * 上传附件
+     */
+    public void uploadAttachments(List<AttachmentUpload> list);
+
     /**
      * 获取附件数量
      */
@@ -114,6 +129,23 @@ public interface IBizService {
      * 删除某个路径的附件
      */
     public void deleteAttachment(String path);
+
+    /**
+     * 获取下一个要上传的附件记录
+     */
+    public List<AttachmentUpload> findNextAttachmentUploadGroup(String userJobNumber);
+
+    /**
+     * 删除上传的附件记录
+     */
+    public void deleteAttachmentUpload(String userJobNumber, long foreignId, AttachmentUploadSource source);
+
+    /**
+     * 根据路径获取附件的上传记录
+     */
+    public AttachmentUpload findAttachmentUploadByPath(String path);
+
+
 
     /**
      * 查找下一个写入的通信记录
@@ -140,6 +172,9 @@ public interface IBizService {
      */
     public Communication findCommunication(String userJobNumber, String communicationBizId);
 
+
+
+
     /**
      * 同步可开锁的蓝牙列表
      */
@@ -159,6 +194,10 @@ public interface IBizService {
      * 根据机房找到对应的温湿度
      */
     public TemperatureHumidity findTemperatureHumidityByRoomName(String roomName);
+
+
+
+
 
     /**
      * 事务处理

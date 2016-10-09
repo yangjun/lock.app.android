@@ -5,8 +5,10 @@ import android.content.Context;
 import com.wm.lock.LockConfig;
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.cache.CacheManager;
-import com.wm.lock.http.template.RestTemplateProviderHttp;
+import com.wm.lock.entity.AttachmentUploadResult;
+import com.wm.lock.entity.params.AttachmentUploadParam;
 import com.wm.lock.http.template.RestTemplateProvider;
+import com.wm.lock.http.template.RestTemplateProviderHttp;
 import com.wm.lock.http.template.RestTemplateProviderSsl;
 
 import org.androidannotations.annotations.AfterInject;
@@ -15,7 +17,10 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.rest.RestService;
 import org.androidannotations.api.rest.MediaType;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -67,6 +72,12 @@ public class Rest {
 //        }
 //    }
 
+    public AttachmentUploadResult uploadAttachment(AttachmentUploadParam param) {
+        final MultiValueMap<String, Object> data = new LinkedMultiValueMap<>();
+        data.set("file", new FileSystemResource(param.getFile()));
+        data.set("aliases", param.getAliases());
+        return mRestClient.uploadAttachment(data);
+    }
 
     private void resetClient() {
         resetClient(getRootUrl());

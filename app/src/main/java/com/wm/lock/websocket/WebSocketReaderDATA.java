@@ -93,7 +93,7 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
 //                            Helper.getDbJson("plan_id", result.getPlan_id())
 //                    });
 //                    bizService().deleteCommunication(deleteParam);
-                    bizService().deleteInspection(loginUser().getJobNumber(), result.getPlan_id());
+                    bizService().submitInspectionSuccess(loginUser().getJobNumber(), result.getPlan_id());
                 }
                 else if (result.getState() == InspectionState.IN_PROCESS) { //提交失败
                     final Inspection inspection = bizService().findInspection(loginUser().getJobNumber(), result.getPlan_id());

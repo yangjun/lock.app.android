@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
+import com.wm.lock.attachment.AttachmentProcessor;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.cache.CacheManager;
@@ -221,7 +222,8 @@ public class InspectionConstructActivity extends BaseActivity {
     }
 
     private void doSubmit() {
-        WebSocketWriter.submitInspection(mInspectionId);
+        bizService().submitInspection(mInspectionId);
+        AttachmentProcessor.getInstance().startIfNot();
         showTip(R.string.message_submit_to_background);
         setResult(RESULT_FIRST_USER);
         finish();

@@ -6,20 +6,16 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.wm.lock.LockApplication;
-import com.wm.lock.LockConfig;
+import com.wm.lock.attachment.AttachmentProcessor;
 import com.wm.lock.bluetooth.BluetoothManager;
+import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.core.CrashHandler;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.logger.LoggerOption;
 import com.wm.lock.core.utils.RedirectUtils;
-import com.wm.lock.core.utils.ToastUtils;
-import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.exception.BizException;
-import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.module.ModuleFactory;
-import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.module.user.IUserService;
 import com.wm.lock.ui.activities.HomeActivity_;
 import com.wm.lock.websocket.WebSocketService;
@@ -86,16 +82,16 @@ public final class Helper {
     }
 
     public static void initByLogin() {
-        final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
-        final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
-
-        // 删除提交的通信记录，由用户手动点击提交
-        final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
-        deleteParam.setSource(userService.getLoginedInfo().getJobNumber());
-        deleteParam.setContents(new String[]{
-                getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT)
-        });
-        bizService.deleteCommunication(deleteParam);
+//        final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+//        final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
+//
+//        // 删除提交的通信记录，由用户手动点击提交
+//        final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
+//        deleteParam.setSource(userService.getLoginedInfo().getJobNumber());
+//        deleteParam.setContents(new String[]{
+//                getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT)
+//        });
+//        bizService.deleteCommunication(deleteParam);
     }
 
     public static void destroyByExit() {
@@ -105,6 +101,16 @@ public final class Helper {
     }
 
     public static void destroyByLogoff() {
+        final Context ctx = LockApplication.getInstance();
+
+        // 停止web socket服务
+        final Intent webSocketIntent = new Intent(ctx, WebSocketService.class);
+        ctx.stopService(webSocketIntent);
+
+        // 停止上传附件
+        AttachmentProcessor.getInstance().stop();
+
+        // 执行注销
         ModuleFactory.getInstance().getModuleInstance(IUserService.class).logoff();
     }
 
@@ -156,6 +162,9 @@ public final class Helper {
         // 启动web socket服务
         final Intent webSocketIntent = new Intent(ctx, WebSocketService.class);
         ctx.startService(webSocketIntent);
+
+        // 启动附件上传
+        AttachmentProcessor.getInstance().startIfNot();
 
         // 跳转到主页
         RedirectUtils.goActivity(ctx, HomeActivity_.class);

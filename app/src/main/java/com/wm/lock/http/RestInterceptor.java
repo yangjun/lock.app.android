@@ -20,14 +20,14 @@ public class RestInterceptor implements ClientHttpRequestInterceptor {
         return response;
     }
 
-    private String inputStream2String(InputStream in) throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        StringBuilder out = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            out.append(line);
-        }
-        return out.toString();
-    }
+//    private String inputStream2String(InputStream in) throws IOException{
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+//        StringBuilder out = new StringBuilder();
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            out.append(line);
+//        }
+//        return out.toString();
+//    }
 
 }

@@ -69,6 +69,19 @@
 			)
 		</content>
 
+		<content>
+			create table tb_attachment_upload (
+				id_ integer primary key autoincrement,
+				create_date timestamp,
+				path varchar(200),
+				type varchar(100),
+				uploadedId varchar(100),
+				foreignId integer,
+				source varchar(100),
+				user_job_number varchar(20)
+			)
+		</content>
+
 	</sql>
 
 </sqls>

@@ -11,10 +11,9 @@ import com.google.gson.JsonSerializer;
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.CollectionUtils;
-import com.wm.lock.core.utils.GsonUtils;
-import com.wm.lock.core.utils.ImageUtils;
 import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
+import com.wm.lock.entity.AttachmentUpload;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.ChatDirective;
 import com.wm.lock.entity.Inspection;
@@ -22,8 +21,6 @@ import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
-
-import org.codehaus.jackson.map.ser.std.DateSerializer;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -72,7 +69,6 @@ public class WebSocketWriter {
             public void run() {
                 final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
 
-                bizService.submitInspection(inspectionId);
                 final Inspection inspection = bizService.findInspection(inspectionId);
 
                 final Map<String, Object> map = new HashMap<>();
@@ -92,14 +88,16 @@ public class WebSocketWriter {
                     if (!CollectionUtils.isEmpty(attachmentList)) {
                         final List<Map<String, Object>> photoList = new ArrayList<>();
                         for (String path : attachmentList) {
-                            try {
-                                final String encodeString = encodePhoto(path);
+//                            try {
+                                final AttachmentUpload attachmentUpload = bizService.findAttachmentUploadByPath(path);
+//                                final String encodeString = encodePhoto(path);
                                 final Map<String, Object> photoMap = new HashMap<>();
-                                photoMap.put("pic", encodeString);
+                                photoMap.put("pic", attachmentUpload.getUploadedId());
+                                photoMap.put("pic_type", 1);
                                 photoList.add(photoMap);
-                            } catch (Exception e) {
-                                Logger.p("fail to encode bitmap to string, the path is: " + path, e);
-                            }
+//                            } catch (Exception e) {
+//                                Logger.p("fail to encode bitmap to string, the path is: " + path, e);
+//                            }
                         }
                         itemMap.put("pics", photoList);
                         itemMap.put("pic_count", attachmentList.size());
@@ -159,9 +157,9 @@ public class WebSocketWriter {
         return result;
     }
 
-    private static String encodePhoto(String path) throws Exception {
-        return ImageUtils.encode(path);
-    }
+//    private static String encodePhoto(String path) throws Exception {
+//        return ImageUtils.encode(path);
+//    }
 
     private static String convertToString(Object obj) {
         final Gson gson = getGsonBuilder().create();

@@ -7,6 +7,8 @@ import com.wm.lock.core.utils.IoUtils;
 import com.wm.lock.dao.DaoManager;
 import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
+import com.wm.lock.entity.AttachmentUpload;
+import com.wm.lock.entity.AttachmentUploadSource;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
@@ -56,11 +58,46 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public void submitInspection(long inspectionId) {
+    public void submitInspection(final long inspectionId) {
+        // 变更巡检计划的状态
         final Inspection inspection = mDaoManager.getInspectionDao().queryForId(inspectionId);
         inspection.setState(InspectionState.SUBMIT_FAIL);
         inspection.setLast_modify_date(new Date());
         mDaoManager.getInspectionDao().update(inspection);
+
+        // 添加附件到上传记录
+        final List<InspectionItem> inspectionItemList = listInspectionItem(inspectionId);
+        mDaoManager.getAttachmentUploadDao().doInTransaction(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                for (InspectionItem item : inspectionItemList) {
+                    final List<String> attachmentList = listAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, AttachmentType.PHOTO);
+                    if (!CollectionUtils.isEmpty(attachmentList)) {
+                        for (String path : attachmentList) {
+                            final AttachmentUpload temp = new AttachmentUpload();
+                            temp.setCreate_date(new Date());
+                            temp.setForeignId(inspectionId);
+                            temp.setSource(AttachmentUploadSource.INSPECTION);
+                            temp.setUser_job_number(inspection.getUser_job_number());
+                            temp.setPath(path);
+                            temp.setType(AttachmentType.PHOTO);
+                            temp.setUploadedId(null);
+                            mDaoManager.getAttachmentUploadDao().create(temp);
+                        }
+                    }
+                }
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public void submitInspectionSuccess(String userJobNumber, String planId) {
+        final Inspection inspection = mDaoManager.getInspectionDao().findByPlanId(userJobNumber, planId);
+        // 删除附件上传记录
+        mDaoManager.getAttachmentUploadDao().delete(userJobNumber, AttachmentUploadSource.INSPECTION, inspection.getId_());
+        // 删除巡检计划
+        deleteInspection(inspection.getId_());
     }
 
     @Override
@@ -108,13 +145,13 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
         });
     }
 
-    @Override
-    public void deleteInspection(String userJobNumber, String planId) {
-        final Inspection inspection = mDaoManager.getInspectionDao().findByPlanId(userJobNumber, planId);
-        if (inspection != null) {
-            deleteInspection(inspection.getId_());
-        }
-    }
+//    @Override
+//    public void deleteInspection(String userJobNumber, String planId) {
+//        final Inspection inspection = mDaoManager.getInspectionDao().findByPlanId(userJobNumber, planId);
+//        if (inspection != null) {
+//            deleteInspection(inspection.getId_());
+//        }
+//    }
 
     @Override
     public long countInspection(InspectionQueryParam param) {
@@ -162,6 +199,11 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
+    public List<AttachmentUpload> findNextAttachmentUploadGroup(String userJobNumber) {
+        return mDaoManager.getAttachmentUploadDao().findNextGroup(userJobNumber);
+    }
+
+    @Override
     public int countAttachments(long foreignId, AttachmentSource source, AttachmentType type) {
         final File folder = getAttachmentFolder(source, foreignId);
         final File[] files = folder.listFiles();
@@ -197,6 +239,16 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     @Override
     public void deleteAttachment(String path) {
         IoUtils.deleteFile(path);
+    }
+
+    @Override
+    public void deleteAttachmentUpload(String userJobNumber, long foreignId, AttachmentUploadSource source) {
+        mDaoManager.getAttachmentUploadDao().delete(userJobNumber, source, foreignId);
+    }
+
+    @Override
+    public AttachmentUpload findAttachmentUploadByPath(String path) {
+        return mDaoManager.getAttachmentUploadDao().findByPath(path);
     }
 
     @Override

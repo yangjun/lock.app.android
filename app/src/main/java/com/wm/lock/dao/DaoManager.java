@@ -5,6 +5,7 @@ import android.content.Context;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.wm.lock.core.logger.Logger;
+import com.wm.lock.entity.AttachmentUpload;
 import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
@@ -31,6 +32,7 @@ public class DaoManager {
     private CommunicationDao communicationDao;
     private LockDeviceDao lockDeviceDao;
     private TemperatureHumidityDao temperatureHumidityDao;
+    private AttachmentUploadDao attachmentUploadDao;
 
     @AfterInject
     void init() {
@@ -41,6 +43,7 @@ public class DaoManager {
             communicationDao = new CommunicationDao((Dao<Communication, Long>) helper.getDao(Communication.class));
             lockDeviceDao = new LockDeviceDao((Dao<LockDevice, Long>) helper.getDao(LockDevice.class));
             temperatureHumidityDao = new TemperatureHumidityDao((Dao<TemperatureHumidity, Long>) helper.getDao(TemperatureHumidity.class));
+            attachmentUploadDao = new AttachmentUploadDao((Dao<AttachmentUpload, Long>) helper.getDao(AttachmentUpload.class));
         } catch (SQLException e) {
             Logger.p("fail to instance dao", e);
             throw new DbException(e);
@@ -73,6 +76,10 @@ public class DaoManager {
 
     public TemperatureHumidityDao getTemperatureHumidityDao() {
         return temperatureHumidityDao;
+    }
+
+    public AttachmentUploadDao getAttachmentUploadDao() {
+        return attachmentUploadDao;
     }
 
     public SqlOpenHelper getHelper() {
