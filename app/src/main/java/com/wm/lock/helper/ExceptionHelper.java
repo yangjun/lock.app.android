@@ -1,17 +1,20 @@
-package com.wm.lock;
+package com.wm.lock.helper;
 
+import com.wm.lock.LockApplication;
+import com.wm.lock.R;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.exception.BizException;
 import com.wm.lock.exception.DbException;
 import com.wm.lock.exception.RemoteException;
+import com.wm.lock.helper.Helper;
 
 /**
  * Created by wm on 15/9/11.
  */
-public final class ExceptionProcessor {
+public final class ExceptionHelper {
 
-    private ExceptionProcessor() {
+    private ExceptionHelper() {
     }
 
     public static void show(String operation, Throwable e) {

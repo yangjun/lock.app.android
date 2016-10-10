@@ -3,7 +3,7 @@ package com.wm.lock.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.wm.lock.Helper;
+import com.wm.lock.helper.Helper;
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.module.ModuleFactory;

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.wm.lock.ExceptionProcessor;
+import com.wm.lock.helper.ExceptionHelper;
 import com.wm.lock.R;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
@@ -159,7 +159,7 @@ public class InspectionListPendingFragment extends InspectionListFragment {
 
             @Override
             public void onFail(Exception e) {
-                ExceptionProcessor.show("fail to refuse inspection", e, getString(R.string.message_refuse_task_fail));
+                ExceptionHelper.show("fail to refuse inspection", e, getString(R.string.message_refuse_task_fail));
             }
 
             @Override
@@ -189,7 +189,7 @@ public class InspectionListPendingFragment extends InspectionListFragment {
 
             @Override
             public void onFail(Exception e) {
-                ExceptionProcessor.show("fail to receive inspection", e, getString(R.string.message_receive_task_fail));
+                ExceptionHelper.show("fail to receive inspection", e, getString(R.string.message_receive_task_fail));
             }
 
             @Override

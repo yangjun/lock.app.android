@@ -21,6 +21,7 @@ import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.entity.Inspection;
+import com.wm.lock.helper.NotificationHelper;
 import com.wm.lock.http.Rest;
 import com.wm.lock.ui.fragments.InspectionListFragment;
 import com.wm.lock.ui.fragments.InspectionListInProcessFragment;
@@ -146,6 +147,24 @@ public class HomeActivity extends BaseActivity {
 
         updateTabTitle();
         mViewPager.setCurrentItem(1); //选中处理中
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    NotificationHelper.dismissNewInspection();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void updateIndicator() {

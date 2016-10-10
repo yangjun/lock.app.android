@@ -51,7 +51,4 @@ public final class LockConstants {
     /** 管理端同步给移动端的机房温湿度 */
     public static final String BIZ_HUMITURE = "HUMITURE";
 
-
-    /** 通知栏id */
-    public static final int NOTIFICATION_ID = 110;
 }

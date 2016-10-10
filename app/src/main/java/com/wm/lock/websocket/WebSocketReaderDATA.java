@@ -1,22 +1,12 @@
 package com.wm.lock.websocket;
 
-import android.content.Context;
-import android.os.Bundle;
-
-import com.wm.lock.LockApplication;
 import com.wm.lock.LockConstants;
-import com.wm.lock.R;
-import com.wm.lock.core.utils.GsonUtils;
-import com.wm.lock.core.utils.NotificationUtils;
+import com.wm.lock.helper.NotificationHelper;
 import com.wm.lock.dto.InspectionNewDto;
-import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.Inspection;
-import com.wm.lock.entity.InspectionResult;
-import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.LockDeviceGroup;
 import com.wm.lock.entity.TemperatureHumidity;
-import com.wm.lock.ui.activities.HomeActivity_;
 
 import de.greenrobot.event.EventBus;
 
@@ -66,13 +56,7 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
                     EventBus.getDefault().post(dto);
 
                     // 通知栏提醒
-                    final Context ctx = LockApplication.getInstance();
-                    String message = ctx.getResources().getString(R.string.message_new_inspection);
-                    message = String.format(message, result);
-
-                    final Bundle bundle = new Bundle();
-                    bundle.putSerializable(LockConstants.DATA, dto);
-                    NotificationUtils.showNotification(LockApplication.getInstance(), 0, message, HomeActivity_.class, bundle);
+                    NotificationHelper.showNewInspection(result);
                 }
                 ask();
             }

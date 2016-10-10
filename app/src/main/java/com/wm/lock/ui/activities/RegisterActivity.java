@@ -1,10 +1,9 @@
 package com.wm.lock.ui.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.EditText;
 
-import com.wm.lock.Helper;
+import com.wm.lock.helper.Helper;
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.core.utils.RedirectUtils;

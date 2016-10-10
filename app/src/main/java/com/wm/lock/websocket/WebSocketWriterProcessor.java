@@ -20,6 +20,7 @@ import com.wm.lock.entity.Communication;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.UserInfo;
 import com.wm.lock.exception.BizException;
+import com.wm.lock.helper.NotificationHelper;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.module.user.IUserService;
@@ -166,11 +167,11 @@ class WebSocketWriterProcessor {
     }
 
     private void showNotification() {
-        NotificationUtils.showNotification(LockApplication.getInstance(), LockConstants.NOTIFICATION_ID, getString(R.string.message_sync_notification), null, null);
+        NotificationHelper.showSync();
     }
 
     private void cancelNotification() {
-        NotificationUtils.cancelNotification(LockApplication.getInstance(), LockConstants.NOTIFICATION_ID);
+        NotificationHelper.dismissSync();
     }
 
     private String getString(int resId) {

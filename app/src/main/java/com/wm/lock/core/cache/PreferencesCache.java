@@ -62,7 +62,7 @@ class PreferencesCache extends BaseCache {
 
 	@Override
 	public boolean isExist(String key) {
-		return mPreferences.getString(key, null) != null;
+		return mPreferences.contains(key);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.wm.lock;
+package com.wm.lock.helper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.wm.lock.LockApplication;
+import com.wm.lock.LockConfig;
 import com.wm.lock.attachment.AttachmentProcessor;
 import com.wm.lock.bluetooth.BluetoothManager;
 import com.wm.lock.bugly.BuglyManager;

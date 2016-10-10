@@ -243,7 +243,7 @@ public class InspectionConstructFragment extends BaseFragment {
 
     public void save() {
         // 记住打开的位置
-        CacheManager.getInstance().putInt(LockConstants.POS, mSv.getScrollY(), CacheManager.CHANNEL_PREFERENCE);
+        CacheManager.getInstance().putInt(LockConstants.POS + mInspectionId, mSv.getScrollY(), CacheManager.CHANNEL_PREFERENCE);
 
         if (!mEnable) {
             return;

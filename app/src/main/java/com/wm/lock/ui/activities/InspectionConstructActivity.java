@@ -83,7 +83,7 @@ public class InspectionConstructActivity extends BaseActivity {
     @Override
     protected void onPause() {
         // 记住选择的分类
-        CacheManager.getInstance().putInt(LockConstants.INDEX, mSelectCategoryIndex, CacheManager.CHANNEL_PREFERENCE);
+        CacheManager.getInstance().putInt(LockConstants.INDEX + mInspectionId, mSelectCategoryIndex, CacheManager.CHANNEL_PREFERENCE);
         super.onPause();
     }
 
@@ -315,7 +315,7 @@ public class InspectionConstructActivity extends BaseActivity {
             public void onSuccess(List<String> result) {
                 mCategories = result;
                 setupMenu();
-                setupContent(CacheManager.getInstance().getInt(LockConstants.INDEX, CacheManager.CHANNEL_PREFERENCE), true);
+                setupContent(CacheManager.getInstance().getInt(LockConstants.INDEX + mInspectionId, CacheManager.CHANNEL_PREFERENCE), true);
                 mFooter.setVisibility(View.VISIBLE);
             }
 
@@ -353,8 +353,9 @@ public class InspectionConstructActivity extends BaseActivity {
 
         mCurrContentFragment = InspectionConstructFragment_.builder().build();
         mCurrContentFragment.setArguments(bundle);
-        if (isFirst) {
-            mCurrContentFragment.selectOffset(CacheManager.getInstance().getInt(LockConstants.POS, CacheManager.CHANNEL_PREFERENCE));
+        if (isFirst && mEnable) {
+            final int lastOffset = CacheManager.getInstance().getInt(LockConstants.POS + mInspectionId, CacheManager.CHANNEL_PREFERENCE);
+            mCurrContentFragment.selectOffset(lastOffset);
         }
         FragmentUtils.replaceFragment(getSupportFragmentManager(), R.id.content_frame, mCurrContentFragment);
     }
