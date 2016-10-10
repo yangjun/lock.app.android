@@ -21,8 +21,13 @@ import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.logger.Logger;
+import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.entity.AttachmentSource;
+import com.wm.lock.entity.AttachmentType;
+import com.wm.lock.entity.AttachmentUpload;
+import com.wm.lock.entity.AttachmentUploadSource;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
@@ -35,6 +40,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Date;
 import java.util.List;
 
 @EActivity
@@ -223,7 +229,14 @@ public class InspectionConstructActivity extends BaseActivity {
 
     private void doSubmit() {
         bizService().submitInspection(mInspectionId);
-        AttachmentProcessor.getInstance().startIfNot();
+        // 有附件, 走附件上传处理器
+        if (hasAttachment()) {
+            AttachmentProcessor.getInstance().startIfNot();
+        }
+        // 没有附件, 走web socket
+        else {
+            WebSocketWriter.submitInspection(mInspectionId, true);
+        }
         showTip(R.string.message_submit_to_background);
         setResult(RESULT_FIRST_USER);
         finish();
@@ -269,6 +282,17 @@ public class InspectionConstructActivity extends BaseActivity {
 //            showTip(R.string.message_submit_fail);
 //        }
 //    }
+
+    private boolean hasAttachment() {
+        final List<InspectionItem> inspectionItemList = bizService().listInspectionItem(mInspectionId);
+        for (InspectionItem item : inspectionItemList) {
+            final List<String> attachmentList = bizService().listAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, AttachmentType.PHOTO);
+            if (!CollectionUtils.isEmpty(attachmentList)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private IBizService bizService() {
         return ModuleFactory.getInstance().getModuleInstance(IBizService.class);

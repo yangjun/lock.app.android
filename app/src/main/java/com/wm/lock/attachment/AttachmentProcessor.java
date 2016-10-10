@@ -107,7 +107,7 @@ public class AttachmentProcessor {
     private void success(List<AttachmentUpload> list) {
         final AttachmentUpload attachmentUpload = list.get(0);
         if (attachmentUpload.getSource() == AttachmentUploadSource.INSPECTION) {
-            WebSocketWriter.submitInspection(attachmentUpload.getForeignId());
+            WebSocketWriter.submitInspection(attachmentUpload.getForeignId(), false);
         }
         bizService().deleteAttachmentUpload(loginUser().getJobNumber(), attachmentUpload.getForeignId(), attachmentUpload.getSource());
         stop();

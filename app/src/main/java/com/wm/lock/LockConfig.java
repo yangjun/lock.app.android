@@ -15,7 +15,7 @@ public final class LockConfig {
     public static final String MODE_JUNIT = "mode_junit";
     public static final String MODE_DEV = "mode_dev";
     public static final String MODE_RELEASE = "mode_release";
-    public static final String MODE = MODE_JUNIT;
+    public static final String MODE = MODE_DEV;
 
     public static final String HTTP_SERVER = "http://112.74.27.140:9002";
     public static final int HTTP_CONN_TIMEOUT = 60000;

@@ -48,7 +48,7 @@ class WebSocketWriterProcessor {
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private WebSocketWriterProcessor() {
-        mExecutorService = Executors.newFixedThreadPool(10);
+        mExecutorService = Executors.newFixedThreadPool(20);
     }
 
     private static class InstanceHolder {

@@ -66,14 +66,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/yingyongbao/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/yingyongbao/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/yingyongbao/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestYingyongbao/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestYingyongbao/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestYingyongbao/assets" type="java-test-resource" />
@@ -82,6 +74,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestYingyongbao/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestYingyongbao/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestYingyongbao/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testYingyongbao/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />

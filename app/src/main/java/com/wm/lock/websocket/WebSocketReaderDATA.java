@@ -32,14 +32,17 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
         if (contains(payload, LockConstants.BIZ_PLAN)) {
             getInspection();
         }
-        else if (contains(payload, LockConstants.BIZ_RESULT_RETURN)) {
-            getInspectionSubmitResult();
-        }
+//        else if (contains(payload, LockConstants.BIZ_RESULT_RETURN)) {
+//            getInspectionSubmitResult();
+//        }
         else if (contains(payload, LockConstants.BIZ_LOCKS_AUTH)) {
             getDeviceLocks();
         }
         else if (contains(payload, LockConstants.BIZ_HUMITURE)) {
             getTemperatureHumidity();
+        }
+        else {
+            ask();
         }
     }
 
@@ -76,45 +79,45 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
         });
     }
 
-    /**
-     * 获取到巡检计划的提交结果
-     */
-    private void getInspectionSubmitResult() {
-        WebSocketReaderProcessor.getInstance().execute(new WebSocketReaderProcessor.WebSocketReaderWork<InspectionResult>() {
-
-            @Override
-            public InspectionResult execute() throws Exception {
-                final InspectionResult result = GsonUtils.fromJson(payload, InspectionResult.class);
-                if (result.getState() == InspectionState.COMPLETE) { //提交成功
-//                    final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
-//                    deleteParam.setSource(loginUser().getJobNumber());
-//                    deleteParam.setContents(new String[]{
-//                            Helper.getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT),
-//                            Helper.getDbJson("plan_id", result.getPlan_id())
-//                    });
-//                    bizService().deleteCommunication(deleteParam);
-                    bizService().submitInspectionSuccess(loginUser().getJobNumber(), result.getPlan_id());
-                }
-                else if (result.getState() == InspectionState.IN_PROCESS) { //提交失败
-                    final Inspection inspection = bizService().findInspection(loginUser().getJobNumber(), result.getPlan_id());
-                    if (inspection != null) {
-                        WebSocketWriter.submitInspection(inspection.getId_());
-                    }
-                }
-                return result;
-            }
-
-            @Override
-            public void onSuccess(InspectionResult result) {
-                final InspectionResultDto dto = new InspectionResultDto();
-                dto.setPlan_id(result.getPlan_id());
-                dto.setSuccess(result.getState() == InspectionState.COMPLETE);
-                EventBus.getDefault().post(dto);
-
-                ask();
-            }
-        });
-    }
+//    /**
+//     * 获取到巡检计划的提交结果
+//     */
+//    private void getInspectionSubmitResult() {
+//        WebSocketReaderProcessor.getInstance().execute(new WebSocketReaderProcessor.WebSocketReaderWork<InspectionResult>() {
+//
+//            @Override
+//            public InspectionResult execute() throws Exception {
+//                final InspectionResult result = GsonUtils.fromJson(payload, InspectionResult.class);
+//                if (result.getState() == InspectionState.COMPLETE) { //提交成功
+////                    final CommunicationDeleteParam deleteParam = new CommunicationDeleteParam();
+////                    deleteParam.setSource(loginUser().getJobNumber());
+////                    deleteParam.setContents(new String[]{
+////                            Helper.getDbJson(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT),
+////                            Helper.getDbJson("plan_id", result.getPlan_id())
+////                    });
+////                    bizService().deleteCommunication(deleteParam);
+//                    bizService().submitInspectionSuccess(loginUser().getJobNumber(), result.getPlan_id());
+//                }
+//                else if (result.getState() == InspectionState.IN_PROCESS) { //提交失败
+//                    final Inspection inspection = bizService().findInspection(loginUser().getJobNumber(), result.getPlan_id());
+//                    if (inspection != null) {
+//                        WebSocketWriter.submitInspection(inspection.getId_(), true);
+//                    }
+//                }
+//                return result;
+//            }
+//
+//            @Override
+//            public void onSuccess(InspectionResult result) {
+//                final InspectionResultDto dto = new InspectionResultDto();
+//                dto.setPlan_id(result.getPlan_id());
+//                dto.setSuccess(result.getState() == InspectionState.COMPLETE);
+//                EventBus.getDefault().post(dto);
+//
+//                ask();
+//            }
+//        });
+//    }
 
     /**
      * 获取到推送的开锁列表

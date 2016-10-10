@@ -1,6 +1,7 @@
 package com.wm.lock.http;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.wm.lock.LockConfig;
 import com.wm.lock.LockConstants;
@@ -18,6 +19,7 @@ import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.rest.RestService;
 import org.androidannotations.api.rest.MediaType;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -75,8 +77,16 @@ public class Rest {
     public AttachmentUploadResult uploadAttachment(AttachmentUploadParam param) {
         final MultiValueMap<String, Object> data = new LinkedMultiValueMap<>();
         data.set("file", new FileSystemResource(param.getFile()));
-        data.set("aliases", param.getAliases());
-        return mRestClient.uploadAttachment(data);
+        if (!TextUtils.isEmpty(param.getAliases())) {
+            data.set("aliases", param.getAliases());
+        }
+        try {
+            mRestClient.setHeader(LockConstants.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA);
+            return mRestClient.uploadAttachment(data);
+        }
+        finally {
+            mRestClient.setHeader(LockConstants.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+        }
     }
 
     private void resetClient() {
@@ -91,7 +101,7 @@ public class Rest {
     }
 
     private RestTemplate getRestTemplate(final String url) {
-        RestTemplateProvider provider = url.startsWith("https") ?  new RestTemplateProviderSsl() : new RestTemplateProviderHttp();
+        RestTemplateProvider provider = url.startsWith("https") ? new RestTemplateProviderSsl() : new RestTemplateProviderHttp();
         final RestTemplate template = provider.getRestTemplate(mCtx, url);
 
         List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();

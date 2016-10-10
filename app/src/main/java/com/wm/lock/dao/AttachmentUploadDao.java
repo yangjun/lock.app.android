@@ -20,7 +20,7 @@ public class AttachmentUploadDao extends BaseDao<AttachmentUpload, Long> {
     public List<AttachmentUpload> findNextGroup(String userJobNumber) {
         try {
             final List<AttachmentUpload> list = where(0 ,1, "id_", true).and().eq("user_job_number", userJobNumber)
-                    .and().isNull("uploadedId")
+//                    .and().isNull("uploadedId")
                     .query();
             if (CollectionUtils.isEmpty(list)) {
                 return null;
@@ -30,7 +30,7 @@ public class AttachmentUploadDao extends BaseDao<AttachmentUpload, Long> {
             return where("id_", true).and().eq("user_job_number", userJobNumber)
                     .and().eq("foreignId", item.getForeignId())
                     .and().eq("source", item.getSource())
-                    .and().isNull("uploadedId")
+//                    .and().isNull("uploadedId")
                     .query();
         } catch (SQLException e) {
             throw new DbException(e);
@@ -51,7 +51,7 @@ public class AttachmentUploadDao extends BaseDao<AttachmentUpload, Long> {
 
     public AttachmentUpload findByPath(String path) {
         try {
-            final List<AttachmentUpload> list = where(0 ,1, "id_", true).and().eq("path", path).query();
+            final List<AttachmentUpload> list = where().and().eq("path", path).query();
             if (CollectionUtils.isEmpty(list)) {
                 return null;
             }

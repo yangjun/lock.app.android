@@ -1,5 +1,7 @@
 package com.wm.lock.module.biz;
 
+import android.text.TextUtils;
+
 import com.wm.lock.entity.AttachmentUpload;
 import com.wm.lock.entity.AttachmentUploadResult;
 import com.wm.lock.entity.params.AttachmentUploadParam;
@@ -20,11 +22,14 @@ public class BizService extends BizServiceBase {
     @Override
     public void uploadAttachments(List<AttachmentUpload> list) {
         for (AttachmentUpload item : list) {
-            final AttachmentUploadParam param = new AttachmentUploadParam();
-            param.setFile(item.getPath());
-            final AttachmentUploadResult uploadResult = mRest.uploadAttachment(param);
-            item.setUploadedId(uploadResult.getId());
-            mDaoManager.getAttachmentUploadDao().update(item);
+            if (TextUtils.isEmpty(item.getUploadedId())) {
+                final AttachmentUploadParam param = new AttachmentUploadParam();
+                param.setFile(item.getPath());
+                param.setAliases(item.getSource().name());
+                final AttachmentUploadResult uploadResult = mRest.uploadAttachment(param);
+                item.setUploadedId(uploadResult.getId());
+                mDaoManager.getAttachmentUploadDao().update(item);
+            }
         }
     }
 
