@@ -15,16 +15,14 @@ public class TemperatureHumidityDao extends BaseDao<TemperatureHumidity, Long> {
     }
 
     public void sync(TemperatureHumidity input) {
-        try {
-            final long count = where().and().eq("room_name", input.getRoom_name()).countOf();
-            if (count == 0) {
-                create(input);
-            }
-            else {
-                update(input);
-            }
-        } catch (SQLException e) {
-            throw new DbException(e);
+        final TemperatureHumidity cacheItem = findByRoomName(input.getRoom_name());
+        if (cacheItem == null) {
+            create(input);
+        }
+        else {
+            cacheItem.setHumidity(input.getHumidity());
+            cacheItem.setTemperature(input.getTemperature());
+            update(cacheItem);
         }
     }
 

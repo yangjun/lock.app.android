@@ -73,6 +73,7 @@ public class WebSocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        connect();
         return Service.START_STICKY;
     }
 
@@ -96,7 +97,7 @@ public class WebSocketService extends Service {
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(mNetChangeReceiver, intentFilter);
 
-        connect();
+//        connect();
         // 不用手动调用connect()，广播会自动执行一次
 
 //        simulatePush();

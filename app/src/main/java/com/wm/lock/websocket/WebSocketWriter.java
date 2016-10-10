@@ -91,7 +91,7 @@ public class WebSocketWriter {
         for (InspectionItem item : inspectionItemList) {
             final Map<String, Object> itemMap = new HashMap<>();
             itemMap.put("item_id", item.getItem_id());
-            itemMap.put("state",item.getState() ? 1 : 0);
+            itemMap.put("state",item.getState() ? 0 : 1);
             itemMap.put("result", item.getResult());
             itemMap.put("note", item.getNote());
 
