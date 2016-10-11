@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/ormlite-android-4.48.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="afa06f539a4026c10b247386312aa67404b80a16">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/ormlite-android-4.48_00cd533a52779f0c9ce1b0fc6daa80c6eaf17e2f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/jackson-core-asl-1.9.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="8493982bba1727106d767034bd0d8e77bc1931a9">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/jackson-core-asl-1.9.2_5fe780514da6ab96967a7898fe435b14e8fbb62d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/.gradle/caches/modules-2/files-2.1/org.java-websocket/Java-WebSocket/1.3.0/db2658f013fb163de4a99274c2eb9e17efe535d2/Java-WebSocket-1.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="db2658f013fb163de4a99274c2eb9e17efe535d2">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/Java-WebSocket-1.3.0_43ed6ea3a49ce26d15e1204593ab346621dbbfc8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/jackson-mapper-asl-1.9.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="95400a7922ce75383866eb72f6ef4a7897923945">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/jackson-mapper-asl-1.9.2_2f7104dc1c009d9378f3785ddc0d427f7aef2bb6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/gson-2.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/gson-2.3.1_f9fc0e721561007b02e7c46742bd7f3069f95138/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.5/442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375/universal-image-loader-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/universal-image-loader-1.9.5_3ab2333ec89dd15b037df737ebbb80cc2ec162ef/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="d4c936aa8c7d2522c82e3f1829c791d9e367f009">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.android.support-recyclerview-v7-23.2.0_d30e4dc9dd1fe94a13a5f5a44ed333167ff28d1f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.github.afollestad.material-dialogs/core/0.8.5.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c14f37db87b8f8f7d62b77f6402de089232d37d0">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.github.afollestad.material-dialogs-core-0.8.5.2_802cf772ddb621f962f89f4bff39305319f8a850/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.android.support-multidex-1.0.1_bc0cd226c468a8ba27f1fded60d84a5ef8dda124/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/commons-lang-2.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="0ce1edb914c94ebc388f086c6827e8bdeec71ac2">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/commons-lang-2.6_b65a8e0ab5a88df5a849d04a749b6e41c5d2faa2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/cn.finalteam/toolsfinal/1.0.7/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c5a8bd8f4ff30e3ae2de62aec6867223015bffb2">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/cn.finalteam-toolsfinal-1.0.7_3f74be644ef5410d2e4ee78b3b705ac668f36b5c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.2.0_6f31c9145d9bf56d332461241e51a782ffc78834/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.bigkoo/convenientbanner/1.0.8/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="87dc383440adec04ed9223bb2e6dc33b3f1a2913">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.bigkoo-convenientbanner-1.0.8_de6885eeca6aed6c125e2e85c921af1e7386ed72/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/.gradle/caches/modules-2/files-2.1/org.springframework.android/spring-android-core/2.0.0.M1/26b2d3262a0c5f8de663deeb6481d132d871fffa/spring-android-core-2.0.0.M1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="26b2d3262a0c5f8de663deeb6481d132d871fffa">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/spring-android-core-2.0.0.M1_ddddf0f801067d2785ce9305976cdc149aab3eda/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.4/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2a24cba08e1d865a79e61335f5a1bd64d520106d">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/me.zhanghai.android.materialprogressbar-library-1.1.4_d62e59d38b35028b958e2dd05eba5e65dd37037c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="292a9fa091757208efa65e77eef63088247e51f3">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.android.support-support-vector-drawable-23.2.0_c277c3626a2be8c6bea09ac7c737928ba7d90201/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/commons-codec-1.9.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6c64dfaa8b38de4c89fd1e5b0f0aa9941ce93a71">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/commons-codec-1.9_b06e71ddfc26e982ee358759818cbd8bec756a2a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/programs/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/support-annotations-23.2.0_31c6de1bab70ef83e8a4462244e81cf9467ae84e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="88e8e18d365173ad04a543d76c157e0b644f0b3f">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.viewpagerindicator-library-2.4.1_b052d7b66494d86fc35fcaa5c55159d7709109cd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/.gradle/caches/modules-2/files-2.1/org.androidannotations/androidannotations-api/3.3.1/3b8b2740d5f8680a9eac6f6f726925988059fccd/androidannotations-api-3.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="3b8b2740d5f8680a9eac6f6f726925988059fccd">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/androidannotations-api-3.3.1_b500ad248733841b382493129e08ca7c69de2164/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/lock/lib-image/unspecified/jars/libs/clipimage.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="72bc36ca227c597242975e912180e0e446172aea">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/8/clipimage_db8aae4b2c4ab1a7af352133b0d62be5488a424e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.android.support-appcompat-v7-23.2.0_8c35f57640541783c19e371d2badbf6d2af25e5d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6e239441500605809818997dd63b62a947195f8c">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/internal_impl-23.2.0_1ecb7f72e07d9d2f5a100c6dcc092efc2caba165/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.android.support-support-v4-23.2.0_9a379e8355430894f43d17b5ec9f18484c7f8e5d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/incremental-classes/yingyongbao/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ecf3903bf1a191e513b2337280d2d7a22dcec9f9">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/instant-run-bootstrap_cd20314644104ddc274bb4c5d9d3bcd7dd2aaa06/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/org.apache.http.legacy.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="fa331331b626ee78c52bea16ce1e34b39e666ce5">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/org.apache.http.legacy_4dcb98dee7c05cf6a5f354be901f7183ca7efeae/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/libs/ormlite-core-4.48.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e579bd2905d0399af5029aaaf9817d5fa0ca88a5">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/2/ormlite-core-4.48_d95f433ba4751556a9f5b970eb52097111211521/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/.gradle/caches/modules-2/files-2.1/org.springframework.android/spring-android-rest-template/2.0.0.M1/6abb1e22445a4e4571c74632804e4179b43d82b5/spring-android-rest-template-2.0.0.M1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6abb1e22445a4e4571c74632804e4179b43d82b5">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/spring-android-rest-template-2.0.0.M1_298d2958e65b6c8e989057643b29213cf29dd714/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/com.tencent.bugly/crashreport_upgrade/1.1.6/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="82263f203fdb70c344f6618724d37917c18a0f55">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/com.tencent.bugly-crashreport_upgrade-1.1.6_33f4d6538fa7e2702b5c07186685ba86fa1634bc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.4.0/ddd166d01b3158d1c00576d29f7ed15c030df719/eventbus-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/eventbus-2.4.0_8f54345e43463211685540a100732cef0d88894b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/exploded-aar/it.sephiroth.android.library.imagezoom/imagezoom/2.2.4/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2df65d287bcfe491b42060d85a99217ad4e7c534">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/it.sephiroth.android.library.imagezoom-imagezoom-2.2.4_df866e6cbeaa4c8fb0e2a44837ec27f46d791765/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/incremental-runtime-classes/yingyongbao/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="72c524a624e288c0c11be3600135d6f71a2a1ed9">
+        <dex dex="/Users/wangmin/Documents/work/workspace/studio/lock/app/build/intermediates/transforms/dex/yingyongbao/debug/folders/1000/10/instant-run_e7691ad798dd86a50637bea385a42a8f9091684c/classes.dex" />
+    </item>
+
+</items>
