@@ -155,9 +155,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
-                    NotificationHelper.dismissNewInspection();
-                }
+                dismissNewInspectionNotificationIfCondition();
             }
 
             @Override
@@ -170,6 +168,12 @@ public class HomeActivity extends BaseActivity {
     private void updateIndicator() {
         final boolean hasNew = BuglyManager.hasUpgradeInfo(getApplicationContext());
         mVIndicator.setVisibility(hasNew ? View.VISIBLE : View.GONE);
+    }
+
+    public void dismissNewInspectionNotificationIfCondition() {
+        if (mViewPager.getCurrentItem() == 0) {
+            NotificationHelper.dismissNewInspection();
+        }
     }
 
     public void receive(Inspection inspection) {

@@ -51,12 +51,12 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
             @Override
             public void onSuccess(Long result) {
                 if (result > 0) {
+                    // 通知栏提醒
+                    NotificationHelper.showNewInspection(result);
+
                     InspectionNewDto dto = new InspectionNewDto();
                     dto.setCount(result);
                     EventBus.getDefault().post(dto);
-
-                    // 通知栏提醒
-                    NotificationHelper.showNewInspection(result);
                 }
                 ask();
             }

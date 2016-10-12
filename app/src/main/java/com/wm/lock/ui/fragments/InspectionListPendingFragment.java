@@ -18,6 +18,7 @@ import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.params.InspectionQueryParam;
+import com.wm.lock.helper.NotificationHelper;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.ui.activities.HomeActivity;
@@ -72,6 +73,7 @@ public class InspectionListPendingFragment extends InspectionListFragment {
             needReload = true;
         }
         else {
+            ((HomeActivity) mActivity).dismissNewInspectionNotificationIfCondition();
             reload();
         }
     }
