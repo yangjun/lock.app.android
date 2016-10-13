@@ -150,7 +150,7 @@ public interface IBizService {
     /**
      * 查找下一个写入的通信记录
      */
-    public Communication findNextWriteCommunication(String userJobNumber, long currCommunicationId);
+    public Communication findNextWriteCommunication(String userJobNumber);
 
     /**
      * 新增通信记录

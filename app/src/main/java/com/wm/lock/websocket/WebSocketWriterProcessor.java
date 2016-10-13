@@ -37,11 +37,6 @@ class WebSocketWriterProcessor {
     private ExecutorService mExecutorService;
 
     /**
-     * 上次写入的通信记录id
-     */
-    private long mLastWriteId = 0L;
-
-    /**
      * 是否正在写入
      */
     private volatile boolean isWriting = false;
@@ -83,7 +78,7 @@ class WebSocketWriterProcessor {
         new Thread() {
             @Override
             public void run() {
-                final Communication communication = bizService().findNextWriteCommunication(loginUser().getJobNumber(), mLastWriteId);
+                final Communication communication = bizService().findNextWriteCommunication(loginUser().getJobNumber());
                 if (communication == null) {
                     WebSocketWriterProcessor.this.stop();
                     return;
@@ -136,8 +131,6 @@ class WebSocketWriterProcessor {
         if (chat != null && TextUtils.equals(chat.getDirective(), ChatDirective.ASK)) {
             bizService().deleteCommunication(communication.getId_());
         }
-
-        mLastWriteId = communication.getId_();
 
         stop();
     }

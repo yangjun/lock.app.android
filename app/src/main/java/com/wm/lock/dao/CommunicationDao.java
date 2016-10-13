@@ -21,11 +21,10 @@ public class CommunicationDao extends BaseDao<Communication, Long> {
         super(dao);
     }
 
-    public Communication findNextWrite(String userJobNumber, long currId) {
+    public Communication findNextWrite(String userJobNumber) {
         try {
             final List<Communication> list = where(0, 1, "id_", true)
                     .and().eq("source", userJobNumber)
-                    .and().gt("id_", currId)
                     .query();
             if (CollectionUtils.isEmpty(list)) {
                 return null;

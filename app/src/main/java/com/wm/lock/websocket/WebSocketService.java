@@ -31,6 +31,7 @@ import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.module.user.IUserService;
 
+import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_10;
@@ -43,11 +44,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class WebSocketService extends Service {
+import static android.R.attr.type;
 
-    private static final int STATUS_DISCONNECTED = 1;
-    private static final int STATUS_CONNECTED = 2;
-    private static final int STATUS_TRY_CONNECTING = 3;
+public class WebSocketService extends Service {
 
     private static final long DELAY = 60000;
 
@@ -56,7 +55,7 @@ public class WebSocketService extends Service {
     private BroadcastReceiver mNetChangeReceiver;
 
     private Handler mHandler = new Handler();
-    private volatile int mConnectStatus = STATUS_DISCONNECTED;
+    private Runnable mReConnectRunnable;
 
     @Nullable
     @Override
@@ -97,9 +96,6 @@ public class WebSocketService extends Service {
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(mNetChangeReceiver, intentFilter);
 
-//        connect();
-        // 不用手动调用connect()，广播会自动执行一次
-
 //        simulatePush();
     }
 
@@ -120,7 +116,8 @@ public class WebSocketService extends Service {
     }
 
     private boolean canConnect() {
-        if (mConnectStatus != STATUS_DISCONNECTED) {
+        // 如果正在连接或已经连接,直接返回false
+        if (mClient != null && (mClient.getReadyState() == WebSocket.READYSTATE.CONNECTING || mClient.getReadyState() == WebSocket.READYSTATE.OPEN)) {
             return false;
         }
 
@@ -134,15 +131,12 @@ public class WebSocketService extends Service {
             return;
         }
 
-        mConnectStatus = STATUS_TRY_CONNECTING;
-
         try {
             final String address = LockConfig.WS_SERVER + userInfo().getJobNumber();
             final URI uri = new URI(address);
             mClient = new WebSocketClient(uri, new Draft_10()) {
                 @Override
                 public void onOpen(final ServerHandshake serverHandshakeData) {
-                    mConnectStatus = STATUS_CONNECTED;
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -165,7 +159,6 @@ public class WebSocketService extends Service {
 
                 @Override
                 public void onClose(final int code, final String reason, final boolean remote) {
-                    mConnectStatus = STATUS_DISCONNECTED;
                     if (code != 1000 || remote) { //如果不是手动关闭，记录日志并尝试重新连接
                         mHandler.post(new Runnable() {
                             @Override
@@ -179,7 +172,6 @@ public class WebSocketService extends Service {
 
                 @Override
                 public void onError(final Exception e) {
-                    mConnectStatus = STATUS_DISCONNECTED;
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -191,18 +183,21 @@ public class WebSocketService extends Service {
             };
             mClient.connect();
         } catch (Exception e) {
-            mConnectStatus = STATUS_DISCONNECTED;
             Logger.p("fail to connect web socket server", e);
         }
     }
 
     private void connectDelay(long timeMills) {
-        mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    connect();
-                }
-            }, timeMills);
+        if (mReConnectRunnable != null) {
+            mHandler.removeCallbacks(mReConnectRunnable);
+        }
+        mReConnectRunnable = new Runnable() {
+            @Override
+            public void run() {
+                connect();
+            }
+        };
+        mHandler.postDelayed(mReConnectRunnable, timeMills);
     }
 
     private synchronized void disConnect() {

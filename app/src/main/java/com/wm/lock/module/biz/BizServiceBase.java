@@ -252,8 +252,8 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public Communication findNextWriteCommunication(String userJobNumber, long currCommunicationId) {
-        return mDaoManager.getCommunicationDao().findNextWrite(userJobNumber, currCommunicationId);
+    public Communication findNextWriteCommunication(String userJobNumber) {
+        return mDaoManager.getCommunicationDao().findNextWrite(userJobNumber);
     }
 
     @Override
