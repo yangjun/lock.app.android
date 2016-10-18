@@ -3,6 +3,7 @@ package com.wm.lock.core;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.view.Menu;
@@ -19,7 +20,7 @@ import com.wm.lock.core.utils.ToastUtils;
 
 import java.lang.reflect.Method;
 
-public abstract class AbstractActivity extends ActionBarActivity implements OnMenuItemClickListener {
+public abstract class AbstractActivity extends AppCompatActivity implements OnMenuItemClickListener {
 
     protected Bundle mSaveBundle;
 

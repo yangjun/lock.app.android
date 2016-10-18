@@ -9,26 +9,15 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.widget.RemoteViews;
 
-import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockConfig;
-import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.core.logger.Logger;
-import com.wm.lock.core.utils.GsonUtils;
-import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.NetWorkUtils;
-import com.wm.lock.entity.Chat;
-import com.wm.lock.entity.ChatDirective;
-import com.wm.lock.entity.Inspection;
-import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.UserInfo;
-import com.wm.lock.entity.params.InspectionQueryParam;
 import com.wm.lock.module.ModuleFactory;
-import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.module.user.IUserService;
 
 import org.java_websocket.WebSocket;
@@ -38,17 +27,11 @@ import org.java_websocket.drafts.Draft_10;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import static android.R.attr.type;
 
 public class WebSocketService extends Service {
 
     private static final long DELAY = 60000;
+    private static final long DELAY_INTERVAL = 300000;
 
     private static final int NOTIFICATION_ID = 1017;
     private static WebSocketClient mClient;
@@ -72,7 +55,7 @@ public class WebSocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        connect();
+        connect(true);
         return Service.START_STICKY;
     }
 
@@ -109,27 +92,25 @@ public class WebSocketService extends Service {
     }
 
     private static Notification fadeNotification(Context context) {
-        Notification notification = new Notification();
+        final Notification notification = new Notification();
         notification.icon = R.mipmap.ic_launcher;
         notification.contentView = new RemoteViews(context.getPackageName(), R.layout.notification_transparent);
         return notification;
     }
 
-    private boolean canConnect() {
-        // 如果正在连接或已经连接,直接返回false
-        if (mClient != null && (mClient.getReadyState() == WebSocket.READYSTATE.CONNECTING || mClient.getReadyState() == WebSocket.READYSTATE.OPEN)) {
-            return false;
-        }
-
-        final int type = NetWorkUtils.getNetworkState(getApplicationContext());
-        return type >= LockConfig.NETWORK_MIN;
-    }
-
-    private synchronized void connect() {
-        // 判断是否能执行连接
-        if (!canConnect()) {
+    private synchronized void connect(boolean force) {
+        final int netType = NetWorkUtils.getNetworkState(getApplicationContext());
+        if (netType < LockConfig.NETWORK_MIN) {
             return;
         }
+
+        if (!force) {
+            if (mClient != null && (mClient.getReadyState() == WebSocket.READYSTATE.CONNECTING || mClient.getReadyState() == WebSocket.READYSTATE.OPEN)) {
+                return;
+            }
+        }
+
+        disConnect();
 
         try {
             final String address = LockConfig.WS_SERVER + userInfo().getJobNumber();
@@ -142,6 +123,7 @@ public class WebSocketService extends Service {
                         public void run() {
                             Logger.d("success to connect web socket server");
                             WebSocketWriter.start(); //每次重连成功后都去查看有没有需要写的数据
+                            connectDelay(DELAY_INTERVAL, true); // 防止意外掉线,每隔一段时间重新连接一次
                         }
                     });
                 }
@@ -159,14 +141,14 @@ public class WebSocketService extends Service {
 
                 @Override
                 public void onClose(final int code, final String reason, final boolean remote) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Logger.d(String.format("close form web socket server, code: %d, reason: %s", code, reason));
+                        }
+                    });
                     if (code != 1000 || remote) { //如果不是手动关闭，记录日志并尝试重新连接
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Logger.d(String.format("close form web socket server, code: %d, reason: %s", code, reason));
-                            }
-                        });
-                        connectDelay(DELAY);
+                        connectDelay(DELAY, true);
                     }
                 }
 
@@ -175,26 +157,27 @@ public class WebSocketService extends Service {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Logger.d(String.format("error form web socket server"), e);
+                            Logger.d("error form web socket server", e);
                         }
                     });
-                    connectDelay(DELAY);
+                    connectDelay(DELAY, true);
                 }
             };
             mClient.connect();
         } catch (Exception e) {
             Logger.p("fail to connect web socket server", e);
+            connectDelay(DELAY, true);
         }
     }
 
-    private void connectDelay(long timeMills) {
+    private void connectDelay(long timeMills, final boolean force) {
         if (mReConnectRunnable != null) {
             mHandler.removeCallbacks(mReConnectRunnable);
         }
         mReConnectRunnable = new Runnable() {
             @Override
             public void run() {
-                connect();
+                connect(force);
             }
         };
         mHandler.postDelayed(mReConnectRunnable, timeMills);
@@ -232,7 +215,7 @@ public class WebSocketService extends Service {
         private void onNetWorkChanged(Context context) {
             final int type = NetWorkUtils.getNetworkState(context);
             if (type != NetWorkUtils.NETWORK_NONE) {
-                connectDelay(0);
+                connectDelay(0, false);
             }
         }
 
