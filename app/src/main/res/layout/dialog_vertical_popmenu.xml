@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalContainerTheme"
+    android:background="@color/translucent"
+    android:paddingRight="8dp">
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        style="@style/wrapTheme"
+        android:orientation="vertical"
+        android:layout_gravity="top|right"
+        android:gravity="right">
+
+        <View
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_triangle"
+            android:layout_marginRight="12dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_pop"
+            style="@style/wrapTheme"
+            android:layout_marginTop="-1dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+</FrameLayout>
+

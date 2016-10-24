@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalWrapContainerTheme"
+    android:background="@drawable/selector_item"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/wrapHeightTheme"
+        android:drawableLeft="@mipmap/ic_room_name"
+        android:drawablePadding="4dp"
+        android:lineSpacingExtra="2dp"
+        android:text="12311111111111111111111111111111111111111111111111111111"
+        android:textColor="@color/txt_content"
+        android:textSize="@dimen/text_size_medium" />
+
+    <LinearLayout
+        style="@style/wrapHeightTheme"
+        android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+        android:gravity="bottom">
+
+        <TextView
+            style="@style/wrapTheme"
+            android:layout_marginLeft="5dp"
+            android:drawableLeft="@mipmap/ic_humility"
+            android:drawablePadding="4dp"
+            android:text="@string/label_humility"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/tv_humility"
+            style="@style/wrapTheme"
+            android:layout_marginLeft="4dp"
+            android:text="20"
+            android:textColor="@color/txt_link"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            style="@style/wrapTheme"
+            android:text="@string/label_humility_unit"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_smaller" />
+
+        <TextView
+            style="@style/wrapTheme"
+            android:layout_marginLeft="80dp"
+            android:drawableLeft="@mipmap/ic_temperature"
+            android:drawablePadding="4dp"
+            android:text="@string/label_temperature"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/tv_temperature"
+            style="@style/wrapTheme"
+            android:layout_marginLeft="4dp"
+            android:text="29"
+            android:textColor="@color/txt_accent"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            style="@style/wrapTheme"
+            android:text="@string/label_temperature_unit"
+            android:textColor="@color/txt_desc"
+            android:textSize="@dimen/text_size_smaller" />
+    </LinearLayout>
+
+</LinearLayout>

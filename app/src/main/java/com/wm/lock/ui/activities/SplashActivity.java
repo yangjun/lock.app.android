@@ -52,9 +52,10 @@ public class SplashActivity extends BaseActivity {
 
     @UiThread
     void onInitFailed(Throwable e) {
+        final String error = e.getMessage();
         ExceptionHelper.log("fail to init app", e);
         if (e instanceof BizException) {
-            showTip(e.getMessage());
+            showTip(error);
         }
         else {
             showTip(R.string.message_inner_error);
