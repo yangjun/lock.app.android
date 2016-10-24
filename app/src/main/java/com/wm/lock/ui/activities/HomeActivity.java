@@ -19,6 +19,8 @@ import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.dialog.DialogManager;
+import com.wm.lock.dialog.VerticalPopMenu;
 import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.helper.NotificationHelper;
@@ -34,6 +36,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wangmin on 16/7/27.
@@ -58,6 +63,7 @@ public class HomeActivity extends BaseActivity {
     TabPageIndicator mTabPagerIndicator;
 
     private PagerTabAdapter.TabItem[] mTabItems;
+    private List<VerticalPopMenu.VerticalPopMenuItem> moreItems;
 
     @Override
     protected int getStatusBarColor() {
@@ -117,9 +123,9 @@ public class HomeActivity extends BaseActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @OptionsItem(R.id.menu_setting)
-    void onSettingClick() {
-        RedirectUtils.goActivity(this, SettingActivity_.class);
+    @OptionsItem(R.id.menu_more)
+    void onMoreClick() {
+        DialogManager.showBottomVerticalPop(this, mToolbar, getMoreItems());
     }
 
     private void setupActionBar() {
@@ -140,7 +146,7 @@ public class HomeActivity extends BaseActivity {
                 new PagerTabAdapter.TabItem(getTabTitle(R.string.label_submit_fail), InspectionListSubmitFailFragment_.builder().build()),
         };
 
-        PagerTabAdapter adapter = new PagerTabAdapter(this, mTabItems);
+        final PagerTabAdapter adapter = new PagerTabAdapter(this, mTabItems);
         mViewPager.setAdapter(adapter);
 
         mTabPagerIndicator.setViewPager(mViewPager);
@@ -237,6 +243,33 @@ public class HomeActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    private List<VerticalPopMenu.VerticalPopMenuItem> getMoreItems() {
+        if (moreItems == null) {
+            moreItems = new ArrayList<>();
+            moreItems.add(new VerticalPopMenu.VerticalPopMenuItem(
+                    R.mipmap.ic_temperature_humility,
+                    getString(R.string.label_temperature_humility_list),
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            RedirectUtils.goActivity(HomeActivity.this, TemperatureHumidityListActivity_.class);
+                        }
+                    }
+            ));
+            moreItems.add(new VerticalPopMenu.VerticalPopMenuItem(
+                    R.mipmap.ic_setting,
+                    getString(R.string.label_setting),
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            RedirectUtils.goActivity(HomeActivity.this, SettingActivity_.class);
+                        }
+                    }
+            ));
+        }
+        return moreItems;
     }
 
 }

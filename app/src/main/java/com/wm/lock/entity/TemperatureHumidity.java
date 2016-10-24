@@ -25,6 +25,10 @@ public class TemperatureHumidity {
     @DatabaseField
     private String room_name;
 
+    /** 用户工号 */
+    @DatabaseField
+    private String user_job_number;
+
     public long getId_() {
         return id_;
     }
@@ -55,6 +59,14 @@ public class TemperatureHumidity {
 
     public void setRoom_name(String room_name) {
         this.room_name = room_name;
+    }
+
+    public String getUser_job_number() {
+        return user_job_number;
+    }
+
+    public void setUser_job_number(String user_job_number) {
+        this.user_job_number = user_job_number;
     }
 
 }

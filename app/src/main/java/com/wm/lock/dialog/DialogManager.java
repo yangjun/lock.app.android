@@ -10,6 +10,8 @@ import com.afollestad.materialdialogs.Theme;
 import com.wm.lock.R;
 import com.wm.lock.core.callback.Injector;
 
+import java.util.List;
+
 /**
  * Created by WM on 2015/8/6.
  */
@@ -151,6 +153,13 @@ public final class DialogManager {
         }
         builder.theme(Theme.LIGHT).cancelable(isCancelable);
         return builder;
+    }
+
+    public static VerticalPopMenu showBottomVerticalPop(Context ctx, View view, List<VerticalPopMenu.VerticalPopMenuItem> itemList) {
+        VerticalPopMenu popMenu = new VerticalPopMenu(ctx);
+        popMenu.setData(itemList);
+        popMenu.showBottom(view);
+        return popMenu;
     }
 
     private static void performInjector(Injector Injector) {

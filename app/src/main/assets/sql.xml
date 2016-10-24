@@ -65,7 +65,8 @@
 				id_ integer primary key autoincrement,
 				temperature varchar(100),
 				humidity varchar(100),
-				room_name varchar(500)
+				room_name varchar(500),
+				user_job_number varchar(20)
 			)
 		</content>
 

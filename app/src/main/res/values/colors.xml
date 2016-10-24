@@ -50,7 +50,7 @@
 
     <!-- 列表项 -->
     <color name="bg_item">#FFFFFF</color>
-    <color name="bg_item_dark">#40E6E6E6</color>
+    <color name="bg_item_dark">#F5F5F5</color>
     <color name="bg_item_light">#E6E6E6</color>
 
     <!-- footer -->
@@ -70,6 +70,7 @@
     <color name="request_item_pressed">#000000</color>
 
     <color name="transparent">#00000000</color>
+    <color name="translucent">#80000000</color>
     <color name="green">#73aa00</color>
 
     <color name="light_blue">#90CAF9</color>

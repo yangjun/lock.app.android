@@ -130,6 +130,7 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
             @Override
             public Void execute() throws Exception {
                 final TemperatureHumidity temperatureHumidity = convertFormJson(payload, TemperatureHumidity.class);
+                temperatureHumidity.setUser_job_number(loginUser().getJobNumber());
                 bizService().syncTemperatureHumidity(temperatureHumidity);
                 return null;
             }

@@ -17,6 +17,7 @@ import com.wm.lock.entity.LockDevice;
 import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
+import com.wm.lock.entity.params.TemperatureHumidityQueryParam;
 import com.wm.lock.module.BaseModule;
 
 import org.androidannotations.annotations.Bean;
@@ -293,8 +294,13 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public TemperatureHumidity findTemperatureHumidityByRoomName(String roomName) {
-        return mDaoManager.getTemperatureHumidityDao().findByRoomName(roomName);
+    public TemperatureHumidity findTemperatureHumidityByRoomName(String roomName, String userJobNumber) {
+        return mDaoManager.getTemperatureHumidityDao().findByRoomName(roomName, userJobNumber);
+    }
+
+    @Override
+    public List<TemperatureHumidity> listTemperatureHumidity(TemperatureHumidityQueryParam param) {
+        return mDaoManager.getTemperatureHumidityDao().list(param);
     }
 
     @Override

@@ -35,5 +35,6 @@
 
 
     <dimen name="corner_radius">2dp</dimen>
+    <dimen name="corner_round_radius">4dp</dimen>
 
 </resources>

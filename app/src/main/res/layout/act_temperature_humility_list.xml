@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalContainerTheme"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/inflate_header" />
+
+    <FrameLayout
+        android:id="@+id/fl"
+        style="@style/matchTheme" />
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import com.wm.lock.entity.LockDevice;
 import com.wm.lock.entity.TemperatureHumidity;
 import com.wm.lock.entity.params.CommunicationDeleteParam;
 import com.wm.lock.entity.params.InspectionQueryParam;
+import com.wm.lock.entity.params.TemperatureHumidityQueryParam;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -193,7 +194,12 @@ public interface IBizService {
     /**
      * 根据机房找到对应的温湿度
      */
-    public TemperatureHumidity findTemperatureHumidityByRoomName(String roomName);
+    public TemperatureHumidity findTemperatureHumidityByRoomName(String roomName, String userJobNumber);
+
+    /**
+     * 列出机房温湿度
+     */
+    public List<TemperatureHumidity> listTemperatureHumidity(TemperatureHumidityQueryParam param);
 
 
 

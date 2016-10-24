@@ -22,8 +22,10 @@ import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionItemFlag;
 import com.wm.lock.entity.TemperatureHumidity;
+import com.wm.lock.entity.UserInfo;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
+import com.wm.lock.module.user.IUserService;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -328,7 +330,7 @@ public class InspectionConstructFragment extends BaseFragment {
 
     private String getDefaultTemperatureHumidityString(InspectionItem item) {
         if (!mmTemperatureHumidityLoaded) {
-            mTemperatureHumidity = bizService().findTemperatureHumidityByRoomName(mInspectionRoomName);
+            mTemperatureHumidity = bizService().findTemperatureHumidityByRoomName(mInspectionRoomName, userInfo().getJobNumber());
             mmTemperatureHumidityLoaded = true;
         }
 
@@ -347,6 +349,10 @@ public class InspectionConstructFragment extends BaseFragment {
                 return String.format("%s, %s", mTemperatureHumidity.getTemperature(), mTemperatureHumidity.getHumidity());
         }
         return null;
+    }
+
+    private UserInfo userInfo() {
+        return ModuleFactory.getInstance().getModuleInstance(IUserService.class).getLoginedInfo();
     }
 
 }
