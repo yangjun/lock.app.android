@@ -62,7 +62,7 @@ public class InspectionConstructActivity extends BaseActivity {
     private long mInspectionId;
     private String mInspectionName;
     private List<String> mCategories;
-    private int mSelectCategoryIndex = -1;
+    private int mSelectCategoryIndex = 0;
 
     private MenuAdapter menuAdapter;
     private InspectionConstructFragment mCurrContentFragment;
@@ -150,11 +150,12 @@ public class InspectionConstructActivity extends BaseActivity {
     @Click(R.id.iv_forward)
     void onForwardClick() {
         closeMenuIfOpen();
-        if (mSelectCategoryIndex <= 0) {
+        if (mSelectCategoryIndex == 0) {
             showTip(R.string.message_inspection_category_no_forward);
         }
         else {
-            setupContent(mSelectCategoryIndex - 1, false);
+            final int index = mSelectCategoryIndex - 1;
+            setupContent(index, false);
         }
     }
 
@@ -165,7 +166,8 @@ public class InspectionConstructActivity extends BaseActivity {
             showTip(R.string.message_inspection_category_no_backward);
         }
         else {
-            setupContent(mSelectCategoryIndex + 1, false);
+            final int index = mSelectCategoryIndex + 1;
+            setupContent(index, false);
         }
     }
 
