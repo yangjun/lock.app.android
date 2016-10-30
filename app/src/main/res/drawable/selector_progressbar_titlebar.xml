@@ -11,7 +11,7 @@
         android:thicknessRatio="16"
         android:useLevel="false">
         <gradient
-            android:centerColor="@color/bg_item_light"
+            android:centerColor="@color/webview_progress_color"
             android:centerY="0.50"
             android:endColor="@color/bg_item"
             android:startColor="@color/bg_item_dark"

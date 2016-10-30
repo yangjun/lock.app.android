@@ -1,13 +1,16 @@
 package com.wm.lock.ui.activities;
 
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
@@ -17,6 +20,7 @@ import com.wm.lock.bluetooth.BluetoothService;
 import com.wm.lock.bluetooth.DoorException;
 import com.wm.lock.bluetooth.DoorManager;
 import com.wm.lock.bluetooth.DoorPackageResult;
+import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.entity.UserInfo;
 
 import org.androidannotations.annotations.EActivity;
@@ -24,6 +28,8 @@ import org.androidannotations.annotations.UiThread;
 
 import java.util.List;
 import java.util.UUID;
+
+import static android.R.id.message;
 
 @EActivity
 public class LockControlActivity extends BaseActivity {
@@ -59,7 +65,8 @@ public class LockControlActivity extends BaseActivity {
                 showResult(receives);
             }
             else if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
-                finish();
+                mConnected = false;
+                fail(R.string.message_open_lock_try_connect_fail);
             }
         }
     };
@@ -103,6 +110,18 @@ public class LockControlActivity extends BaseActivity {
     protected void onDestroy() {
         BluetoothManager.getInstance().unbind(getApplicationContext());
         super.onDestroy();
+    }
+
+    @Override
+    public Dialog showWaittingDialog(int messageId) {
+        mDialog = DialogManager.showWaittingDialog(this, R.string.holdon, getString(messageId), true);
+        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                finish();
+            }
+        });
+        return mDialog;
     }
 
     private void showResult(byte[] data) {

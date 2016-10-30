@@ -5,9 +5,9 @@ import android.os.Bundle;
 
 import com.wm.lock.R;
 import com.wm.lock.core.AbstractActivity;
-import com.wm.lock.helper.Helper;
 import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.entity.UserInfo;
+import com.wm.lock.helper.Helper;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.user.IUserService;
 
@@ -58,6 +58,7 @@ public abstract class BaseActivity extends AbstractActivity {
     public Dialog showWaittingDialog(int messageId) {
         return showWaittingDialog(getString(messageId));
     }
+
 
     public Dialog showWaittingDialog(String message) {
         return showWaittingDialog(R.string.holdon, message);
