@@ -114,7 +114,7 @@
         <activity
             android:name=".ui.activities.InspectionConstructActivity_"
             android:label=""
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ui.activities.TemperatureHumidityListActivity_"
             android:label="@string/title_temperature_humility_list"

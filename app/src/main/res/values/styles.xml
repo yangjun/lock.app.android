@@ -279,6 +279,7 @@
         <item name="android:background">@drawable/selector_bg_input</item>
         <item name="android:minHeight">@dimen/height_input</item>
         <item name="android:singleLine">true</item>
+        <item name="android:textCursorDrawable">@null</item>
     </style>
 
     <style name="inputMultiTheme" parent="inputTheme">
@@ -292,6 +293,7 @@
         <item name="android:drawablePadding">@dimen/activity_horizontal_margin_half</item>
         <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:textCursorDrawable">@null</item>
     </style>
 
     <style name="scrollVTheme" parent="matchTheme">
