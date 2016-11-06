@@ -43,6 +43,9 @@ class WebSocketReader {
 
             case ChatDirective.DATA:
                 return new WebSocketReaderDATA();
+
+            case ChatDirective.BYE:
+                return new WebSocketReaderBye();
         }
         return null;
     }

@@ -46,6 +46,7 @@
     <string name="label_temperature_humility_list">@string/title_temperature_humility_list</string>
     <string name="label_setting">@string/title_setting</string>
     <string name="label_more">更多</string>
+    <string name="label_notify">温馨提示</string>
 
 
 
@@ -92,6 +93,7 @@
     <string name="message_open_lock_try_connect">正在尝试连接蓝牙设备...</string>
     <string name="message_open_lock_try_connect_fail">连接蓝牙失败</string>
     <string name="message_bluetooth_disconnect">蓝牙开关已关闭</string>
+    <string name="message_pull_logoff">您的账号已在其他设备登录</string>
 
 
 

@@ -11,4 +11,7 @@ public class ChatDirective {
     /** 回复 */
     public static final String ASK = "ask";
 
+    /** 强制客户端下线 */
+    public static final String BYE = "bye";
+
 }

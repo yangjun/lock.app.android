@@ -64,6 +64,9 @@ public class WebSocketService extends Service {
         if (mNetChangeReceiver != null) {
             unregisterReceiver(mNetChangeReceiver);
         }
+        if (mReConnectRunnable != null) {
+            mHandler.removeCallbacks(mReConnectRunnable);
+        }
         WebSocketWriter.stop();
         disConnect();
         super.onDestroy();
