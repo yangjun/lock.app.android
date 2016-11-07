@@ -1,32 +1,38 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wm.lock.core.widget.ScaleLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/matchTheme">
 
-    <com.wm.lock.core.widget.ScaleLinearLayout style="@style/matchTheme">
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/matchTheme">
 
         <ImageView
             android:id="@+id/iv_photo"
             style="@style/matchTheme"
             android:background="@color/transparent"
             android:scaleType="centerCrop" />
-    </com.wm.lock.core.widget.ScaleLinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_insert_photo"
-        style="@style/wrapTheme"
-        android:layout_gravity="center_vertical"
-        android:gravity="center"
-        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/ll_insert_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <ImageView
-            style="@style/wrapTheme"
-            android:src="@mipmap/ic_add_photo" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="40dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_add_photo"
+                android:adjustViewBounds="true"/>
 
-        <TextView
-            style="@style/wrapTheme"
-            android:layout_marginTop="4dp"
-            android:text="@string/label_photo_add"
-            android:textColor="@color/txt_content"
-            android:textSize="@dimen/text_size_smallest" />
-    </LinearLayout>
+            <TextView
+                style="@style/wrapTheme"
+                android:layout_marginTop="4dp"
+                android:text="@string/label_photo_add"
+                android:textColor="@color/txt_content"
+                android:textSize="@dimen/text_size_smallest" />
+        </LinearLayout>
+    </FrameLayout>
+</com.wm.lock.core.widget.ScaleLinearLayout>
 
-</FrameLayout>
+
