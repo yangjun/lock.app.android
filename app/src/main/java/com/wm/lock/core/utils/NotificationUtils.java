@@ -13,7 +13,7 @@ import com.wm.lock.R;
 
 public class NotificationUtils {
 
-    public static void showNotification(Context ctx, int id, String message, Class targetClazz, Bundle bundle) {
+    public static void showNotification(Context ctx, int id, String message, Class targetClazz, Bundle bundle, boolean silent) {
         final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
         builder.setContentTitle(ctx.getString(R.string.app_name))
@@ -34,7 +34,7 @@ public class NotificationUtils {
         }
 
         final Notification notification = builder.build();
-        notification.defaults = Notification.DEFAULT_ALL;
+        notification.defaults = silent ? 0 : Notification.DEFAULT_ALL;
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(id, notification);
     }

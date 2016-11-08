@@ -25,7 +25,7 @@ public class NotificationHelper {
 
         final Bundle bundle = new Bundle();
         bundle.putSerializable(LockConstants.DATA, dto);
-        NotificationUtils.showNotification(LockApplication.getInstance(), 0, message, HomeActivity_.class, bundle);
+        NotificationUtils.showNotification(LockApplication.getInstance(), 0, message, HomeActivity_.class, bundle, false);
     }
 
     /**
@@ -40,7 +40,7 @@ public class NotificationHelper {
      */
     public static void showSync() {
         final String message = LockApplication.getInstance().getString(R.string.message_sync_notification);
-        NotificationUtils.showNotification(LockApplication.getInstance(), 110, message, null, null);
+        NotificationUtils.showNotification(LockApplication.getInstance(), 110, message, null, null, true);
     }
 
     /**
