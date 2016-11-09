@@ -10,6 +10,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.logger.Logger;
+import com.wm.lock.core.security.SecurityManager;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
@@ -44,6 +45,19 @@ public class WebSocketWriter {
     public static void ask(String id) {
         final Chat chat = toAskChat(id);
         execute(chat);
+    }
+
+    public static void login(String userJobNumber, String lockPwd) throws Exception {
+        final Map<String, Object> map = new HashMap<>();
+        map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_LOGIN);
+        map.put("user_job_number", userJobNumber);
+        map.put("lock_password", SecurityManager.md5(lockPwd));
+
+        final String payload = convertToString(map);
+        final Chat chat = toDataChat(payload);
+
+        final String data = convertToString(chat);
+        WebSocketWriterProcessor.getInstance().doSend(data);
     }
 
     public static void receiveInspection(Inspection inspection) {
@@ -125,8 +139,12 @@ public class WebSocketWriter {
     }
 
     private static void execute(Object obj) {
+        execute(obj, false);
+    }
+
+    private static void execute(Object obj, boolean insertToHead) {
         if (obj instanceof Chat) {
-            WebSocketWriterProcessor.getInstance().execute((Chat) obj);
+            WebSocketWriterProcessor.getInstance().execute((Chat) obj, insertToHead);
             return;
         }
 
@@ -138,7 +156,7 @@ public class WebSocketWriter {
         }
         if (!TextUtils.isEmpty(payload)) {
             final Chat chat = toDataChat(payload);
-            WebSocketWriterProcessor.getInstance().execute(chat);
+            WebSocketWriterProcessor.getInstance().execute(chat, insertToHead);
         }
     }
 

@@ -20,7 +20,10 @@ import com.wm.lock.exception.BizException;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.user.IUserService;
 import com.wm.lock.ui.activities.HomeActivity_;
+import com.wm.lock.ui.activities.LoginActivity_;
 import com.wm.lock.websocket.WebSocketService;
+
+import java.util.List;
 
 /**
  * Created by wangmin on 16/7/27.
@@ -122,16 +125,12 @@ public final class Helper {
         }
 
         destroyByLogoff();
-        // TODO
-//        if (act instanceof HomeActivity) {
-//            ((HomeActivity) act).logoff();
-//        } else if (TechApplication.getInstance().isActivityRunning(HomeActivity_.class)) {
-//            Intent it = new Intent();
-//            it.putExtra(Constants.DATA, Constants.FLAG_LOGOFF);
-//            RedirectUtils.goActivityByClearTopForUnReCrate(act, HomeActivity_.class, it);
-//        } else {
-//            RedirectUtils.goActivityByClearTopForUnReCrate(act, LoginWithUserNameActivity_.class);
-//        }
+
+        act.startActivity(new Intent(act, LoginActivity_.class));
+        final List<Activity> list = LockApplication.getInstance().getRunningActs();
+        for (Activity actItem : list) {
+            actItem.finish();
+        }
     }
 
     public static void exit(Activity act) {

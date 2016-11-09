@@ -15,6 +15,7 @@
     <string name="label_load_fail">加载失败，点击重试</string>
     <string name="label_load_empty">暂无信息</string>
     <string name="label_login">登录</string>
+    <string name="label_logoff">退出登录</string>
     <string name="label_next">下一步</string>
     <string name="label_job_number">工号:</string>
     <string name="label_setting_lock_pwd">修改开锁密码</string>
@@ -97,6 +98,7 @@
     <string name="message_pull_logoff">您的账号已在其他设备登录</string>
     <string name="message_loging">正在登录系统...</string>
     <string name="message_login_fail">登录失败</string>
+    <string name="message_login_timeout">登录超时</string>
 
 
 

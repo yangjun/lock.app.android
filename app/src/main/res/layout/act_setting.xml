@@ -50,9 +50,12 @@
                     style="@style/itemTheme"
                     android:drawableLeft="@mipmap/ic_setting_lock_pwd"
                     android:drawableRight="@mipmap/ic_arrow"
-                    android:text="@string/label_setting_lock_pwd" />
+                    android:text="@string/label_setting_lock_pwd"
+                    android:visibility="gone" />
 
-                <View style="@style/splitInnerTheme" />
+                <View
+                    style="@style/splitInnerTheme"
+                    android:visibility="gone" />
 
                 <FrameLayout style="@style/wrapHeightTheme">
 
@@ -72,9 +75,20 @@
                 </FrameLayout>
 
                 <View style="@style/splitTheme" />
-
             </LinearLayout>
 
+            <View
+                style="@style/splitTheme"
+                android:layout_marginTop="24dp" />
+
+            <TextView
+                android:id="@+id/btn_logoff"
+                style="@style/itemTheme"
+                android:gravity="center"
+                android:text="@string/label_logoff"
+                android:textColor="@color/txt_accent" />
+
+            <View style="@style/splitTheme" />
         </LinearLayout>
     </ScrollView>
 

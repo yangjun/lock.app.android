@@ -4,20 +4,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
-import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockApplication;
-import com.wm.lock.LockConfig;
-import com.wm.lock.LockConstants;
-import com.wm.lock.R;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.GsonUtils;
 import com.wm.lock.core.utils.HardwareUtils;
-import com.wm.lock.core.utils.NotificationUtils;
 import com.wm.lock.dto.DataWriteFailDto;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.ChatDirective;
 import com.wm.lock.entity.Communication;
-import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.UserInfo;
 import com.wm.lock.exception.BizException;
 import com.wm.lock.helper.NotificationHelper;
@@ -25,8 +19,8 @@ import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.module.user.IUserService;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,11 +49,11 @@ class WebSocketWriterProcessor {
         return InstanceHolder.instance;
     }
 
-    public void execute(final Chat chat) {
+    public void execute(final Chat chat, final boolean insertToHead) {
         mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
-                final Communication communication = toCommunication(chat);
+                final Communication communication = toCommunication(chat, insertToHead);
                 bizService().addCommunication(communication);
                 startIfNot();
 
@@ -99,12 +93,21 @@ class WebSocketWriterProcessor {
         cancelNotification();
     }
 
-    private Communication toCommunication(Chat chat) {
+    public void doSend(String data) throws Exception {
+        WebSocketService.send(data);
+    }
+
+    private Communication toCommunication(Chat chat, boolean insertToHead) {
         final Communication result = new Communication();
         result.setId(chat.getData().getId());
         result.setDirective(chat.getDirective());
         result.setTarget("admin");
         result.setSource(loginUser().getJobNumber());
+
+        final Calendar c = Calendar.getInstance();
+        c.set(2000, 1, 1);
+        final Date date = insertToHead ? c.getTime() : new Date();
+        result.setCreate_date(date);
 
         try {
             result.setContent(GsonUtils.toJson(chat));
@@ -117,7 +120,7 @@ class WebSocketWriterProcessor {
 
     private void send(String data) throws Exception {
         showNotification();
-        WebSocketService.send(data);
+        doSend(data);
     }
 
     private void sendSuccess(Communication communication) {

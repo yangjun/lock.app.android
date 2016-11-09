@@ -7,6 +7,9 @@ public class UserInfo implements Serializable {
     /** 工号 */
     private String jobNumber;
 
+    /** 工号 */
+    private String jobNumberCopy;
+
     /** 姓名 */
     private String name;
 
@@ -22,6 +25,14 @@ public class UserInfo implements Serializable {
 
     public void setJobNumber(String jobNumber) {
         this.jobNumber = jobNumber;
+    }
+
+    public String getJobNumberCopy() {
+        return jobNumberCopy;
+    }
+
+    public void setJobNumberCopy(String jobNumberCopy) {
+        this.jobNumberCopy = jobNumberCopy;
     }
 
     public String getName() {

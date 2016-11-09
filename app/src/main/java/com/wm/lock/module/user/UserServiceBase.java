@@ -33,7 +33,7 @@ public abstract class UserServiceBase extends BaseModule implements IUserService
 
     @Override
     public void logoff() {
-        mLoginUser.setJobNumber(null);
+//        mLoginUser.setJobNumber(null);
         mLoginUser.setName(null);
         mLoginUser.setLockPwd(null);
         mLoginUser.setGesturePwd(null);
@@ -42,12 +42,19 @@ public abstract class UserServiceBase extends BaseModule implements IUserService
 
     @Override
     public boolean hasLogin() {
-        final String jobNumber = getLoginedInfo().getJobNumber();
-        return !TextUtils.isEmpty(jobNumber);
+        final String lockPwd = getLoginedInfo().getLockPwd();
+        return !TextUtils.isEmpty(lockPwd);
+    }
+
+    @Override
+    public void login(UserInfo user) {
+        user.setJobNumberCopy(user.getJobNumber());
+        update(user);
     }
 
     @Override
     public void register(UserInfo user) {
+        user.setJobNumberCopy(user.getJobNumber());
         update(user);
     }
 
@@ -60,6 +67,7 @@ public abstract class UserServiceBase extends BaseModule implements IUserService
     protected final void setCache(UserInfo user) {
         CacheManager cacheManager = CacheManager.getInstance();
         cacheManager.putString(LockConstants.JOB_NUMBER, SecurityManager.base64Encode(user.getJobNumber()), CacheManager.CHANNEL_PREFERENCE);
+        cacheManager.putString(LockConstants.JOB_NUMBER_COPY, SecurityManager.base64Encode(user.getJobNumberCopy()), CacheManager.CHANNEL_PREFERENCE);
         cacheManager.putString(LockConstants.NAME, SecurityManager.base64Encode(user.getName()), CacheManager.CHANNEL_PREFERENCE);
         cacheManager.putString(LockConstants.PWD_LOCK, SecurityManager.base64Encode(user.getLockPwd()), CacheManager.CHANNEL_PREFERENCE);
         cacheManager.putString(LockConstants.PWD_GESTURE, user.getGesturePwd(), CacheManager.CHANNEL_PREFERENCE);
@@ -69,6 +77,7 @@ public abstract class UserServiceBase extends BaseModule implements IUserService
         UserInfo result = new UserInfo();
         CacheManager cacheManager = CacheManager.getInstance();
         result.setJobNumber(SecurityManager.base64Decode(cacheManager.getString(LockConstants.JOB_NUMBER, CacheManager.CHANNEL_PREFERENCE)));
+        result.setJobNumberCopy(SecurityManager.base64Decode(cacheManager.getString(LockConstants.JOB_NUMBER_COPY, CacheManager.CHANNEL_PREFERENCE)));
         result.setName(SecurityManager.base64Decode(cacheManager.getString(LockConstants.NAME, CacheManager.CHANNEL_PREFERENCE)));
         result.setLockPwd(SecurityManager.base64Decode(cacheManager.getString(LockConstants.PWD_LOCK, CacheManager.CHANNEL_PREFERENCE)));
         result.setGesturePwd(cacheManager.getString(LockConstants.PWD_GESTURE, CacheManager.CHANNEL_PREFERENCE));

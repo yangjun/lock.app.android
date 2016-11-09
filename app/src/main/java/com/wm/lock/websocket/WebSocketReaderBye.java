@@ -12,9 +12,8 @@ public class WebSocketReaderBye extends WebSocketReaderBase {
 
     @Override
     void execute(Chat chat) {
-//        final Activity act = LockApplication.getInstance().getCurrActivity();
-//        Helper.logoff(act);
-//        // TODO 退出到登录页面
+        final Activity act = LockApplication.getInstance().getCurrActivity();
+        Helper.logoff(act);
         showLogoffDialog();
     }
 

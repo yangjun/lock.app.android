@@ -19,6 +19,7 @@ public final class LockConstants {
     public static final String SHOW_BACK_BTN = "show_back_btn";
 
     public static final String JOB_NUMBER = "job_number";
+    public static final String JOB_NUMBER_COPY = "job_number_copy";
     public static final String NAME = "name";
     public static final String PWD_LOCK = "pwd_lock";
     public static final String PWD_GESTURE = "pwd_gesture";
@@ -50,5 +51,11 @@ public final class LockConstants {
 
     /** 管理端同步给移动端的机房温湿度 */
     public static final String BIZ_HUMITURE = "HUMITURE";
+
+    /** 登录 */
+    public static final String BIZ_LOGIN = "LOGIN";
+
+    /** 登录反馈 */
+    public static final String BIZ_LOGIN_RESULT = "LOGIN_RETURN";
 
 }

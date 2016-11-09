@@ -23,7 +23,7 @@ public class CommunicationDao extends BaseDao<Communication, Long> {
 
     public Communication findNextWrite(String userJobNumber) {
         try {
-            final List<Communication> list = where(0, 1, "id_", true)
+            final List<Communication> list = where(0, 1, "create_date", true)
                     .and().eq("source", userJobNumber)
                     .query();
             if (CollectionUtils.isEmpty(list)) {

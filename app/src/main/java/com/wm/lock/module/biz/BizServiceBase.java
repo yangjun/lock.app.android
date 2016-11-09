@@ -259,7 +259,6 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
 
     @Override
     public void addCommunication(Communication communication) {
-        communication.setCreate_date(new Date());
         mDaoManager.getCommunicationDao().add(communication);
     }
 

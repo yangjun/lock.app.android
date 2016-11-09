@@ -60,8 +60,13 @@
             android:theme="@style/AppFullScreenTheme" />
 
         <activity
+            android:name=".ui.activities.LoginActivity_"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
+
+        <activity
             android:name=".ui.activities.LoginActivity_bak_"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.activities.RegisterActivity_"

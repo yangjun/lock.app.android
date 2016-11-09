@@ -1,12 +1,16 @@
 package com.wm.lock.websocket;
 
+import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockConstants;
+import com.wm.lock.dto.UserLoginDto;
 import com.wm.lock.helper.NotificationHelper;
 import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.LockDeviceGroup;
 import com.wm.lock.entity.TemperatureHumidity;
+
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -31,9 +35,31 @@ class WebSocketReaderDATA extends WebSocketReaderBase {
         else if (contains(payload, LockConstants.BIZ_HUMITURE)) {
             getTemperatureHumidity();
         }
+        else if (contains(payload, LockConstants.BIZ_LOGIN_RESULT)) {
+            getLogin();
+        }
         else {
             ask();
         }
+    }
+
+    /**
+     * 获取登录结果
+     */
+    private void getLogin() {
+        WebSocketReaderProcessor.getInstance().execute(new WebSocketReaderProcessor.WebSocketReaderWork<UserLoginDto>() {
+            @Override
+            public UserLoginDto execute() throws Exception {
+                final UserLoginDto result = convertFormJson(payload, UserLoginDto.class);
+                return result;
+            }
+
+            @Override
+            public void onSuccess(UserLoginDto result) {
+                EventBus.getDefault().post(result);
+                ask();
+            }
+        });
     }
 
     /**

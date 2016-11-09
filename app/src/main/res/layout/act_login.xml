@@ -5,7 +5,9 @@
 
     <include layout="@layout/inflate_header" />
 
-    <ScrollView style="@style/scrollVTheme">
+    <!--<ScrollView style="@style/scrollVTheme">-->
+
+    <RelativeLayout style="@style/matchTheme">
 
         <LinearLayout
             style="@style/verticalWrapContainerTheme"
@@ -50,6 +52,14 @@
                 android:background="@drawable/selector_btn_title"
                 android:text="@string/label_login" />
         </LinearLayout>
-    </ScrollView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/bg_login_footer" />
+    </RelativeLayout>
+    <!--</ScrollView>-->
 
 </LinearLayout>

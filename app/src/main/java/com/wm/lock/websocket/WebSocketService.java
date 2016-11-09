@@ -194,13 +194,10 @@ public class WebSocketService extends Service {
     }
 
     public static synchronized void send(String data) throws Exception {
-//        try {
-            if (mClient != null) {
-                mClient.send(data);
-            }
-//        } catch (Exception e) {
-//            Logger.p("fail to send data to web socket server", e);
-//        }
+        if (mClient == null || mClient.getReadyState() != WebSocket.READYSTATE.OPEN) {
+            throw new Exception("web socket not connect");
+        }
+        mClient.send(data);
     }
 
     private class NetChangeReceiver extends BroadcastReceiver {
