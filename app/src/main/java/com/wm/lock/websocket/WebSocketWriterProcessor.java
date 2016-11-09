@@ -80,7 +80,8 @@ class WebSocketWriterProcessor {
                 try {
                     send(communication.getContent());
                     sendSuccess(communication);
-                    startIfNot(); //继续
+                    Thread.sleep(3000); //睡眠一段时间,等待服务器回复。如果服务器没有回复,下一次继续发这条数据
+                    startIfNot();
                 } catch (Exception e) {
                     sendFail(e);
                 }
