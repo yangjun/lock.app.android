@@ -66,7 +66,7 @@ public class GuideActivity extends BaseActivity {
     private void next() {
         if (isByStart) {
             mSaveBundle.remove(LockConstants.FLAG);
-            RedirectUtils.goActivity(this, LoginActivity_.class, mSaveBundle);
+            RedirectUtils.goActivity(this, LoginActivity_bak_.class, mSaveBundle);
         }
         finish();
         mSysService.setCacheAppVersion();

@@ -28,7 +28,7 @@ public class InspectionListSubmitFailFragment extends InspectionListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (needReload) {
+        if (needReload && getUserVisibleHint()) {
             reload();
         }
     }
@@ -40,9 +40,24 @@ public class InspectionListSubmitFailFragment extends InspectionListFragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden && needReload) {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (!isPaused && needReload) {
+                reload();
+            }
+        }
+    }
+
+    public void onEventMainThread(InspectionResultDto dto) {
+        if (!dto.isSuccess()) {
+            return;
+        }
+
+        if (isPaused || !getUserVisibleHint()) {
+            needReload = true;
+        }
+        else {
             reload();
         }
     }
@@ -68,19 +83,6 @@ public class InspectionListSubmitFailFragment extends InspectionListFragment {
         bundle.putString(LockConstants.TITLE, item.getPlan_name());
         bundle.putBoolean(LockConstants.BOOLEAN, false);
         RedirectUtils.goActivity(mActivity, InspectionConstructActivity_.class, bundle);
-    }
-
-    public void onEventMainThread(InspectionResultDto dto) {
-        if (!dto.isSuccess()) {
-            return;
-        }
-
-        if (isPaused || isHidden()) {
-            needReload = true;
-        }
-        else {
-            reload();
-        }
     }
 
 }

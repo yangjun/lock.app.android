@@ -43,7 +43,7 @@ public class InspectionListPendingFragment extends InspectionListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (needReload) {
+        if (needReload && getUserVisibleHint()) {
             reload();
         }
     }
@@ -55,9 +55,21 @@ public class InspectionListPendingFragment extends InspectionListFragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden && needReload) {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (!isPaused && needReload) {
+                reload();
+            }
+        }
+    }
+
+    public void onEventMainThread(InspectionNewDto dto) {
+        if (isPaused || !getUserVisibleHint()) {
+            needReload = true;
+        }
+        else {
+            ((HomeActivity) mActivity).dismissNewInspectionNotificationIfCondition();
             reload();
         }
     }
@@ -66,16 +78,6 @@ public class InspectionListPendingFragment extends InspectionListFragment {
     public void reload() {
         needReload = false;
         super.reload();
-    }
-
-    public void onEventMainThread(InspectionNewDto dto) {
-        if (isPaused || isHidden()) {
-            needReload = true;
-        }
-        else {
-            ((HomeActivity) mActivity).dismissNewInspectionNotificationIfCondition();
-            reload();
-        }
     }
 
     @Override

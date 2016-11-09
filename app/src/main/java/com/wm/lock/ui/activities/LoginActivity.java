@@ -1,58 +1,88 @@
 package com.wm.lock.ui.activities;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.DialogInterface;
+import android.text.TextUtils;
+import android.widget.EditText;
 
-import com.wm.lock.helper.Helper;
-import com.wm.lock.LockConstants;
+import com.wm.lock.R;
 import com.wm.lock.core.utils.RedirectUtils;
-import com.wm.lock.module.ModuleFactory;
-import com.wm.lock.module.user.IUserService;
+import com.wm.lock.core.utils.StringUtils;
+import com.wm.lock.dialog.DialogManager;
+import com.wm.lock.entity.UserInfo;
 
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OnActivityResult;
+import org.androidannotations.annotations.ViewById;
 
-/**
- * Created by wangmin on 16/9/5.
- */
+import de.greenrobot.event.EventBus;
+
 @EActivity
 public class LoginActivity extends BaseActivity {
 
-    private static final int REQUEST_GESTURE_PRINT_VERIFY = 1;
+    @ViewById(R.id.et_job_number)
+    EditText mEtJobNumber;
+
+    @ViewById(R.id.et_lock_pwd)
+    EditText mEtLockPwd;
 
     @Override
     protected int getContentViewId() {
-        return -1;
+        return R.layout.act_login;
     }
 
     @Override
     protected void init() {
-        final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
-        if (userService.hasLogin()) {
-            login();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
+    @Click(R.id.btn_next)
+    void onLoginClick() {
+        final int msgId = checkInput();
+        if (msgId > 0) {
+            showTip(msgId);
         }
         else {
-            register();
+            login();
         }
     }
 
-    @OnActivityResult(REQUEST_GESTURE_PRINT_VERIFY)
-    void onVerifyGesturePrintResult(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Helper.goHomePage(this);
+    private int checkInput() {
+        if (StringUtils.isEmpty(mEtJobNumber)) {
+            return R.string.empty_job_number;
         }
-        finish();
+        if (StringUtils.isEmpty(mEtLockPwd)) {
+            return R.string.empty_lock_pwd;
+        }
+        return -1;
     }
 
     private void login() {
-        final Bundle bundle = new Bundle();
-        bundle.putBoolean(LockConstants.SHOW_BACK_BTN, false);
-        RedirectUtils.goActivityForResult(this, GesturePrintVerifyActivity_.class, bundle, REQUEST_GESTURE_PRINT_VERIFY);
+        mDialog = DialogManager.showWaittingDialog(this, R.string.holdon, getString(R.string.message_loging), false);
+        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                EventBus.getDefault().unregister(this);
+            }
+        });
+        EventBus.getDefault().register(this);
+        // TODO 执行websocket
     }
 
-    private void register() {
-        RedirectUtils.goActivity(this, RegisterActivity_.class);
-        finish();
+    public void onEventMainThread(UserInfo user) {
+        if (TextUtils.isEmpty(user.getJobNumber())) {
+            showTip(R.string.message_login_fail);
+        }
+        else if (user.getJobNumber().equals(mEtJobNumber.getText().toString().trim())) {
+            // TODO
+        }
     }
 
 }

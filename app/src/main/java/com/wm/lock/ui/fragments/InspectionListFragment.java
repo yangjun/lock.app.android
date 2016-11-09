@@ -9,7 +9,6 @@ import com.wm.lock.R;
 import com.wm.lock.adapter.InspectionListAdapter;
 import com.wm.lock.core.load.LoadListFragment;
 import com.wm.lock.core.utils.FragmentUtils;
-import com.wm.lock.core.utils.HardwareUtils;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.UserInfo;
 import com.wm.lock.entity.params.InspectionQueryParam;
