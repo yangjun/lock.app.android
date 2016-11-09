@@ -6,7 +6,9 @@ import android.widget.TextView;
 
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.wm.lock.R;
+import com.wm.lock.core.callback.Injector;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.entity.UserInfo;
 import com.wm.lock.bugly.BuglyManager;
 import com.wm.lock.helper.Helper;
@@ -73,7 +75,12 @@ public class SettingActivity extends BaseActivity {
 
     @Click(R.id.btn_logoff)
     void onLogoffClick() {
-        Helper.logoff(this);
+        DialogManager.showConfirmDialog(this, R.string.label_notify, getString(R.string.message_logoff_confirm), false, new Injector() {
+            @Override
+            public void execute() {
+                Helper.logoff(SettingActivity.this);
+            }
+        });
     }
 
     private void updateIndicator() {

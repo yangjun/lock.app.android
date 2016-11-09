@@ -1,12 +1,16 @@
 package cn.finalteam.galleryfinal;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import java.io.File;
+import java.util.List;
 
 import cn.finalteam.toolsfinal.DeviceUtils;
 import cn.finalteam.toolsfinal.FileUtils;
@@ -29,11 +33,20 @@ public class ImageTakePhotoActivity extends ImageBaseActivity {
         }
 
         mTakeConfig = ImageHandler.getInstance().getTakeConfig();
+
         Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        final String packageName = getCameraPackageName(getApplicationContext());
+        final Intent intentSys = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (intentSys != null) {
+            captureIntent.setPackage(packageName);
+        }
+
         Uri uri = getOutputUri(mTakeConfig.getPath());
         if (uri != null) {
             captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         }
+
         startActivityForResult(captureIntent, TAKE_REQUEST_CODE);
     }
 
@@ -70,6 +83,22 @@ public class ImageTakePhotoActivity extends ImageBaseActivity {
             return Uri.fromFile(new File(path));
         }
         return null;
+    }
+
+    private static String getCameraPackageName(Context context) {
+        List<PackageInfo> packages = context.getPackageManager().getInstalledPackages(0);
+        for (int i = 0; i < packages.size(); i++) {
+            PackageInfo packageInfo = packages.get(i);
+            String strLabel = packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
+            // 一般手机系统中拍照软件的名字
+            if ("相机,照相机,照相,拍照,摄像,Camera,camera".contains(strLabel)) {
+                String strCamera = packageInfo.packageName;
+                if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                    return strCamera;
+                }
+            }
+        }
+        return "com.android.camera";
     }
 
 }

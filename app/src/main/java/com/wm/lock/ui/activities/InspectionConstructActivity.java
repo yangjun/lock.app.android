@@ -19,16 +19,19 @@ import com.wm.lock.attachment.AttachmentProcessor;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.cache.CacheManager;
+import com.wm.lock.core.callback.Injector;
 import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.AttachmentUpload;
 import com.wm.lock.entity.AttachmentUploadSource;
 import com.wm.lock.entity.InspectionItem;
+import com.wm.lock.helper.Helper;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.ui.fragments.InspectionConstructFragment;
@@ -230,18 +233,24 @@ public class InspectionConstructActivity extends BaseActivity {
     }
 
     private void doSubmit() {
-        bizService().submitInspection(mInspectionId);
-        // 有附件, 走附件上传处理器
-        if (hasAttachment()) {
-            AttachmentProcessor.getInstance().startIfNot();
-        }
-        // 没有附件, 走web socket
-        else {
-            WebSocketWriter.submitInspection(mInspectionId, true);
-        }
-        showTip(R.string.message_submit_to_background);
-        setResult(RESULT_FIRST_USER);
-        finish();
+        DialogManager.showConfirmDialog(this, R.string.label_notify, getString(R.string.message_submit_confirm), false, new Injector() {
+            @Override
+            public void execute() {
+                bizService().submitInspection(mInspectionId);
+                // 有附件, 走附件上传处理器
+                if (hasAttachment()) {
+                    AttachmentProcessor.getInstance().startIfNot();
+                }
+                // 没有附件, 走web socket
+                else {
+                    WebSocketWriter.submitInspection(mInspectionId, true);
+                }
+                showTip(R.string.message_submit_to_background);
+                setResult(RESULT_FIRST_USER);
+                finish();
+            }
+        });
+
 //        new AsyncExecutor().execute(new AsyncWork<Void>() {
 //            @Override
 //            public void onPreExecute() {
