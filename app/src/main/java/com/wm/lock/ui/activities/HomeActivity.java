@@ -40,6 +40,10 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
+import static com.tencent.bugly.crashreport.inner.InnerApi.context;
+
 /**
  * Created by wangmin on 16/7/27.
  */
@@ -217,6 +221,10 @@ public class HomeActivity extends BaseActivity {
 
         tabItem.title = title;
         mTabPagerIndicator.notifyDataSetChanged();
+
+        if (tabItem == mTabItems[0]) {
+            updateDeskstopCount((int) count);
+        }
     }
 
     private void updateTabTitle() {
@@ -243,6 +251,10 @@ public class HomeActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    private void updateDeskstopCount(int count) {
+        ShortcutBadger.applyCount(context, count);
     }
 
     private List<VerticalPopMenu.VerticalPopMenuItem> getMoreItems() {

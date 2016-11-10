@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity {
     @ViewById(R.id.et_lock_pwd)
     EditText mEtLockPwd;
 
-    private static final int INTERVAL_TIMEOUT = 10000;
+    private static final int INTERVAL_TIMEOUT = 30000;
     private Handler mHandler = new Handler();
     private Runnable mTimeoutRunnable;
     private AsyncExecutor mAsyncExecutor;

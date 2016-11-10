@@ -68,7 +68,7 @@ public abstract class InspectionListFragment extends BaseFragment {
                 .setPageLimit(mPageLimit)
                 .setIsPullRefreshEnable(false)
                 .setPaddingTop((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
-//                .setPaddingBottom((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
+                .setPaddingBottom((int) getResources().getDimension(R.dimen.activity_horizontal_margin))
                 .setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
