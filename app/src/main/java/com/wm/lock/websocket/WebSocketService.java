@@ -320,7 +320,8 @@ public class WebSocketService extends Service {
                                     inspection.setDispatch_man("张经理");
                                     inspection.setItems(inspectionItemList);
 
-                                    final Map<String, Object> map = GsonUtils.fromJson(GsonUtils.toJson(inspection), new TypeToken<Map<String, Object>>() {});
+                                    final Map<String, Object> map = GsonUtils.fromJson(GsonUtils.toJson(inspection), new TypeToken<Map<String, Object>>() {
+                                    });
                                     map.put("plan_date", new Date().getTime());
                                     map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_PLAN);
 
@@ -340,7 +341,7 @@ public class WebSocketService extends Service {
                                 }
                             }
                         }
-                    }, 5000);
+                    }, 10000);
                 }
             }
         }.start();

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.wm.lock.helper.ExceptionHelper;
 import com.wm.lock.R;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
@@ -18,7 +17,7 @@ import com.wm.lock.dto.InspectionNewDto;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.params.InspectionQueryParam;
-import com.wm.lock.helper.NotificationHelper;
+import com.wm.lock.helper.ExceptionHelper;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 import com.wm.lock.ui.activities.HomeActivity;

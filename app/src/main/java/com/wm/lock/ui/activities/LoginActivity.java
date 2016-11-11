@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity {
                         dto.setState(1);
                         EventBus.getDefault().post(dto);
                     }
-                }, 2000);
+                }, 0);
             }
 
             @Override

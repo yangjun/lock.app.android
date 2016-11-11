@@ -40,6 +40,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.tencent.bugly.crashreport.inner.InnerApi.context;
@@ -80,6 +81,12 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     protected void init() {
         setupActionBar();
         setupTab();
@@ -90,6 +97,12 @@ public class HomeActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         updateIndicator();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     @Override
@@ -155,7 +168,7 @@ public class HomeActivity extends BaseActivity {
 
         mTabPagerIndicator.setViewPager(mViewPager);
 
-        updateTabTitle();
+        updateTabTitles();
         mViewPager.setCurrentItem(1); //选中处理中
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -223,37 +236,41 @@ public class HomeActivity extends BaseActivity {
         mTabPagerIndicator.notifyDataSetChanged();
 
         if (tabItem == mTabItems[0]) {
-            updateDeskstopCount((int) count);
+            updateDesktopCount((int) count);
         }
     }
 
-    private void updateTabTitle() {
-        for (final PagerTabAdapter.TabItem tabItem : mTabItems) {
-            new AsyncExecutor().execute(new AsyncWork<Long>() {
-                @Override
-                public void onPreExecute() {
-
-                }
-
-                @Override
-                public void onSuccess(Long result) {
-                    updateTabTitle(tabItem, result);
-                }
-
-                @Override
-                public void onFail(Exception e) {
-                    Logger.p("fail to load inspection list count for tab:" + tabItem.title, e);
-                }
-
-                @Override
-                public Long onExecute() throws Exception {
-                    return ((InspectionListFragment) tabItem.fragment).getItemCount();
-                }
-            });
+    private void updateTabTitles() {
+        for (int i = 0, len = mTabItems.length; i < len; i++) {
+            updateTabTitleItem(i);
         }
     }
 
-    private void updateDeskstopCount(int count) {
+    private void updateTabTitleItem(final int index) {
+        new AsyncExecutor().execute(new AsyncWork<Long>() {
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onSuccess(Long result) {
+                updateTabTitle(mTabItems[index], result);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                Logger.p("fail to load inspection list count for tab:" + mTabItems[index].title, e);
+            }
+
+            @Override
+            public Long onExecute() throws Exception {
+                return ((InspectionListFragment) mTabItems[index].fragment).getItemCount();
+            }
+        });
+    }
+
+    private void updateDesktopCount(int count) {
         ShortcutBadger.applyCount(context, count);
     }
 
@@ -282,6 +299,11 @@ public class HomeActivity extends BaseActivity {
             ));
         }
         return moreItems;
+    }
+
+
+    public void onEventMainThread(InspectionNewDto dto) {
+        updateTabTitleItem(0);
     }
 
 }
