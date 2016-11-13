@@ -79,6 +79,7 @@ public class InspectionListSubmitFailFragment extends InspectionListFragment {
     protected void onItemClick(Inspection item) {
         final Bundle bundle = new Bundle();
         bundle.putLong(LockConstants.ID, item.getId_());
+        bundle.putString(LockConstants.FLAG, item.getPlan_id());
         bundle.putString(LockConstants.NAME, item.getRoom_name());
         bundle.putString(LockConstants.TITLE, item.getPlan_name());
         bundle.putBoolean(LockConstants.BOOLEAN, false);

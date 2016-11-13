@@ -1,16 +1,13 @@
 package com.wm.lock.websocket;
 
-import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockConstants;
-import com.wm.lock.dto.UserLoginDto;
-import com.wm.lock.helper.NotificationHelper;
 import com.wm.lock.dto.InspectionNewDto;
+import com.wm.lock.dto.UserLoginDto;
 import com.wm.lock.entity.Chat;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.LockDeviceGroup;
 import com.wm.lock.entity.TemperatureHumidity;
-
-import java.util.Map;
+import com.wm.lock.helper.NotificationHelper;
 
 import de.greenrobot.event.EventBus;
 

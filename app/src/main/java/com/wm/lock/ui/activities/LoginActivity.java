@@ -127,15 +127,15 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(Void result) {
                 // FIXME test only, simulate login success
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        final UserLoginDto dto = new UserLoginDto();
-                        dto.setUser_job_number(mEtJobNumber.getText().toString().trim());
-                        dto.setState(1);
-                        EventBus.getDefault().post(dto);
-                    }
-                }, 0);
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        final UserLoginDto dto = new UserLoginDto();
+//                        dto.setUser_job_number(mEtJobNumber.getText().toString().trim());
+//                        dto.setState(1);
+//                        EventBus.getDefault().post(dto);
+//                    }
+//                }, 2000);
             }
 
             @Override
@@ -172,7 +172,7 @@ public class LoginActivity extends BaseActivity {
             loginSuccess();
         }
         else {
-            showTip(R.string.message_login_fail);
+            showTip(R.string.message_login_illegal);
         }
     }
 

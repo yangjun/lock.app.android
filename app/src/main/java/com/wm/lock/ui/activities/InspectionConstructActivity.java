@@ -26,6 +26,7 @@ import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.FragmentUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.dialog.DialogManager;
+import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.AttachmentType;
 import com.wm.lock.entity.AttachmentUpload;
@@ -46,6 +47,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.Date;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 @EActivity
 public class InspectionConstructActivity extends BaseActivity {
 
@@ -63,6 +66,7 @@ public class InspectionConstructActivity extends BaseActivity {
 
     private boolean mEnable;
     private long mInspectionId;
+    private String mPlanId;
     private String mInspectionName;
     private List<String> mCategories;
     private int mSelectCategoryIndex = 0;
@@ -77,11 +81,11 @@ public class InspectionConstructActivity extends BaseActivity {
         return R.layout.act_inspection_construct;
     }
 
-//    @Override
-//    public void onCreate(Bundle arg0) {
-//        super.onCreate(arg0);
-//        EventBus.getDefault().register(this);
-//    }
+    @Override
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     protected void onPause() {
@@ -90,16 +94,17 @@ public class InspectionConstructActivity extends BaseActivity {
         super.onPause();
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        EventBus.getDefault().unregister(this);
-//        super.onDestroy();
-//    }
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 
     @Override
     protected void init() {
         mEnable = mSaveBundle.getBoolean(LockConstants.BOOLEAN, true);
         mInspectionId = mSaveBundle.getLong(LockConstants.ID);
+        mPlanId = mSaveBundle.getString(LockConstants.FLAG);
         mInspectionName = mSaveBundle.getString(LockConstants.NAME);
         loadCategories();
     }
@@ -281,18 +286,17 @@ public class InspectionConstructActivity extends BaseActivity {
 //        });
     }
 
-//    public void onEventMainThread(InspectionResultDto dto) {
-//        dismissDialog();
-//        if (dto.isSuccess()) {
-//            bizService().deleteInspection(mInspectionId);
-//            showTip(R.string.message_submit_success);
-//            setResult(RESULT_OK);
-//            finish();
-//        }
-//        else {
-//            showTip(R.string.message_submit_fail);
-//        }
-//    }
+    public void onEventMainThread(InspectionResultDto dto) {
+        if (mEnable) {
+            return;
+        }
+
+        // 如果该任务提交成功,则回到主页
+        if (dto.isSuccess() && dto.getPlan_id().equals(mPlanId)) {
+            showTip(R.string.message_submit_success_in_fail_list);
+            finish();
+        }
+    }
 
     private boolean hasAttachment() {
         final List<InspectionItem> inspectionItemList = bizService().listInspectionItem(mInspectionId);
