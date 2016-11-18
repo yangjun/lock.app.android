@@ -189,8 +189,9 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void updateIndicator() {
-        final boolean hasNew = BuglyManager.hasUpgradeInfo(getApplicationContext());
-        mVIndicator.setVisibility(hasNew ? View.VISIBLE : View.GONE);
+//        final boolean hasNew = BuglyManager.hasUpgradeInfo(getApplicationContext());
+//        mVIndicator.setVisibility(hasNew ? View.VISIBLE : View.GONE);
+        // TODO 更新红点的时候,需要在下拉功能菜单的"设置"项旁边加上红点,这样才完整
     }
 
     public void dismissNewInspectionNotificationIfCondition() {
