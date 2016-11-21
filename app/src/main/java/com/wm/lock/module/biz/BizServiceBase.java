@@ -195,8 +195,17 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     }
 
     @Override
-    public List<LockDevice> listInspectionItemCategoryBluetooth(long inspectionId, String category) {
-        return mDaoManager.getInspectionItemDao().listBluetoothByCategory(inspectionId, category);
+    public List<LockDevice> listInspectionItemCategoryBluetooth(String userJobNumber, long inspectionId, String category) {
+        final List<LockDevice> result = mDaoManager.getInspectionItemDao().listBluetoothByCategory(inspectionId, category);
+        if (!CollectionUtils.isEmpty(result)) {
+            for (LockDevice item : result) {
+                final LockDevice queryItem = mDaoManager.getLockDeviceDao().findByMac(userJobNumber, item.getLock_mac());
+                if (queryItem != null) {
+                    item.setLock_name(queryItem.getLock_name());
+                }
+            }
+        }
+        return result;
     }
 
     @Override

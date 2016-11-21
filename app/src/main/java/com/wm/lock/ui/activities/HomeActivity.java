@@ -22,6 +22,7 @@ import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.dialog.VerticalPopMenu;
 import com.wm.lock.dto.InspectionNewDto;
+import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.helper.NotificationHelper;
 import com.wm.lock.http.Rest;
@@ -305,6 +306,13 @@ public class HomeActivity extends BaseActivity {
 
     public void onEventMainThread(InspectionNewDto dto) {
         updateTabTitleItem(0);
+    }
+
+    public void onEventMainThread(InspectionResultDto dto) {
+        if (dto.isSuccess()) {
+            updateTabTitleItem(1);
+            updateTabTitleItem(2);
+        }
     }
 
 }

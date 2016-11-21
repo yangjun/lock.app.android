@@ -56,7 +56,8 @@
 				id_ integer primary key autoincrement,
 				lock_mac varchar(50),
 				lock_name varchar(500),
-				user_job_number varchar(20)
+				user_job_number varchar(20),
+				first_letter varchar(1)
 			)
 		</content>
 

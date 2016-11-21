@@ -101,7 +101,7 @@ public interface IBizService {
     /**
      * 根据巡检项的分类，获取对应机柜的蓝牙列表
      */
-    public List<LockDevice> listInspectionItemCategoryBluetooth(long inspectionId, String category);
+    public List<LockDevice> listInspectionItemCategoryBluetooth(String userJobNumber, long inspectionId, String category);
 
 
 

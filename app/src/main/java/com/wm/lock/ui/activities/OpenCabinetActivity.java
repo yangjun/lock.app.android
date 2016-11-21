@@ -54,7 +54,7 @@ public class OpenCabinetActivity extends OpenLockActivity {
 //        }
 
             // 指定分类的所有机柜的蓝牙设备
-            final List<LockDevice> cabinetList = bizService.listInspectionItemCategoryBluetooth(mInspectionId, mCategory);
+            final List<LockDevice> cabinetList = bizService.listInspectionItemCategoryBluetooth(loginUser().getJobNumber(), mInspectionId, mCategory);
             if (!CollectionUtils.isEmpty(cabinetList)) {
                 mAllList.addAll(cabinetList);
             }

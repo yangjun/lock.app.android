@@ -25,6 +25,10 @@ public class LockDevice {
     @DatabaseField
     private String user_job_number;
 
+    /** 首字符 */
+    @DatabaseField
+    private String first_letter;
+
     public long getId_() {
         return id_;
     }
@@ -57,4 +61,11 @@ public class LockDevice {
         this.user_job_number = user_job_number;
     }
 
+    public String getFirst_letter() {
+        return first_letter;
+    }
+
+    public void setFirst_letter(String first_letter) {
+        this.first_letter = first_letter;
+    }
 }

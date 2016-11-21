@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,10 +29,14 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @EActivity
 public abstract class OpenLockActivity extends BaseActivity implements BluetoothManager.ScanCallback {
+
+    private static final long DELAY = 500;
 
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int REQUEST_OPEN = 2;
@@ -44,8 +49,11 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
 
     private BlueDeviceLockListAdapter mListAdapter;
     private boolean mScanning = false;
-    private List<LockDevice> mDeviceList;
+    protected List<LockDevice> mDeviceList;
     private boolean mIsRequestEnable = false;
+
+    private Handler mHandler = new Handler();
+    private Runnable mRefreshRunnable;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -105,6 +113,12 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         invalidateOptionsMenu();
         unregisterReceiver(mReceiver);
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopRefresh();
+        super.onDestroy();
     }
 
     @Override
@@ -169,7 +183,7 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
                 final LockDevice bluetoothDevice = filter(device);
                 if (bluetoothDevice != null) {
                     mDeviceList.add(0, bluetoothDevice);
-                    mListAdapter.notifyDataSetChanged();
+                    startRefresh();
                 }
             }
         });
@@ -224,6 +238,25 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         return fix(device);
     }
 
+    protected void startRefresh() {
+        stopRefresh();
+        mRefreshRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Collections.sort(mDeviceList, new LockDeviceComparator());
+                mListAdapter.notifyDataSetChanged();
+            }
+        };
+        mHandler.postDelayed(mRefreshRunnable, DELAY);
+    }
+
+    private void stopRefresh() {
+        if (mRefreshRunnable != null) {
+            mHandler.removeCallbacks(mRefreshRunnable);
+            mRefreshRunnable = null;
+        }
+    }
+
     protected LockDevice findExist(List<LockDevice> list, BluetoothDevice device) {
         if (CollectionUtils.isEmpty(list)) {
             return null;
@@ -244,5 +277,21 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
     }
 
     protected abstract LockDevice fix(BluetoothDevice device);
+
+    private static class LockDeviceComparator implements Comparator<LockDevice> {
+
+        @Override
+        public int compare(LockDevice s, LockDevice t1) {
+            final int val1 = (int) s.getFirst_letter().charAt(0);
+            final int val2 = (int) t1.getFirst_letter().charAt(0);
+            if (val1 > val2) {
+                return 1;
+            }
+            if (val2 > val1) {
+                return -1;
+            }
+            return 0;
+        }
+    }
 
 }

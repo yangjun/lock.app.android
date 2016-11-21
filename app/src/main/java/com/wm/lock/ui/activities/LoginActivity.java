@@ -3,16 +3,13 @@ package com.wm.lock.ui.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.widget.EditText;
 
-import com.wm.lock.LockConstants;
 import com.wm.lock.R;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.HardwareUtils;
-import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.core.utils.StringUtils;
 import com.wm.lock.dialog.DialogManager;
 import com.wm.lock.dto.UserLoginDto;
@@ -27,11 +24,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.UUID;
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
-
-import static android.R.attr.data;
 
 @EActivity
 public class LoginActivity extends BaseActivity {
@@ -65,7 +60,7 @@ public class LoginActivity extends BaseActivity {
 
             // 以临时账户登录
             final IUserService userService = ModuleFactory.getInstance().getModuleInstance(IUserService.class);
-            final String tempJobNumber = "android_login_" + UUID.randomUUID().toString();
+            final String tempJobNumber = "android_login_" + (new Date().getTime());
             user.setJobNumber(tempJobNumber);
             userService.update(user);
 
@@ -126,7 +121,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSuccess(Void result) {
-                // FIXME test only, simulate login success
+//                // FIXME test only, simulate login success
 //                mHandler.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
