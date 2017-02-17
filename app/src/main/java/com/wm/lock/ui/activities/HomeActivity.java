@@ -44,8 +44,6 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-import static com.tencent.bugly.crashreport.inner.InnerApi.context;
-
 /**
  * Created by wangmin on 16/7/27.
  */
@@ -273,7 +271,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void updateDesktopCount(int count) {
-        ShortcutBadger.applyCount(context, count);
+        ShortcutBadger.applyCount(this, count);
     }
 
     private List<VerticalPopMenu.VerticalPopMenuItem> getMoreItems() {
