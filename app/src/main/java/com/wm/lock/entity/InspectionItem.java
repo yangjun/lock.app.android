@@ -3,15 +3,14 @@ package com.wm.lock.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import org.w3c.dom.Text;
-
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 巡检项
  */
 @DatabaseTable(tableName = "tb_inspection_item")
-public class InspectionItem {
+public class InspectionItem implements Serializable {
 
     /** 唯一id */
     @DatabaseField(generatedId = true)
@@ -45,9 +44,13 @@ public class InspectionItem {
     @DatabaseField
     private int item_flag;
 
+    /** 作业标准 */
+    @DatabaseField
+    private String item_standard;
+
     /** 创建时间 */
     @DatabaseField
-    private Date create_date;
+    private Date start_date;
 
     /** 最后修改时间 */
     @DatabaseField
@@ -58,8 +61,8 @@ public class InspectionItem {
     private Inspection inspection;
 
     /** 是否正常 */
-    @DatabaseField(canBeNull = false, defaultValue = "true")
-    private Boolean state;
+    @DatabaseField
+    private int state;
 
     /** 运行情况 */
     @DatabaseField
@@ -129,12 +132,28 @@ public class InspectionItem {
         this.cabinet_lock_mac = cabinet_lock_mac;
     }
 
-    public Date getCreate_date() {
-        return create_date;
+    public int getItem_flag() {
+        return item_flag;
     }
 
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
+    public void setItem_flag(int item_flag) {
+        this.item_flag = item_flag;
+    }
+
+    public String getItem_standard() {
+        return item_standard;
+    }
+
+    public void setItem_standard(String item_standard) {
+        this.item_standard = item_standard;
+    }
+
+    public Date getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
     }
 
     public Date getLast_modify_date() {
@@ -153,11 +172,11 @@ public class InspectionItem {
         this.inspection = inspection;
     }
 
-    public Boolean getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(int state) {
         this.state = state;
     }
 
@@ -177,15 +196,7 @@ public class InspectionItem {
         this.note = note;
     }
 
-    public int getItem_flag() {
-        return item_flag;
-    }
-
-    public void setItem_flag(int item_flag) {
-        this.item_flag = item_flag;
-    }
-
-    public Boolean is_default_input() {
+    public Boolean getIs_default_input() {
         return is_default_input;
     }
 

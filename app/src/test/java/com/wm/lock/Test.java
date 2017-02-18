@@ -5,6 +5,9 @@ import com.wm.lock.core.utils.PinyinUtils;
 import org.junit.Before;
 
 import java.util.Comparator;
+import java.util.Date;
+
+import static cn.finalteam.toolsfinal.DateUtils.date;
 
 public class Test {
 
@@ -23,6 +26,7 @@ public class Test {
 
     @org.junit.Test
     public void test() {
+        System.out.print(new Date().getTime());
 //        Calendar c = Calendar.getInstance();
 //        c.set(2000, 1, 1);
 //        Date date1 = c.getTime();
@@ -47,7 +51,6 @@ public class Test {
 //            System.out.println(":::" + item);
 //        }
 
-        // TODO 刷新太频繁??
     }
 
     static class CharComparator implements Comparator<String> {

@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalWrapContainerTheme"
+    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+    android:background="@color/bg_item">
+
+    <View style="@style/splitTheme" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/wrapTheme"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/height_item"
+        android:paddingBottom="@dimen/activity_horizontal_margin_half"
+        android:paddingTop="@dimen/activity_horizontal_margin_half"
+        android:textColor="@color/txt_content"
+        android:textSize="@dimen/text_size_medium" />
+
+    <LinearLayout
+        style="@style/wrapHeightTheme"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/descTheme"
+            android:layout_width="wrap_content"
+            android:text="@string/label_conclusion_state"
+            android:visibility="gone" />
+
+        <RadioGroup
+            android:id="@+id/rg_conclusion"
+            style="@style/wrapHeightTheme"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_conclusion_yes"
+                style="@style/horizontalWeightTheme"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_radio"
+                android:drawablePadding="4dp"
+                android:text="@string/label_conclusion_yes"
+                android:textColor="@color/txt_content"
+                android:textSize="@dimen/text_size_medium" />
+
+            <RadioButton
+                android:id="@+id/rb_conclusion_no"
+                style="@style/horizontalWeightTheme"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_radio"
+                android:drawablePadding="4dp"
+                android:text="@string/label_conclusion_no"
+                android:textColor="@color/txt_content"
+                android:textSize="@dimen/text_size_medium" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <View style="@style/splitTheme" />
+</LinearLayout>

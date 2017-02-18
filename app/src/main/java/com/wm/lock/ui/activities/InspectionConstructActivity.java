@@ -74,8 +74,6 @@ public class InspectionConstructActivity extends BaseActivity {
     private MenuAdapter menuAdapter;
     private InspectionConstructFragment mCurrContentFragment;
 
-//    private boolean mIsTrySubmit = false;
-
     @Override
     protected int getContentViewId() {
         return R.layout.act_inspection_construct;
@@ -126,9 +124,6 @@ public class InspectionConstructActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (!closeMenuIfOpen()) {
-//            if (mIsTrySubmit) {
-//                setResult(RESULT_FIRST_USER);
-//            }
             finish();
         }
     }
@@ -180,61 +175,64 @@ public class InspectionConstructActivity extends BaseActivity {
     }
 
     private void submit() {
-        new AsyncExecutor().execute(new AsyncWork<InspectionItem>() {
+        doSubmit();
 
-            @Override
-            public void onPreExecute() {
-                showWaittingDialog(R.string.message_submit_checking);
-            }
-
-            @Override
-            public void onSuccess(InspectionItem result) {
-                dismissDialog();
-                if (result == null) {
-                    doSubmit();
-                } else {
-                    int categoryIndex = -1;
-                    for (int i = 0, len = mCategories.size(); i < len; i++) {
-                        if (mCategories.get(i).equals(result.getItem_cate_name())) {
-                            categoryIndex = i;
-                            break;
-                        }
-                    }
-
-                    int index = -1;
-                    final List<InspectionItem> itemList = bizService().listInspectionItemByCategory(mInspectionId, mCategories.get(categoryIndex));
-                    for (int i = 0, len = itemList.size(); i < len; i++) {
-                        if (itemList.get(i).getId_() == result.getId_()) {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    final String msg = String.format(getString(R.string.message_submit_check_success), (categoryIndex + 1) + "." + (index + 1));
-                    showTip(msg);
-                }
-            }
-
-            @Override
-            public void onFail(Exception e) {
-                Logger.p("fail to check before submit", e);
-                dismissDialog();
-                showTip(R.string.message_submit_check_fail);
-            }
-
-            @Override
-            public InspectionItem onExecute() throws Exception {
-                final List<InspectionItem> itemList = bizService().listInspectionItem(mInspectionId);
-                for (int i = 0, len = itemList.size(); i < len; i++) {
-                    final InspectionItem item = itemList.get(i);
-                    if (TextUtils.isEmpty(item.getResult())) {
-                        return item;
-                    }
-                }
-                return null;
-            }
-
-        });
+        // FIXME 暂时不需要检查数据是否为空
+//        new AsyncExecutor().execute(new AsyncWork<InspectionItem>() {
+//
+//            @Override
+//            public void onPreExecute() {
+//                showWaittingDialog(R.string.message_submit_checking);
+//            }
+//
+//            @Override
+//            public void onSuccess(InspectionItem result) {
+//                dismissDialog();
+//                if (result == null) {
+//                    doSubmit();
+//                } else {
+//                    int categoryIndex = -1;
+//                    for (int i = 0, len = mCategories.size(); i < len; i++) {
+//                        if (mCategories.get(i).equals(result.getItem_cate_name())) {
+//                            categoryIndex = i;
+//                            break;
+//                        }
+//                    }
+//
+//                    int index = -1;
+//                    final List<InspectionItem> itemList = bizService().listInspectionItemByCategory(mInspectionId, mCategories.get(categoryIndex));
+//                    for (int i = 0, len = itemList.size(); i < len; i++) {
+//                        if (itemList.get(i).getId_() == result.getId_()) {
+//                            index = i;
+//                            break;
+//                        }
+//                    }
+//
+//                    final String msg = String.format(getString(R.string.message_submit_check_success), (categoryIndex + 1) + "." + (index + 1));
+//                    showTip(msg);
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(Exception e) {
+//                Logger.p("fail to check before submit", e);
+//                dismissDialog();
+//                showTip(R.string.message_submit_check_fail);
+//            }
+//
+//            @Override
+//            public InspectionItem onExecute() throws Exception {
+//                final List<InspectionItem> itemList = bizService().listInspectionItem(mInspectionId);
+//                for (int i = 0, len = itemList.size(); i < len; i++) {
+//                    final InspectionItem item = itemList.get(i);
+//                    if (TextUtils.isEmpty(item.getResult())) {
+//                        return item;
+//                    }
+//                }
+//                return null;
+//            }
+//
+//        });
     }
 
     private void doSubmit() {
@@ -255,35 +253,6 @@ public class InspectionConstructActivity extends BaseActivity {
                 finish();
             }
         });
-
-//        new AsyncExecutor().execute(new AsyncWork<Void>() {
-//            @Override
-//            public void onPreExecute() {
-//                mIsTrySubmit = true;
-//                showWaittingDialog(R.string.message_submiting);
-//            }
-//
-//            @Override
-//            public void onSuccess(Void result) {
-//
-//            }
-//
-//            @Override
-//            public void onFail(Exception e) {
-//                Logger.p("fail to submit inspection", e);
-//
-//                final InspectionResultDto dto = new InspectionResultDto();
-//                dto.setSuccess(false);
-//                EventBus.getDefault().post(dto);
-//            }
-//
-//            @Override
-//            public Void onExecute() throws Exception {
-//                bizService().submitInspection(mInspectionId);
-//                WebSocketWriter.submitInspection(mInspectionId);
-//                return null;
-//            }
-//        });
     }
 
     public void onEventMainThread(InspectionResultDto dto) {

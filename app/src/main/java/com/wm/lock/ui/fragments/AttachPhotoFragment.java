@@ -65,7 +65,7 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
         mSource = AttachmentSource.valueOf(bundle.getString(LockConstants.FLAG));
         mEnable = bundle.getBoolean(LockConstants.BOOLEAN);
 
-        mPhotoPathList = loadPathList(mForeignId);
+        mPhotoPathList = loadPathList(mForeignId, mSource);
         mGridAdapter = new GridAdapter();
         mGridView.setAdapter(mGridAdapter);
         mGridView.setOnItemClickListener(this);
@@ -153,8 +153,8 @@ public class AttachPhotoFragment extends BaseFragment implements ImageHandler.Im
         }
     }
 
-    private List<String> loadPathList(long foreignId) {
-        List<String> result = bizService().listAttachments(foreignId, mSource, AttachmentType.PHOTO);
+    private List<String> loadPathList(long foreignId, AttachmentSource source) {
+        List<String> result = bizService().listAttachments(foreignId, source, AttachmentType.PHOTO);
         if (result == null) {
             result = new ArrayList<>();
         }

@@ -17,4 +17,10 @@ public class InspectionItemFlag {
     /** 温/湿度 */
     public static final int TEMPERATURE_HUMIDITY = 3;
 
+    /** 作业结论 */
+    public static final int CONCLUSION = 4;
+
+    /** 备注 */
+    public static final int REMARK = 5;
+
 }

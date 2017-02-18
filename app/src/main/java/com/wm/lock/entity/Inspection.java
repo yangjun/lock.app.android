@@ -24,25 +24,37 @@ public class Inspection {
     @DatabaseField
     private String plan_name;
 
+    /** 任务类型 */
+    @DatabaseField
+    private int plan_type;
+
     /** 派发人 */
     @DatabaseField
     private String dispatch_man;
 
-    /** 创建时间 */
+    /** 处理人 */
     @DatabaseField
-    private Date create_date;
+    private String deal_man;
 
-    /** 最后修改时间 */
+    /** 工作人员 */
     @DatabaseField
-    private Date last_modify_date;
+    private String job_man;
 
     /** 要求完成时间 */
     @DatabaseField
     private Date plan_date;
 
-    /** 实际完成时间 */
+    /** 开始时间 */
     @DatabaseField
-    private Date finish_date;
+    private Date start_date;
+
+    /** 完成时间 */
+    @DatabaseField
+    private Date end_date;
+
+    /** 最后修改时间 */
+    @DatabaseField
+    private Date last_modify_date;
 
     /** 所属机房 */
     @DatabaseField
@@ -52,13 +64,21 @@ public class Inspection {
     @DatabaseField
     private String lock_mac;
 
-    /** 执行人员的工号 */
-    @DatabaseField
-    private String user_job_number;
-
     /** 状态 */
     @DatabaseField
     private int state;
+
+    /** 工作内容 */
+    @DatabaseField
+    private String content;
+
+    /** 备注 */
+    @DatabaseField
+    private String note;
+
+    /** 执行人员的工号 */
+    @DatabaseField
+    private String user_job_number;
 
     /** 巡检项列表 */
     private List<InspectionItem> items;
@@ -87,6 +107,14 @@ public class Inspection {
         this.plan_name = plan_name;
     }
 
+    public int getPlan_type() {
+        return plan_type;
+    }
+
+    public void setPlan_type(int plan_type) {
+        this.plan_type = plan_type;
+    }
+
     public String getDispatch_man() {
         return dispatch_man;
     }
@@ -95,20 +123,20 @@ public class Inspection {
         this.dispatch_man = dispatch_man;
     }
 
-    public Date getCreate_date() {
-        return create_date;
+    public String getDeal_man() {
+        return deal_man;
     }
 
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
+    public void setDeal_man(String deal_man) {
+        this.deal_man = deal_man;
     }
 
-    public Date getLast_modify_date() {
-        return last_modify_date;
+    public String getJob_man() {
+        return job_man;
     }
 
-    public void setLast_modify_date(Date last_modify_date) {
-        this.last_modify_date = last_modify_date;
+    public void setJob_man(String job_man) {
+        this.job_man = job_man;
     }
 
     public Date getPlan_date() {
@@ -119,12 +147,28 @@ public class Inspection {
         this.plan_date = plan_date;
     }
 
-    public Date getFinish_date() {
-        return finish_date;
+    public Date getStart_date() {
+        return start_date;
     }
 
-    public void setFinish_date(Date finish_date) {
-        this.finish_date = finish_date;
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
+    }
+
+    public Date getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
+    }
+
+    public Date getLast_modify_date() {
+        return last_modify_date;
+    }
+
+    public void setLast_modify_date(Date last_modify_date) {
+        this.last_modify_date = last_modify_date;
     }
 
     public String getRoom_name() {
@@ -143,20 +187,36 @@ public class Inspection {
         this.lock_mac = lock_mac;
     }
 
-    public String getUser_job_number() {
-        return user_job_number;
-    }
-
-    public void setUser_job_number(String user_job_number) {
-        this.user_job_number = user_job_number;
-    }
-
     public int getState() {
         return state;
     }
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getUser_job_number() {
+        return user_job_number;
+    }
+
+    public void setUser_job_number(String user_job_number) {
+        this.user_job_number = user_job_number;
     }
 
     public List<InspectionItem> getItems() {
@@ -166,4 +226,5 @@ public class Inspection {
     public void setItems(List<InspectionItem> items) {
         this.items = items;
     }
+
 }

@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalWrapContainerTheme"
+    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+    android:background="@color/bg_item">
+
+    <View style="@style/splitTheme" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/wrapTheme"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/height_item"
+        android:paddingBottom="@dimen/activity_horizontal_margin_half"
+        android:paddingTop="@dimen/activity_horizontal_margin_half"
+        android:textColor="@color/txt_content"
+        android:textSize="@dimen/text_size_medium" />
+
+    <EditText
+        android:id="@+id/et_remark"
+        style="@style/inputMultiTheme"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:hint="@string/hint_remark"
+        android:minHeight="80dp" />
+
+    <View
+        style="@style/splitTheme"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+</LinearLayout>

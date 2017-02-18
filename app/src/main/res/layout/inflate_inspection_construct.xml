@@ -174,3 +174,182 @@
             android:layout_marginTop="@dimen/activity_horizontal_margin" />
     </LinearLayout>
 </FrameLayout>
+
+
+
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--style="@style/wrapHeightTheme">-->
+
+    <!--<LinearLayout-->
+        <!--style="@style/verticalWrapContainerTheme"-->
+        <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
+        <!--android:background="@color/bg_item">-->
+
+        <!--<View style="@style/splitTheme" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_category"-->
+            <!--style="@style/wrapTheme"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:minHeight="@dimen/height_item"-->
+            <!--android:paddingBottom="@dimen/activity_horizontal_margin_half"-->
+            <!--android:paddingTop="@dimen/activity_horizontal_margin_half"-->
+            <!--android:textColor="@color/txt_content"-->
+            <!--android:textSize="@dimen/text_size_medium" />-->
+
+        <!--<View style="@style/splitInnerTheme" />-->
+
+        <!--<LinearLayout-->
+            <!--style="@style/wrapTheme"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:minHeight="@dimen/height_item">-->
+
+            <!--<TextView-->
+                <!--style="@style/descTheme"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:text="@string/label_normal_state" />-->
+
+            <!--<View-->
+                <!--style="@style/horizontalWeightTheme"-->
+                <!--android:layout_height="1dp" />-->
+
+            <!--<RadioGroup-->
+                <!--android:id="@+id/rg_normal"-->
+                <!--style="@style/wrapTheme"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<RadioButton-->
+                    <!--android:id="@+id/rb_normal_yes"-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+                    <!--android:button="@null"-->
+                    <!--android:drawableLeft="@drawable/selector_radio"-->
+                    <!--android:drawablePadding="4dp"-->
+                    <!--android:text="@string/label_normal_yes"-->
+                    <!--android:textColor="@color/txt_content"-->
+                    <!--android:textSize="@dimen/text_size_medium" />-->
+
+                <!--<RadioButton-->
+                    <!--android:id="@+id/rb_normal_no"-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:layout_marginLeft="32dp"-->
+                    <!--android:button="@null"-->
+                    <!--android:drawableLeft="@drawable/selector_radio"-->
+                    <!--android:drawablePadding="4dp"-->
+                    <!--android:text="@string/label_normal_no"-->
+                    <!--android:textColor="@color/txt_content"-->
+                    <!--android:textSize="@dimen/text_size_medium" />-->
+
+            <!--</RadioGroup>-->
+
+        <!--</LinearLayout>-->
+
+        <!--&lt;!&ndash;<View style="@style/splitInnerTheme" />&ndash;&gt;-->
+
+        <!--<TextView-->
+            <!--style="@style/descTheme"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:text="@string/label_run_state" />-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/et_result"-->
+            <!--style="@style/inputMultiTheme"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginTop="@dimen/activity_horizontal_margin_half"-->
+            <!--android:minHeight="80dp" />-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_note"-->
+            <!--style="@style/verticalWrapContainerTheme"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginTop="@dimen/activity_horizontal_margin">-->
+
+            <!--<TextView-->
+                <!--style="@style/descTheme"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:text="@string/label_note" />-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/et_note"-->
+                <!--style="@style/inputTheme"-->
+                <!--android:layout_marginTop="@dimen/activity_horizontal_margin_half" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_photo"-->
+            <!--style="@style/verticalWrapContainerTheme"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginTop="@dimen/activity_horizontal_margin">-->
+
+            <!--<TextView-->
+                <!--style="@style/descTheme"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:text="@string/label_photo" />-->
+
+            <!--<FrameLayout-->
+                <!--android:id="@+id/fl_photo_area"-->
+                <!--style="@style/wrapHeightTheme"-->
+                <!--android:layout_marginTop="@dimen/activity_horizontal_margin_half" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--style="@style/wrapTheme"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+            <!--android:gravity="bottom">-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_add_photo"-->
+                <!--style="@style/wrapTheme"-->
+                <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+                <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<ImageView-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:src="@mipmap/ic_add_photo" />-->
+
+                <!--<TextView-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:layout_marginTop="4dp"-->
+                    <!--android:text="@string/label_photo_add"-->
+                    <!--android:textColor="@color/txt_content"-->
+                    <!--android:textSize="@dimen/text_size_smallest" />-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_add_note"-->
+                <!--style="@style/wrapTheme"-->
+                <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+                <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<ImageView-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:src="@mipmap/ic_add_note" />-->
+
+                <!--<TextView-->
+                    <!--style="@style/wrapTheme"-->
+                    <!--android:layout_marginTop="4dp"-->
+                    <!--android:text="@string/label_note_add"-->
+                    <!--android:textColor="@color/txt_content"-->
+                    <!--android:textSize="@dimen/text_size_smallest" />-->
+            <!--</LinearLayout>-->
+
+        <!--</LinearLayout>-->
+
+        <!--<View-->
+            <!--style="@style/splitTheme"-->
+            <!--android:layout_marginTop="@dimen/activity_horizontal_margin" />-->
+    <!--</LinearLayout>-->
+<!--</FrameLayout>-->

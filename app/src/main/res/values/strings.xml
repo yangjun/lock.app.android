@@ -30,9 +30,13 @@
     <string name="label_receive_task">接收任务</string>
     <string name="label_refuse_task">拒绝任务</string>
     <string name="label_category_select">选择巡检类别</string>
-    <string name="label_normal_state">是否正常:</string>
+    <string name="label_normal_state">作业结果:</string>
     <string name="label_normal_yes">正常</string>
     <string name="label_normal_no">异常</string>
+    <string name="label_normal_not_support">不支持</string>
+    <string name="label_conclusion_state">作业结论:</string>
+    <string name="label_conclusion_yes">合格</string>
+    <string name="label_conclusion_no">不合格</string>
     <string name="label_run_state">巡视情况/运行情况:</string>
     <string name="label_note">备注:</string>
     <string name="label_note_add">添加备注</string>
@@ -115,6 +119,7 @@
     <string name="hint_lock_pwd_new">请输入新开锁密码...</string>
     <string name="hint_lock_pwd_new_repeat">请重复新开锁密码...</string>
     <string name="hint_refuse_task">请输入拒绝理由...</string>
+    <string name="hint_remark">请输入备注信息...</string>
 
     <string name="empty_job_number">请输入工号</string>
     <string name="empty_name">请输入姓名</string>

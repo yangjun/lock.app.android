@@ -104,7 +104,9 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
     @Override
     public long addInspection(final Inspection inspection) {
         inspection.setState(InspectionState.PENDING);
-        inspection.setCreate_date(new Date());
+        if (inspection.getStart_date() == null) {
+            inspection.setStart_date(new Date());
+        }
         inspection.setLast_modify_date(new Date());
         final int count = mDaoManager.getInspectionDao().add(inspection);
         if (count <= 0) {
@@ -116,7 +118,7 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
             public Void call() throws Exception {
                 final List<InspectionItem> inspectionItemList = inspection.getItems();
                 for (InspectionItem item : inspectionItemList) {
-                    item.setCreate_date(new Date());
+                    item.setStart_date(new Date());
                     item.setLast_modify_date(new Date());
                     item.setInspection(inspection);
                     mDaoManager.getInspectionItemDao().create(item);
