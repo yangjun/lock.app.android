@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 
 import com.wm.lock.LockConstants;
 import com.wm.lock.R;
@@ -20,16 +19,19 @@ import com.wm.lock.bluetooth.BluetoothService;
 import com.wm.lock.bluetooth.DoorException;
 import com.wm.lock.bluetooth.DoorManager;
 import com.wm.lock.bluetooth.DoorPackageResult;
+import com.wm.lock.core.async.AsyncAbstractWork;
+import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.dialog.DialogManager;
+import com.wm.lock.entity.LockOpenRecord;
 import com.wm.lock.entity.UserInfo;
+import com.wm.lock.websocket.WebSocketWriter;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import static android.R.id.message;
 
 @EActivity
 public class LockControlActivity extends BaseActivity {
@@ -40,6 +42,7 @@ public class LockControlActivity extends BaseActivity {
     private DoorManager doorManager;
     private boolean mConnected = false;
     private String mDeviceAddress;
+    private String mDeviceName;
     private BluetoothGattCharacteristic mWriteGattCharacteristic;
     private boolean mFirstDisplayService = true;
 
@@ -79,6 +82,7 @@ public class LockControlActivity extends BaseActivity {
     @Override
     protected void init() {
         mDeviceAddress = mSaveBundle.getString(LockConstants.DATA);
+        mDeviceName = mSaveBundle.getString(LockConstants.NAME);
         BluetoothManager.getInstance().bind(getApplicationContext(), mDeviceAddress);
 
         doorManager = new DoorManager(this);
@@ -201,6 +205,21 @@ public class LockControlActivity extends BaseActivity {
         }
     }
 
+    void uploadRecord() {
+        new AsyncExecutor().execute(new AsyncAbstractWork<Void>() {
+            @Override
+            public Void onExecute() throws Exception {
+                final LockOpenRecord record = new LockOpenRecord();
+                record.setUser_job_number(loginUser().getJobNumber());
+                record.setLock_mac(mDeviceAddress);
+                record.setLock_name(mDeviceName);
+                record.setLock_time(new Date());
+                WebSocketWriter.uploadLockOpenRecord(record);
+                return null;
+            }
+        });
+    }
+
     private void fail(DoorException e) {
         fail(e.getMessage());
     }
@@ -215,6 +234,7 @@ public class LockControlActivity extends BaseActivity {
     }
 
     private void success() {
+        uploadRecord();
         dismissDialog();
         showTip(R.string.message_open_lock_success);
         setResult(RESULT_OK);

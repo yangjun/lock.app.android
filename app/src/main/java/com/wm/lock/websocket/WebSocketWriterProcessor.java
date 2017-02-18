@@ -105,9 +105,15 @@ class WebSocketWriterProcessor {
         result.setTarget("admin");
         result.setSource(loginUser().getJobNumber());
 
-        final Calendar c = Calendar.getInstance();
-        c.set(2000, 1, 1);
-        final Date date = insertToHead ? c.getTime() : new Date();
+        Date date = null;
+        if (insertToHead) {
+            final Calendar c = Calendar.getInstance();
+            c.set(2000, 1, 1);
+            date = c.getTime();
+        }
+        else {
+            date = new Date();
+        }
         result.setCreate_date(date);
 
         try {

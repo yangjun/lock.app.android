@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.reflect.TypeToken;
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.security.SecurityManager;
@@ -20,6 +21,7 @@ import com.wm.lock.entity.ChatDirective;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionState;
+import com.wm.lock.entity.LockOpenRecord;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
 
@@ -58,6 +60,16 @@ public class WebSocketWriter {
 
         final String data = convertToString(chat);
         WebSocketWriterProcessor.getInstance().doSend(data);
+    }
+
+    public static void uploadLockOpenRecord(LockOpenRecord record) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_LOCK_OPEN_RECORD);
+
+        final Map<String, Object> dtoMap = convertToMap(record);
+        map.putAll(dtoMap);
+
+        execute(map);
     }
 
     public static void receiveInspection(Inspection inspection) {
@@ -191,6 +203,13 @@ public class WebSocketWriter {
     private static String convertToString(Object obj) {
         final Gson gson = getGsonBuilder().create();
         return gson.toJson(obj);
+    }
+
+    private static Map<String, Object> convertToMap(Object obj) {
+        final Gson gson = getGsonBuilder().create();
+        final String json = gson.toJson(obj);
+        final Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>(){}.getType());
+        return map;
     }
 
     private static GsonBuilder getGsonBuilder() {

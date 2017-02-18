@@ -86,6 +86,7 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
                 final LockDevice device = (LockDevice) parent.getItemAtPosition(position);
                 final Bundle bundle = new Bundle();
                 bundle.putString(LockConstants.DATA, device.getLock_mac());
+                bundle.putString(LockConstants.NAME, device.getLock_name());
                 RedirectUtils.goActivityForResult(OpenLockActivity.this, LockControlActivity_.class, bundle, REQUEST_OPEN);
             }
         });

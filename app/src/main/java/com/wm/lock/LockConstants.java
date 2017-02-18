@@ -52,6 +52,9 @@ public final class LockConstants {
     /** 管理端同步给移动端的机房温湿度 */
     public static final String BIZ_HUMITURE = "HUMITURE";
 
+    /** 移动端同步给服务端的开锁记录 */
+    public static final String BIZ_LOCK_OPEN_RECORD = "LOCKS_RECORDS";
+
     /** 登录 */
     public static final String BIZ_LOGIN = "LOGIN";
 
