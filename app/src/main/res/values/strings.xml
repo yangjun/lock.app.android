@@ -53,7 +53,16 @@
     <string name="label_setting">@string/title_setting</string>
     <string name="label_more">更多</string>
     <string name="label_notify">温馨提示</string>
-
+    <string name="label_plan_name">任务名称</string>
+    <string name="label_dispatch_man">编制人</string>
+    <string name="label_deal_man">责任人</string>
+    <string name="label_job_man">工作人员</string>
+    <string name="label_job_address">工作地点</string>
+    <string name="label_job_range">工作范围</string>
+    <string name="label_start_time">开始时间</string>
+    <string name="label_end_time">结束时间</string>
+    <string name="label_job_content">工作内容</string>
+    <string name="label_job_remark">备注</string>
 
 
     <string name="header_hint_normal">下拉刷新</string>
@@ -107,8 +116,6 @@
     <string name="message_login_illegal">工号或开锁密码错误</string>
     <string name="message_login_timeout">登录超时</string>
     <string name="message_logoff_confirm">确定要注销登录吗?</string>
-
-
 
 
     <string name="hint_job_number">请输入工号...</string>

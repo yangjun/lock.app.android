@@ -48,6 +48,11 @@ public class InspectionItemDao extends BaseDao<InspectionItem, Long> {
         return toBluetoothDeviceList(list);
     }
 
+    public List<LockDevice> listBluetooth(long inspectionId) {
+        final List<InspectionItem> list = list(inspectionId);
+        return toBluetoothDeviceList(list);
+    }
+
     public List<InspectionItem> list(long inspectionId) {
         try {
             return where("id_", true).and().eq("inspection_id", inspectionId).query();

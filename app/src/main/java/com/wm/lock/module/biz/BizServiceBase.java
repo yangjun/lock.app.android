@@ -1,6 +1,7 @@
 package com.wm.lock.module.biz;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.IoUtils;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import static android.R.id.list;
 
 @EBean
 public abstract class BizServiceBase extends BaseModule implements IBizService {
@@ -198,15 +201,14 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
 
     @Override
     public List<LockDevice> listInspectionItemCategoryBluetooth(String userJobNumber, long inspectionId, String category) {
-        final List<LockDevice> result = mDaoManager.getInspectionItemDao().listBluetoothByCategory(inspectionId, category);
-        if (!CollectionUtils.isEmpty(result)) {
-            for (LockDevice item : result) {
-                final LockDevice queryItem = mDaoManager.getLockDeviceDao().findByMac(userJobNumber, item.getLock_mac());
-                if (queryItem != null) {
-                    item.setLock_name(queryItem.getLock_name());
-                }
-            }
+        List<LockDevice> result = null;
+        if (TextUtils.isEmpty(category)) {
+            result = mDaoManager.getInspectionItemDao().listBluetooth(inspectionId);
         }
+        else {
+            result = mDaoManager.getInspectionItemDao().listBluetoothByCategory(inspectionId, category);
+        }
+        result = fixLockDeviceList(userJobNumber, result);
         return result;
     }
 
@@ -343,6 +345,18 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
             default:
                 return ".unknown";
         }
+    }
+
+    private List<LockDevice> fixLockDeviceList(String userJobNumber, List<LockDevice> list) {
+        if (!CollectionUtils.isEmpty(list)) {
+            for (LockDevice item : list) {
+                final LockDevice queryItem = mDaoManager.getLockDeviceDao().findByMac(userJobNumber, item.getLock_mac());
+                if (queryItem != null) {
+                    item.setLock_name(queryItem.getLock_name());
+                }
+            }
+        }
+        return list;
     }
 
 }

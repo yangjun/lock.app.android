@@ -8,7 +8,7 @@ import com.wm.lock.dto.InspectionResultDto;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.params.InspectionQueryParam;
-import com.wm.lock.ui.activities.InspectionConstructActivity_;
+import com.wm.lock.helper.Helper;
 
 import org.androidannotations.annotations.EFragment;
 
@@ -83,7 +83,9 @@ public class InspectionListSubmitFailFragment extends InspectionListFragment {
         bundle.putString(LockConstants.NAME, item.getRoom_name());
         bundle.putString(LockConstants.TITLE, item.getPlan_name());
         bundle.putBoolean(LockConstants.BOOLEAN, false);
-        RedirectUtils.goActivity(mActivity, InspectionConstructActivity_.class, bundle);
+
+        final Class<?> clazz = Helper.getRedirectInspectionActivity(item.getPlan_type());
+        RedirectUtils.goActivity(mActivity, clazz, bundle);
     }
 
 }

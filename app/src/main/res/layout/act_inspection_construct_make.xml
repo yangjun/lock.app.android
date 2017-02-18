@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalContainerTheme"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/inflate_header" />
+
+    <FrameLayout
+        android:id="@+id/fl"
+        style="@style/matchTheme">
+
+        <ScrollView style="@style/scrollVTheme">
+
+            <LinearLayout
+                style="@style/verticalWrapContainerTheme"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin">
+
+                <LinearLayout style="@style/itemGroupTheme">
+
+                    <View style="@style/splitTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_plan_name" />
+
+                        <TextView
+                            android:id="@+id/tv_plan_name"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_dispatch_man" />
+
+                        <TextView
+                            android:id="@+id/tv_dispatch_man"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_deal_man" />
+
+                        <TextView
+                            android:id="@+id/tv_deal_man"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitTheme" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/itemGroupTheme"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+                    <View style="@style/splitTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_job_man" />
+
+                        <TextView
+                            android:id="@+id/tv_job_name"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_job_address" />
+
+                        <TextView
+                            android:id="@+id/tv_job_address"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_job_range" />
+
+                        <TextView
+                            android:id="@+id/tv_job_range"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_start_time" />
+
+                        <TextView
+                            android:id="@+id/tv_start_time"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_end_time" />
+
+                        <TextView
+                            android:id="@+id/tv_end_time"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_job_content" />
+
+                        <TextView
+                            android:id="@+id/tv_job_content"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitInnerTheme" />
+
+                    <LinearLayout
+                        style="@style/wrapTheme"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            style="@style/itemLabelTheme"
+                            android:drawablePadding="@dimen/padding_item_top"
+                            android:text="@string/label_job_remark" />
+
+                        <TextView
+                            android:id="@+id/tv_job_remark"
+                            style="@style/itemContentTheme"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="left|center_vertical" />
+
+                    </LinearLayout>
+
+                    <View style="@style/splitTheme" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <include layout="@layout/inflate_header" />
+
+    <include layout="@layout/inflate_header" />
+
+</LinearLayout>

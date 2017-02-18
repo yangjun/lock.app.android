@@ -9,6 +9,7 @@ import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionState;
 import com.wm.lock.entity.params.InspectionQueryParam;
+import com.wm.lock.helper.Helper;
 import com.wm.lock.ui.activities.HomeActivity;
 import com.wm.lock.ui.activities.InspectionConstructActivity_;
 
@@ -35,7 +36,9 @@ public class InspectionListInProcessFragment extends InspectionListFragment {
         bundle.putString(LockConstants.NAME, item.getRoom_name());
         bundle.putString(LockConstants.TITLE, item.getPlan_name());
         bundle.putBoolean(LockConstants.BOOLEAN, true);
-        RedirectUtils.goActivityForResult(this, InspectionConstructActivity_.class, bundle, REQUEST_CONSTRUCT);
+
+        final Class<?> clazz = Helper.getRedirectInspectionActivity(item.getPlan_type());
+        RedirectUtils.goActivityForResult(this, clazz, bundle, REQUEST_CONSTRUCT);
     }
 
     public void receive(Inspection inspection) {

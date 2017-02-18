@@ -16,10 +16,14 @@ import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.logger.LoggerOption;
 import com.wm.lock.core.utils.RedirectUtils;
+import com.wm.lock.entity.InspectionType;
 import com.wm.lock.exception.BizException;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.user.IUserService;
 import com.wm.lock.ui.activities.HomeActivity_;
+import com.wm.lock.ui.activities.InspectionConstructActivity_;
+import com.wm.lock.ui.activities.InspectionConstructBaseActivity;
+import com.wm.lock.ui.activities.InspectionConstructMakeActivity_;
 import com.wm.lock.ui.activities.LoginActivity_;
 import com.wm.lock.websocket.WebSocketService;
 
@@ -173,6 +177,15 @@ public final class Helper {
 
     public static String getDbJson(String key, String value) {
        return String.format("\\\"%s\\\":\\\"%s\\\"", key, value);
+    }
+
+    public static Class<? extends InspectionConstructBaseActivity> getRedirectInspectionActivity(final int type) {
+        switch (type) {
+            case InspectionType.MAKE:
+                return InspectionConstructMakeActivity_.class;
+            default:
+                return InspectionConstructActivity_.class;
+        }
     }
 
 }

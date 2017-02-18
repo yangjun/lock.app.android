@@ -66,7 +66,7 @@
 
         <activity
             android:name=".ui.activities.LoginActivity_bak_"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activities.RegisterActivity_"
@@ -118,6 +118,10 @@
 
         <activity
             android:name=".ui.activities.InspectionConstructActivity_"
+            android:label=""
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.activities.InspectionConstructMakeActivity_"
             android:label=""
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity

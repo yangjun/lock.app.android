@@ -1,6 +1,7 @@
 package com.wm.lock.ui.activities;
 
 import android.bluetooth.BluetoothDevice;
+import android.text.TextUtils;
 
 import com.wm.lock.LockConstants;
 import com.wm.lock.core.utils.CollectionUtils;
