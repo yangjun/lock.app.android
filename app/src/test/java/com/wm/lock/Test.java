@@ -1,13 +1,19 @@
 package com.wm.lock;
 
-import com.wm.lock.core.utils.PinyinUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import org.junit.Before;
 
+import java.lang.reflect.Type;
 import java.util.Comparator;
 import java.util.Date;
-
-import static cn.finalteam.toolsfinal.DateUtils.date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Test {
 
@@ -26,7 +32,7 @@ public class Test {
 
     @org.junit.Test
     public void test() {
-        System.out.print(new Date().getTime());
+//        System.out.print(new Date().getTime());
 //        Calendar c = Calendar.getInstance();
 //        c.set(2000, 1, 1);
 //        Date date1 = c.getTime();
@@ -34,11 +40,11 @@ public class Test {
 //        System.out.println("date1: " + date1.getTime());
 //        System.out.println("date2: " + date2.getTime());
 
-        // 取第一个字符
-        String str = "您好";
-        str = str.substring(0, 1);
-        str = PinyinUtils.getPinYinHeadChar(str);
-        System.out.println(":::" + str);
+//        // 取第一个字符
+//        String str = "您好";
+//        str = str.substring(0, 1);
+//        str = PinyinUtils.getPinYinHeadChar(str);
+//        System.out.println(":::" + str);
 
 
 //        // 排序
@@ -51,6 +57,23 @@ public class Test {
 //            System.out.println(":::" + item);
 //        }
 
+        final Map<String, String> map = new HashMap<>();
+        map.put("1", "1");
+        map.put("2", null);
+
+        final GsonBuilder gb = new GsonBuilder().serializeNulls()
+                .registerTypeAdapter(Date.class, new DateSerializer());
+
+        final Gson gson = gb.create();
+        final String json = gson.toJson(map);
+        System.out.print(json);
+    }
+
+    private static class DateSerializer implements JsonSerializer<Date> {
+        @Override
+        public JsonElement serialize(Date date, Type type, JsonSerializationContext jsonSerializationContext) {
+            return new JsonPrimitive(date.getTime());
+        }
     }
 
     static class CharComparator implements Comparator<String> {

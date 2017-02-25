@@ -214,6 +214,7 @@ public class WebSocketWriter {
 
     private static GsonBuilder getGsonBuilder() {
         return new GsonBuilder()
+                .serializeNulls()
                 .registerTypeAdapter(Date.class, new DateSerializer())
                 .setDateFormat(DateFormat.LONG);
     }

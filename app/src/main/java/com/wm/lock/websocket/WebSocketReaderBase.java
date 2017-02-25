@@ -47,7 +47,9 @@ abstract class WebSocketReaderBase {
     }
 
     private GsonBuilder getGsonBuilder() {
-        return new GsonBuilder().registerTypeAdapter(Date.class, new DateDeserializer());
+        return new GsonBuilder()
+                .serializeNulls()
+                .registerTypeAdapter(Date.class, new DateDeserializer());
     }
 
     private static class DateDeserializer implements JsonDeserializer{
