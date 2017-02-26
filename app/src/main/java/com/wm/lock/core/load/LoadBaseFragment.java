@@ -34,6 +34,8 @@ abstract class LoadBaseFragment<T> extends AbstractFragment implements SwipeRefr
 
     private Handler mHandler = new Handler();
 
+    public LoadBaseFragment() { }
+
     public LoadBaseFragment(LoadFrgCallBack<T> loadCallBack) {
         mLoadFrgCallBack = loadCallBack;
     }

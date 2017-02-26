@@ -50,8 +50,10 @@ public class InspectionListInProcessFragment extends InspectionListFragment {
         switch (resultCode) {
             case Activity.RESULT_OK:
             case Activity.RESULT_FIRST_USER:
-                ((HomeActivity) mActivity).reloadSubmitFail();
-                reloadDelay();
+                if (mActivity != null) {
+                    ((HomeActivity) mActivity).reloadSubmitFail();
+                    reloadDelay();
+                }
                 break;
         }
     }

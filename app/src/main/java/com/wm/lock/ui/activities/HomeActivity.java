@@ -215,7 +215,9 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void reloadSubmitFail() {
-        ((InspectionListFragment) mTabItems[2].fragment).reloadDelay();
+        if (mTabItems != null) {
+            ((InspectionListFragment) mTabItems[2].fragment).reloadDelay();
+        }
     }
 
     private String getTabTitle(int resId) {

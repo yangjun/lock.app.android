@@ -43,6 +43,10 @@ public class LoadListFragment<T, T2 extends ListView> extends LoadBaseFragment {
 
     protected ViewGroup mEmptyGroup;
 
+    public LoadListFragment() {
+        super();
+    }
+
     public LoadListFragment(LoadListCallBack<T> loadListCallBack) {
         super(loadListCallBack);
         setLoadConfig(new LoadListConfig());
