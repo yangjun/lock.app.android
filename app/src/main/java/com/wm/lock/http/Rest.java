@@ -101,10 +101,10 @@ public class Rest {
     }
 
     private RestTemplate getRestTemplate(final String url) {
-        RestTemplateProvider provider = url.startsWith("https") ? new RestTemplateProviderSsl() : new RestTemplateProviderHttp();
+        final RestTemplateProvider provider = url.startsWith("https") ? new RestTemplateProviderSsl() : new RestTemplateProviderHttp();
         final RestTemplate template = provider.getRestTemplate(mCtx, url);
 
-        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+        final List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
         interceptors.add(new RestInterceptor());
         template.setInterceptors(interceptors);
 
