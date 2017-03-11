@@ -5,7 +5,10 @@ package com.wm.lock.entity;
  */
 public enum AttachmentSource {
 
+    /** 巡检计划 */
+    INSPECTION,
+
     /** 巡检项 */
-    INSPECTION_ITEM;
+    INSPECTION_ITEM
 
 }

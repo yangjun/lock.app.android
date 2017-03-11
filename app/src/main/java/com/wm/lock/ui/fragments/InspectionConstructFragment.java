@@ -2,6 +2,7 @@ package com.wm.lock.ui.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,8 +15,9 @@ import com.wm.lock.R;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.utils.CollectionUtils;
+import com.wm.lock.core.utils.DataUtils;
 import com.wm.lock.core.utils.FragmentUtils;
-import com.wm.lock.core.utils.HardwareUtils;
+import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.entity.InspectionItemFlag;
 import com.wm.lock.module.ModuleFactory;
@@ -27,6 +29,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import static com.wm.lock.R.id.fl;
 
 @EFragment
 public class InspectionConstructFragment extends BaseFragment {
@@ -44,6 +48,7 @@ public class InspectionConstructFragment extends BaseFragment {
     private long mInspectionId;
     private String mCategory;
     private boolean mEnable;
+    private boolean mLast;
     private List<InspectionItem> mItemList;
     private List<InspectionItemConstructFragment> mItemFragmentList;
 
@@ -65,6 +70,7 @@ public class InspectionConstructFragment extends BaseFragment {
         mCategory = bundle.getString(LockConstants.DATA);
         mInspectionId = bundle.getLong(LockConstants.ID);
         mEnable = bundle.getBoolean(LockConstants.BOOLEAN);
+        mLast = bundle.getBoolean(LockConstants.FLAG);
 
         mTvCategory.setText(String.format("%s. %s", mCategoryIndex + 1, mCategory));
         loadData();
@@ -133,6 +139,10 @@ public class InspectionConstructFragment extends BaseFragment {
             rendererItem(i, item);
         }
 
+        if (mLast) {
+            rendererPhoto();
+        }
+
         mHasRenderer = true;
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -181,6 +191,24 @@ public class InspectionConstructFragment extends BaseFragment {
         FragmentUtils.replaceFragment(getChildFragmentManager(), containerId, fragment);
 
         mItemFragmentList.add(fragment);
+    }
+
+    private void rendererPhoto() {
+        final View view = LayoutInflater.from(mActivity).inflate(R.layout.frag_inspection_item_construct_photo, null);
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mLlContainer.addView(view, params);
+
+        final int id = DataUtils.generateViewId();
+        view.findViewById(R.id.fl_photos).setId(id);
+
+        final Bundle bundle = new Bundle();
+        bundle.putLong(LockConstants.ID, mInspectionId);
+        bundle.putString(LockConstants.FLAG, AttachmentSource.INSPECTION.name());
+        bundle.putBoolean(LockConstants.BOOLEAN, mEnable);
+        final AttachPhotoFragment photoFragment = new AttachPhotoFragment_();
+        photoFragment.setArguments(bundle);
+
+        FragmentUtils.replaceFragment(getChildFragmentManager(), id, photoFragment);
     }
 
     private IBizService bizService() {

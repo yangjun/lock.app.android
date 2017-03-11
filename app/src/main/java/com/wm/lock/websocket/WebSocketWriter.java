@@ -111,6 +111,7 @@ public class WebSocketWriter {
         final Map<String, Object> map = new HashMap<>();
         map.put(LockConstants.BIZ_FLAG, LockConstants.BIZ_RESULT);
         map.put("plan_id", inspection.getPlan_id());
+        buildAttachments(inspectionId, AttachmentSource.INSPECTION, map);
 
         final List<Map<String, Object>> itemList = new ArrayList<>();
         final List<InspectionItem> inspectionItemList = bizService.listInspectionItem(inspectionId);
@@ -120,34 +121,35 @@ public class WebSocketWriter {
             itemMap.put("state",item.getState());
             itemMap.put("result", item.getResult());
             itemMap.put("note", item.getNote());
-
-            final List<String> attachmentList = bizService.listAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, AttachmentType.PHOTO);
-            if (!CollectionUtils.isEmpty(attachmentList)) {
-                final List<Map<String, Object>> photoList = new ArrayList<>();
-                for (String path : attachmentList) {
-//                            try {
-                    final AttachmentUpload attachmentUpload = bizService.findAttachmentUploadByPath(path);
-//                                final String encodeString = encodePhoto(path);
-                    final Map<String, Object> photoMap = new HashMap<>();
-                    photoMap.put("pic", attachmentUpload.getUploadedId());
-                    photoMap.put("pic_type", 1);
-                    photoList.add(photoMap);
-//                            } catch (Exception e) {
-//                                Logger.p("fail to encode bitmap to string, the path is: " + path, e);
-//                            }
-                }
-                itemMap.put("pics", photoList);
-                itemMap.put("pic_count", attachmentList.size());
-            }
-            else {
-                itemMap.put("pics", new ArrayList<>());
-                itemMap.put("pic_count", 0);
-            }
+            buildAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, itemMap);
             itemList.add(itemMap);
         }
         map.put("items", itemList);
 
         execute(map);
+    }
+
+    private static void buildAttachments(long foreignId, AttachmentSource source, Map<String, Object> map) {
+        final IBizService bizService = ModuleFactory.getInstance().getModuleInstance(IBizService.class);
+
+        // photo
+        final List<String> attachmentList = bizService.listAttachments(foreignId, source, AttachmentType.PHOTO);
+        if (!CollectionUtils.isEmpty(attachmentList)) {
+            final List<Map<String, Object>> picList = new ArrayList<>();
+            for (String path : attachmentList) {
+                final AttachmentUpload attachmentUpload = bizService.findAttachmentUploadByPath(path);
+                final Map<String, Object> photoMap = new HashMap<>();
+                photoMap.put("pic", attachmentUpload.getUploadedId());
+                photoMap.put("pic_type", 1);
+                picList.add(photoMap);
+            }
+            map.put("pics", picList);
+            map.put("pic_count", attachmentList.size());
+        }
+        else {
+            map.put("pics", new ArrayList<>());
+            map.put("pic_count", 0);
+        }
     }
 
     private static void execute(Object obj) {
@@ -195,10 +197,6 @@ public class WebSocketWriter {
 
         return result;
     }
-
-//    private static String encodePhoto(String path) throws Exception {
-//        return ImageUtils.encode(path);
-//    }
 
     private static String convertToString(Object obj) {
         final Gson gson = getGsonBuilder().create();

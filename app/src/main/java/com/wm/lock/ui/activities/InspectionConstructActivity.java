@@ -235,6 +235,7 @@ public class InspectionConstructActivity extends InspectionConstructBaseActivity
         bundle.putString(LockConstants.NAME, mInspectionName);
         bundle.putInt(LockConstants.POS, mSelectCategoryIndex);
         bundle.putString(LockConstants.DATA, mCategories.get(mSelectCategoryIndex));
+        bundle.putBoolean(LockConstants.FLAG, mSelectCategoryIndex >= mCategories.size() - 1);
         bundle.putBoolean(LockConstants.BOOLEAN, mEnable);
 
         mCurrContentFragment = InspectionConstructFragment_.builder().build();

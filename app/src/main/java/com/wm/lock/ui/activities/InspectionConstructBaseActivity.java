@@ -74,10 +74,15 @@ public abstract class InspectionConstructBaseActivity extends BaseActivity {
     }
 
     protected boolean hasAttachment() {
+        int count = bizService().countAttachments(mInspectionId, AttachmentSource.INSPECTION, AttachmentType.PHOTO);
+        if (count > 0) {
+            return true;
+        }
+
         final List<InspectionItem> inspectionItemList = bizService().listInspectionItem(mInspectionId);
         for (InspectionItem item : inspectionItemList) {
-            final List<String> attachmentList = bizService().listAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, AttachmentType.PHOTO);
-            if (!CollectionUtils.isEmpty(attachmentList)) {
+            count = bizService().countAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, AttachmentType.PHOTO);
+            if (count > 0) {
                 return true;
             }
         }

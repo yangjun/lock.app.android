@@ -1,20 +1,22 @@
 package com.wm.lock.ui.activities;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.wm.lock.LockConstants;
 import com.wm.lock.R;
-import com.wm.lock.attachment.AttachmentProcessor;
-import com.wm.lock.core.callback.Injector;
 import com.wm.lock.core.load.LoadApi;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.core.utils.DateUtils;
-import com.wm.lock.dialog.DialogManager;
+import com.wm.lock.core.utils.FragmentUtils;
+import com.wm.lock.entity.AttachmentSource;
 import com.wm.lock.entity.Inspection;
 import com.wm.lock.entity.InspectionItem;
 import com.wm.lock.module.biz.IBizService;
-import com.wm.lock.websocket.WebSocketWriter;
+import com.wm.lock.ui.fragments.AttachPhotoFragment;
+import com.wm.lock.ui.fragments.AttachPhotoFragment_;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
@@ -138,6 +140,20 @@ public class InspectionConstructMakeActivity extends InspectionConstructBaseActi
         // 备注
         final TextView tvRemark = (TextView) findViewById(R.id.tv_job_remark);
         tvRemark.setText(mInspection.getNote());
+
+        // 照片
+        rendererPhoto();
+    }
+
+    private void rendererPhoto() {
+        final Bundle bundle = new Bundle();
+        bundle.putLong(LockConstants.ID, mInspectionId);
+        bundle.putString(LockConstants.FLAG, AttachmentSource.INSPECTION.name());
+        bundle.putBoolean(LockConstants.BOOLEAN, mEnable);
+        final AttachPhotoFragment photoFragment = new AttachPhotoFragment_();
+        photoFragment.setArguments(bundle);
+
+        FragmentUtils.replaceFragment(getSupportFragmentManager(), R.id.fl_photos, photoFragment);
     }
 
     private String getJobRange() {

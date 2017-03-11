@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import static android.R.attr.path;
 import static android.R.id.list;
 
 @EBean
@@ -69,26 +70,17 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
         inspection.setLast_modify_date(new Date());
         mDaoManager.getInspectionDao().update(inspection);
 
-        // 添加附件到上传记录
+        // 添加附件
         final List<InspectionItem> inspectionItemList = listInspectionItem(inspectionId);
         mDaoManager.getAttachmentUploadDao().doInTransaction(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
+                // 添加巡检任务的附件
+                addAttachmentUploads(inspectionId, AttachmentSource.INSPECTION, inspection);
+
+                // 添加巡检项任务附件
                 for (InspectionItem item : inspectionItemList) {
-                    final List<String> attachmentList = listAttachments(item.getId_(), AttachmentSource.INSPECTION_ITEM, AttachmentType.PHOTO);
-                    if (!CollectionUtils.isEmpty(attachmentList)) {
-                        for (String path : attachmentList) {
-                            final AttachmentUpload temp = new AttachmentUpload();
-                            temp.setCreate_date(new Date());
-                            temp.setForeignId(inspectionId);
-                            temp.setSource(AttachmentUploadSource.INSPECTION);
-                            temp.setUser_job_number(inspection.getUser_job_number());
-                            temp.setPath(path);
-                            temp.setType(AttachmentType.PHOTO);
-                            temp.setUploadedId(null);
-                            mDaoManager.getAttachmentUploadDao().create(temp);
-                        }
-                    }
+                    addAttachmentUploads(item.getId_(), AttachmentSource.INSPECTION_ITEM, inspection);
                 }
                 return null;
             }
@@ -357,6 +349,27 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
             }
         }
         return list;
+    }
+
+    private void addAttachmentUploads(long foreignId, AttachmentSource source, Inspection inspection) {
+        final List<String> picList = listAttachments(foreignId, source, AttachmentType.PHOTO);
+        if (!CollectionUtils.isEmpty(picList)) {
+            for (String path : picList) {
+                addAttachmentUpload(path, AttachmentType.PHOTO, inspection);
+            }
+        }
+    }
+
+    private void addAttachmentUpload(String path, AttachmentType type, Inspection inspection) {
+        final AttachmentUpload temp = new AttachmentUpload();
+        temp.setCreate_date(new Date());
+        temp.setForeignId(inspection.getId_());
+        temp.setType(type);
+        temp.setPath(path);
+        temp.setUser_job_number(inspection.getUser_job_number());
+        temp.setSource(AttachmentUploadSource.INSPECTION);
+        temp.setUploadedId(null);
+        mDaoManager.getAttachmentUploadDao().create(temp);
     }
 
 }

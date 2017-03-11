@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/verticalWrapContainerTheme">
+
+    <TextView
+        style="@style/wrapTheme"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="@string/label_photo"
+        android:textColor="@color/txt_desc"
+        android:textSize="@dimen/text_size_medium"
+        android:visibility="gone" />
+
+    <View
+        style="@style/splitTheme"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    <FrameLayout
+        android:id="@+id/fl_photos"
+        style="@style/wrapHeightTheme"
+        android:background="@color/bg_item"
+        android:padding="@dimen/activity_horizontal_margin" />
+
+    <View style="@style/splitTheme" />
+</LinearLayout>

@@ -227,6 +227,8 @@
 
                     <View style="@style/splitTheme" />
                 </LinearLayout>
+
+                <include layout="@layout/frag_inspection_item_construct_photo" />
             </LinearLayout>
         </ScrollView>
     </FrameLayout>
