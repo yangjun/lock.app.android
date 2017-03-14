@@ -13,8 +13,7 @@
         android:visibility="gone" />
 
     <View
-        style="@style/splitTheme"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+        style="@style/splitTheme" />
 
     <FrameLayout
         android:id="@+id/fl_photos"

@@ -22,7 +22,9 @@ public class WebSocketReaderBye extends WebSocketReaderBase {
             @Override
             public void run() {
                 final Activity act = LockApplication.getInstance().getCurrActivity();
-                DialogManager.showNotifyDialog(act, R.string.label_notify, act.getString(R.string.message_pull_logoff), false);
+                if (act != null) {
+                    DialogManager.showNotifyDialog(act, R.string.label_notify, act.getString(R.string.message_pull_logoff), false);
+                }
             }
         }, 300);
     }
