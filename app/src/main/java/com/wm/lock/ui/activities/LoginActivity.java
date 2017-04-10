@@ -153,7 +153,12 @@ public class LoginActivity extends BaseActivity {
         mAsyncExecutor.execute(new AsyncAbstractWork<Boolean>() {
             @Override
             public Boolean onExecute() throws Exception {
-                return HardwareUtils.ping();
+                if (!HardwareUtils.isNetworkAvailable(getApplicationContext())) {
+                    return false;
+                }
+                else {
+                    return HardwareUtils.ping();
+                }
             }
 
             @Override
