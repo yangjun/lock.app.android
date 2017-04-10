@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.widget.EditText;
 
 import com.wm.lock.R;
+import com.wm.lock.core.async.AsyncAbstractWork;
 import com.wm.lock.core.async.AsyncExecutor;
 import com.wm.lock.core.async.AsyncWork;
 import com.wm.lock.core.logger.Logger;
@@ -101,9 +102,9 @@ public class LoginActivity extends BaseActivity {
         if (StringUtils.isEmpty(mEtLockPwd)) {
             return R.string.empty_lock_pwd;
         }
-        if (!HardwareUtils.isNetworkAvailable(getApplicationContext())) {
-            return R.string.message_no_net;
-        }
+//        if (!HardwareUtils.isNetworkAvailable(getApplicationContext())) {
+//            return R.string.message_no_net;
+//        }
         return -1;
     }
 
@@ -136,14 +137,35 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onFail(Exception e) {
                 Logger.p("fail to login", e);
-                dismissLoginDialog();
-                showTip(R.string.message_login_fail);
+                ping();
             }
 
             @Override
             public Void onExecute() throws Exception {
                 WebSocketWriter.login(userJobNumber, userLockPwd);
                 return null;
+            }
+        });
+    }
+
+    private void ping() {
+        mAsyncExecutor = new AsyncExecutor();
+        mAsyncExecutor.execute(new AsyncAbstractWork<Boolean>() {
+            @Override
+            public Boolean onExecute() throws Exception {
+                return HardwareUtils.ping();
+            }
+
+            @Override
+            public void onSuccess(Boolean result) {
+                dismissLoginDialog();
+                showTip(result ? R.string.message_login_fail : R.string.message_net_error);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                dismissLoginDialog();
+                showTip(R.string.message_login_fail);
             }
         });
     }
