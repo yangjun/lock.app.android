@@ -49,7 +49,7 @@ class WebSocketWriterProcessor {
         return InstanceHolder.instance;
     }
 
-    public void execute(final Chat chat, final boolean insertToHead) {
+    public synchronized void execute(final Chat chat, final boolean insertToHead) {
         mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -79,8 +79,8 @@ class WebSocketWriterProcessor {
                 }
                 try {
                     send(communication.getContent());
-                    sendSuccess(communication);
                     Thread.sleep(3000); //睡眠一段时间,等待服务器回复。如果服务器没有回复,下一次继续发这条数据
+                    sendSuccess(communication);
                     startIfNot();
                 } catch (Exception e) {
                     sendFail(e);
