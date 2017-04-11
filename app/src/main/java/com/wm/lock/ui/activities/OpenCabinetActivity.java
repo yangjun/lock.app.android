@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.text.TextUtils;
 
 import com.wm.lock.LockConstants;
+import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.utils.CollectionUtils;
 import com.wm.lock.entity.LockDevice;
 import com.wm.lock.module.ModuleFactory;
@@ -38,6 +39,7 @@ public class OpenCabinetActivity extends OpenLockActivity {
     @Override
     protected LockDevice fix(BluetoothDevice device) {
         final List<LockDevice> list = list();
+        Logger.p("open cabinet, find local device list size:" + list.size());
         return findExist(list, device);
     }
 

@@ -195,7 +195,8 @@ public class LockControlActivity extends BaseActivity {
         showWaittingDialog(R.string.message_open_lock_try_open);
         try {
             final UserInfo user = loginUser();
-            final String pin = user.getJobNumber() + user.getLockPwd();
+//            final String pin = user.getJobNumber() + user.getLockPwd();
+            final String pin = user.getLockPwd() + user.getJobNumber();
             final byte[] send = doorManager.open(pin);
             if (send != null) {
                 BluetoothManager.getInstance().getBluetoothService().writeData(mWriteGattCharacteristic, send);

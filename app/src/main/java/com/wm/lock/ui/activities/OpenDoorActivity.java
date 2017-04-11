@@ -2,6 +2,7 @@ package com.wm.lock.ui.activities;
 
 import android.bluetooth.BluetoothDevice;
 
+import com.wm.lock.core.logger.Logger;
 import com.wm.lock.entity.LockDevice;
 import com.wm.lock.module.ModuleFactory;
 import com.wm.lock.module.biz.IBizService;
@@ -24,6 +25,7 @@ public class OpenDoorActivity extends OpenLockActivity {
     @Override
     protected LockDevice fix(BluetoothDevice device) {
         final List<LockDevice> list = list();
+        Logger.p("open door, find local device list size:" + list.size());
         return findExist(list, device);
 //        final LockDevice result = new LockDevice();
 //        result.setLock_mac(device.getAddress());
