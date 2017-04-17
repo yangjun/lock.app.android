@@ -32,8 +32,8 @@ public class SqlOpenHelper extends OrmLiteSqliteOpenHelper {
     }
 
     private static String getPath(Context ctx) {
-        return ctx.getExternalCacheDir().getAbsolutePath() + File.separator + DB_NAME; // FIXME，正式上线用下面的代码
-//        return DB_NAME;
+//        return ctx.getExternalCacheDir().getAbsolutePath() + File.separator + DB_NAME; // FIXME，正式上线用下面的代码
+        return DB_NAME;
     }
 
     public SqlOpenHelper(Context context, String databaseName, CursorFactory factory, int databaseVersion) {

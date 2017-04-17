@@ -15,6 +15,8 @@ import com.wm.lock.core.CrashHandler;
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.logger.Logger;
 import com.wm.lock.core.logger.LoggerOption;
+import com.wm.lock.core.utils.HardwareUtils;
+import com.wm.lock.core.utils.IoUtils;
 import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.entity.InspectionType;
 import com.wm.lock.exception.BizException;
@@ -82,6 +84,11 @@ public final class Helper {
 
 //        //update
 //        UpdateApi.getInstance().init(ctx);
+
+        // 删除之前的数据库, 做兼容处理
+        if (HardwareUtils.getVerCode(ctx) > 101) {
+            IoUtils.deleteFiles(ctx.getExternalCacheDir());
+        }
 
         // bluetooth
         final String error = BluetoothManager.getInstance().checkHardware(ctx);

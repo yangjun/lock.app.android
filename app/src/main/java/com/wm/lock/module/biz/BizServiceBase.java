@@ -129,14 +129,18 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
         mDaoManager.getInspectionDao().doInTransaction(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
+                // 删除巡检项
                 final List<InspectionItem> inspectionItems = mDaoManager.getInspectionItemDao().list(inspectionId);
                 if (!CollectionUtils.isEmpty(inspectionItems)) {
                     for (InspectionItem inspectionItem : inspectionItems) {
-                        final File file = getAttachmentFolder(AttachmentSource.INSPECTION_ITEM, inspectionItem.getId_());
-                        IoUtils.deleteFiles(file.getAbsolutePath());
+                        final File itemFile = getAttachmentFolder(AttachmentSource.INSPECTION_ITEM, inspectionItem.getId_());
+                        IoUtils.deleteFiles(itemFile.getAbsolutePath());
                         mDaoManager.getInspectionItemDao().deleteById(inspectionItem.getId_());
                     }
                 }
+                // 删除巡检计划
+                final File file = getAttachmentFolder(AttachmentSource.INSPECTION, inspectionId);
+                IoUtils.deleteFiles(file.getAbsolutePath());
                 mDaoManager.getInspectionDao().deleteById(inspectionId);
                 return null;
             }
@@ -314,9 +318,7 @@ public abstract class BizServiceBase extends BaseModule implements IBizService {
 
     protected File getAttachmentFolder(AttachmentSource source, long foreignId) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(mCtx.getExternalCacheDir().getAbsolutePath())
-                .append(File.separator)
-                .append("attachments")
+        builder.append(mCtx.getExternalFilesDir("attachments").getAbsolutePath())
                 .append(File.separator)
                 .append(source.name())
                 .append(File.separator)
