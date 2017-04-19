@@ -126,7 +126,7 @@ public class WebSocketWriter {
         }
         map.put("items", itemList);
 
-        execute(map);
+        execute(map, true);
     }
 
     private static void buildAttachments(long foreignId, AttachmentSource source, Map<String, Object> map) {
