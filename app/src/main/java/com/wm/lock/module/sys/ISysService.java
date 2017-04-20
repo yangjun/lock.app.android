@@ -20,6 +20,11 @@ public interface ISysService {
      */
     public boolean isNewInstall();
 
+    /**
+     * 丢弃数据库
+     */
+    public void dropDatabase();
+
 //    /**
 //     * 获取新版本
 //     */

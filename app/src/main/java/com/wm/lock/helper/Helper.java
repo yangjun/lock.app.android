@@ -21,6 +21,7 @@ import com.wm.lock.core.utils.RedirectUtils;
 import com.wm.lock.entity.InspectionType;
 import com.wm.lock.exception.BizException;
 import com.wm.lock.module.ModuleFactory;
+import com.wm.lock.module.sys.ISysService;
 import com.wm.lock.module.user.IUserService;
 import com.wm.lock.ui.activities.HomeActivity_;
 import com.wm.lock.ui.activities.InspectionConstructActivity_;
@@ -85,9 +86,14 @@ public final class Helper {
 //        //update
 //        UpdateApi.getInstance().init(ctx);
 
-        // 删除之前的数据库, 做兼容处理
+        // 删除之前的数据, 做兼容处理
         if (HardwareUtils.getVerCode(ctx) > 101) {
             IoUtils.deleteFiles(ctx.getExternalCacheDir());
+        }
+        // 对1.0.3的版本, 如果是新安装, 清除数据库
+        final ISysService sysService = ModuleFactory.getInstance().getModuleInstance(ISysService.class);
+        if (HardwareUtils.getVerCode(ctx) == 103 && sysService.isNewInstall()) {
+            sysService.dropDatabase();
         }
 
         // bluetooth

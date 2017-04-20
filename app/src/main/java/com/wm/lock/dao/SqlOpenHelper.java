@@ -58,7 +58,11 @@ public class SqlOpenHelper extends OrmLiteSqliteOpenHelper {
         super(context, databaseName, factory, databaseVersion, is);
         this.mCtx = context;
     }
-    
+
+    public void drop() {
+        mCtx.deleteDatabase(DB_NAME);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db,
                          ConnectionSource connectionSource) {

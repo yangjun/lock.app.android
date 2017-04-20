@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.wm.lock.core.cache.CacheManager;
 import com.wm.lock.core.utils.HardwareUtils;
+import com.wm.lock.dao.DaoManager;
 import com.wm.lock.module.BaseModule;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -19,6 +21,9 @@ public abstract class SysServiceBase extends BaseModule implements ISysService {
 
     @RootContext
     Context mCtx;
+
+    @Bean
+    DaoManager mDaoManager;
 
     @Override
     public int getCacheAppVersion() {
@@ -38,7 +43,12 @@ public abstract class SysServiceBase extends BaseModule implements ISysService {
         return currVersion > cacheVersion;
     }
 
-//    @Override
+    @Override
+    public void dropDatabase() {
+        mDaoManager.dropDb();
+    }
+
+    //    @Override
 //    public void ignoreVersion(VersionInfo version) {
 //        // TODO
 //    }

@@ -19,6 +19,8 @@ import org.androidannotations.annotations.RootContext;
 
 import java.sql.SQLException;
 
+import static com.tencent.bugly.crashreport.common.strategy.StrategyBean.d;
+
 @EBean(scope = EBean.Scope.Singleton)
 public class DaoManager {
 
@@ -84,6 +86,10 @@ public class DaoManager {
 
     public SqlOpenHelper getHelper() {
         return helper;
+    }
+
+    public void dropDb() {
+        helper.drop();
     }
 
 }

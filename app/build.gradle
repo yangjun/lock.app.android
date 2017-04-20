@@ -91,8 +91,8 @@ android {
         applicationId "com.wm.lock"
         minSdkVersion 18
         targetSdkVersion 22
-        versionCode 102
-        versionName "1.0.2"
+        versionCode 103
+        versionName "1.0.3"
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道
