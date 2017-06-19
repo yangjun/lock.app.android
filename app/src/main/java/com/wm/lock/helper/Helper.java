@@ -41,6 +41,9 @@ public final class Helper {
         final boolean isDebugMode = !LockConfig.MODE.equals(LockConfig.MODE_RELEASE);
 
         BuglyManager.init(ctx);
+        CacheManager.getInstance().init(ctx);
+        //module
+        ModuleFactory.getInstance().init(ctx);
 
         Logger.init(ctx, new LoggerOption.Builder()
                         .setDebug(isDebugMode)
@@ -77,11 +80,6 @@ public final class Helper {
                 showTip(msg);
             }
         });
-
-        CacheManager.getInstance().init(ctx);
-
-        //module
-        ModuleFactory.getInstance().init(ctx);
 
 //        //update
 //        UpdateApi.getInstance().init(ctx);

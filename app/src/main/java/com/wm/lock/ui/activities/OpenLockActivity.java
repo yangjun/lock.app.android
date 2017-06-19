@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +30,6 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -118,7 +118,7 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
 
     @Override
     protected void onDestroy() {
-        stopRefresh();
+//        stopRefresh();
         super.onDestroy();
     }
 
@@ -183,8 +183,9 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
             public void run() {
                 final LockDevice bluetoothDevice = filter(device);
                 if (bluetoothDevice != null) {
-                    mDeviceList.add(0, bluetoothDevice);
-                    startRefresh();
+                    mDeviceList.add(bluetoothDevice);
+                    mListAdapter.notifyDataSetChanged();
+//                    startRefresh();
                 }
             }
         });
@@ -239,24 +240,24 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
         return fix(device);
     }
 
-    protected void startRefresh() {
-        stopRefresh();
-        mRefreshRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Collections.sort(mDeviceList, new LockDeviceComparator());
-                mListAdapter.notifyDataSetChanged();
-            }
-        };
-        mHandler.postDelayed(mRefreshRunnable, DELAY);
-    }
-
-    private void stopRefresh() {
-        if (mRefreshRunnable != null) {
-            mHandler.removeCallbacks(mRefreshRunnable);
-            mRefreshRunnable = null;
-        }
-    }
+//    protected void startRefresh() {
+//        stopRefresh();
+//        mRefreshRunnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                Collections.sort(mDeviceList, new LockDeviceComparator());
+//                mListAdapter.notifyDataSetChanged();
+//            }
+//        };
+//        mHandler.postDelayed(mRefreshRunnable, DELAY);
+//    }
+//
+//    private void stopRefresh() {
+//        if (mRefreshRunnable != null) {
+//            mHandler.removeCallbacks(mRefreshRunnable);
+//            mRefreshRunnable = null;
+//        }
+//    }
 
     protected LockDevice findExist(List<LockDevice> list, BluetoothDevice device) {
         if (CollectionUtils.isEmpty(list)) {
@@ -283,8 +284,14 @@ public abstract class OpenLockActivity extends BaseActivity implements Bluetooth
 
         @Override
         public int compare(LockDevice s, LockDevice t1) {
-            final int val1 = (int) s.getFirst_letter().charAt(0);
-            final int val2 = (int) t1.getFirst_letter().charAt(0);
+            final String firstLetterS = s.getFirst_letter();
+            final String firstLetterT = t1.getFirst_letter();
+            if (TextUtils.isEmpty(firstLetterS) || TextUtils.isEmpty(firstLetterT)) {
+                return -1;
+            }
+
+            final int val1 = (int) firstLetterS.charAt(0);
+            final int val2 = (int) firstLetterT.charAt(0);
             if (val1 > val2) {
                 return 1;
             }

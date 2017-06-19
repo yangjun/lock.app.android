@@ -107,7 +107,7 @@ public class BluetoothManager {
 
 
 
-    private void scan(Context ctx, boolean enable) {
+    private synchronized void scan(Context ctx, boolean enable) {
         final BluetoothAdapter adapter = getAdapter(ctx);
         if (enable) {
             mScanTimeoutRunnable = new Runnable() {
